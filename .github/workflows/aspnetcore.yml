@@ -23,6 +23,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore ./CIAC-TAS-Service/CIAC-TAS-Service.csproj --verbosity detailed
     - name: Build
-      run: dotnet build ./CIAC-TAS-Service/CIAC-TAS-Service.sln --verbosity detailed --no-restore
+      run: dotnet build ./CIAC-TAS-Service/CIAC-TAS-Service.sln --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
