@@ -28,10 +28,6 @@ jobs:
       run: dotnet restore ./CIAC-TAS-Service.Sample/CIAC-TAS-Service.Sample.csproj --verbosity detailed
     - name: Restore dependencies Sdk
       run: dotnet restore ./CIAC-TAS-Service.Sdk/CIAC-TAS-Service.Sdk.csproj --verbosity detailed
-    - name: Build Contracts
-      run: dotnet build ./CIAC-TAS-Service.Contracts/CIAC-TAS-Service.Contracts.sln --no-restore
-    - name: Build Sdk
-      run: dotnet build ./CIAC-TAS-Service.Sdk/CIAC-TAS-Service.Sdk.sln --no-restore
     - name: Build Service
       run: dotnet build ./CIAC-TAS-Service/CIAC-TAS-Service.sln --no-restore
     - name: Test
