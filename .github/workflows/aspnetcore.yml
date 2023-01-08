@@ -1,0 +1,34 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.305
+    - name: Restore dependencies Service
+      run: dotnet restore ./CIAC-TAS-Service/CIAC-TAS-Service.csproj --verbosity detailed
+    - name: Restore dependencies Contracts
+      run: dotnet restore ./CIAC-TAS-Service.Contracts/CIAC-TAS-Service.Contracts.csproj --verbosity detailed
+    - name: Restore dependencies Sample
+      run: dotnet restore ./CIAC-TAS-Service.Sample/CIAC-TAS-Service.Sample.csproj --verbosity detailed
+    - name: Restore dependencies Sdk
+      run: dotnet restore ./CIAC-TAS-Service.Sdk/CIAC-TAS-Service.Sdk.csproj --verbosity detailed
+    - name: Build Service
+      run: dotnet build ./CIAC-TAS-Service/CIAC-TAS-Service.sln --no-restore
+    - name: Test Service
+      run: dotnet test ./CIAC-TAS-Service/CIAC-TAS-Service.sln --no-build --verbosity normal
