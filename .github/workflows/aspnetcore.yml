@@ -20,9 +20,19 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.305
-    - name: Restore dependencies
+    - name: Restore dependencies Service
       run: dotnet restore ./CIAC-TAS-Service/CIAC-TAS-Service.csproj --verbosity detailed
-    - name: Build
+    - name: Restore dependencies Contracts
+      run: dotnet restore ./CIAC-TAS-Service.Contracts/CIAC-TAS-Service.Contracts.csproj --verbosity detailed
+    - name: Restore dependencies Sample
+      run: dotnet restore ./CIAC-TAS-Service.Sample/CIAC-TAS-Service.Sample.csproj --verbosity detailed
+    - name: Restore dependencies Sdk
+      run: dotnet restore ./CIAC-TAS-Service.Sdk/CIAC-TAS-Service.Sdk.csproj --verbosity detailed
+    - name: Build Contracts
+      run: dotnet build ./CIAC-TAS-Service.Contracts/CIAC-TAS-Service.Contracts.sln --no-restore
+    - name: Build Sdk
+      run: dotnet build ./CIAC-TAS-Service.Sdk/CIAC-TAS-Service.Sdk.sln --no-restore
+    - name: Build Service
       run: dotnet build ./CIAC-TAS-Service/CIAC-TAS-Service.sln --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
