@@ -18,6 +18,7 @@ namespace CIAC_TAS_Service.Installers
 
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<ITagService, TagService>();
+            services.AddScoped<IGrupoService, GrupoService>();
         }
     }
 }

@@ -26,6 +26,7 @@ using (var serviceScope = app.Services.CreateScope())
 
     await dbContext.Database.MigrateAsync();
 
+    //Roles
     var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
     if (!await roleManager.RoleExistsAsync("Admin"))
@@ -38,6 +39,31 @@ using (var serviceScope = app.Services.CreateScope())
     {
         var posterRole = new IdentityRole("Poster");
         await roleManager.CreateAsync(posterRole);
+    }
+
+    if (!await roleManager.RoleExistsAsync("Estudiante"))
+    {
+        var estudianteRole = new IdentityRole("Estudiante");
+        await roleManager.CreateAsync(estudianteRole);
+    }
+
+    //Users
+    var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+    //var userRoleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityUserRole>>();
+
+    if (await userManager.FindByNameAsync("Admin") == null)
+    {
+        var identityUser = new IdentityUser
+        {
+            UserName = "Admin",
+            Email = "ciac.tas@gmail.com",
+        };
+        var identityResult = await userManager.CreateAsync(identityUser , "3FMa[E8UZq/{=c,z");
+
+        if (identityResult.Succeeded)
+        {
+            await userManager.AddToRoleAsync(identityUser, "Admin");
+        }
     }
 }
 

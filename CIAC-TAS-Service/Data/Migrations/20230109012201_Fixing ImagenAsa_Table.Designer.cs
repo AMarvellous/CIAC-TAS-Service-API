@@ -4,6 +4,7 @@ using CIAC_TAS_Service.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CIACTASService.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230109012201_Fixing ImagenAsa_Table")]
+    partial class FixingImagenAsa_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,34 +23,6 @@ namespace CIACTASService.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.ASA.ConfiguracionPreguntaAsa", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("GrupoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CantitdadPreguntas")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("FechaFin")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("FechaInicial")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id", "GrupoId");
-
-                    b.HasIndex("GrupoId")
-                        .IsUnique();
-
-                    b.ToTable("ConfiguracionPreguntaAsa");
-                });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.ASA.EstadoPreguntaAsa", b =>
                 {
@@ -92,7 +66,7 @@ namespace CIACTASService.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Ruta")
+                    b.Property<string>("RutaImagen")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -115,6 +89,9 @@ namespace CIACTASService.Data.Migrations
                     b.Property<int>("GrupoPreguntaAsaId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ImagenAsaId")
+                        .HasColumnType("int");
+
                     b.Property<int>("NumeroPregunta")
                         .HasColumnType("int");
 
@@ -130,267 +107,9 @@ namespace CIACTASService.Data.Migrations
                     b.HasIndex("GrupoPreguntaAsaId")
                         .IsUnique();
 
-                    b.ToTable("PreguntaAsa");
-                });
-
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.ASA.PreguntaAsaImagenAsa", b =>
-                {
-                    b.Property<int>("PreguntaAsaId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ImagenAsaId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PreguntaAsaId", "ImagenAsaId");
-
                     b.HasIndex("ImagenAsaId");
 
-                    b.ToTable("PreguntaAsaImagenAsa");
-                });
-
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.Estudiante", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ApellidoMaterno")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ApellidoPaterno")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CarnetIdentidad")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Celular")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CelularMadre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CelularPadre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CelularTutor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CodigoSeguro")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CodigoTas")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Domicilio")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EstadoCivil")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("ExamenPsicofisiologico")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("ExperienciaPrevia")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("FamiliarTutor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("FechaNacimiento")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("FechaSeguro")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("InstruccionPrevia")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LugarNacimiento")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nacionalidad")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NombreMadre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NombrePadre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NombreTutor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Sexo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Telefono")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("VacunaAntitetanica")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Estudiante");
-                });
-
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.EstudianteGrupo", b =>
-                {
-                    b.Property<int>("EstudianteId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GrupoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EstudianteId", "GrupoId");
-
-                    b.HasIndex("GrupoId");
-
-                    b.ToTable("EstudianteGrupos");
-                });
-
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.EstudiantePrograma", b =>
-                {
-                    b.Property<int>("EstudianteId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProgramaId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EstudianteId", "ProgramaId");
-
-                    b.HasIndex("ProgramaId");
-
-                    b.ToTable("EstudiantePrograma");
-                });
-
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.General.Grupo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Grupo");
-                });
-
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.General.Programa", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Programa");
-                });
-
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.Menu.MenuModuloWeb", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Estilo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("MenuModulosWeb");
-                });
-
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.Menu.MenuSubModuloWeb", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Estilo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ModuloId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Pagina")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ModuloId");
-
-                    b.ToTable("MenuSubModulosWeb");
+                    b.ToTable("PreguntaAsa");
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.Post", b =>
@@ -682,17 +401,6 @@ namespace CIACTASService.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.ASA.ConfiguracionPreguntaAsa", b =>
-                {
-                    b.HasOne("CIAC_TAS_Service.Domain.General.Grupo", "Grupo")
-                        .WithOne("ConfiguracionPreguntaAsa")
-                        .HasForeignKey("CIAC_TAS_Service.Domain.ASA.ConfiguracionPreguntaAsa", "GrupoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Grupo");
-                });
-
             modelBuilder.Entity("CIAC_TAS_Service.Domain.ASA.PreguntaAsa", b =>
                 {
                     b.HasOne("CIAC_TAS_Service.Domain.ASA.EstadoPreguntaAsa", "EstadoPreguntaAsa")
@@ -707,99 +415,13 @@ namespace CIACTASService.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CIAC_TAS_Service.Domain.ASA.ImagenAsa", null)
+                        .WithMany("PreguntasAsa")
+                        .HasForeignKey("ImagenAsaId");
+
                     b.Navigation("EstadoPreguntaAsa");
 
                     b.Navigation("GrupoPreguntaAsa");
-                });
-
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.ASA.PreguntaAsaImagenAsa", b =>
-                {
-                    b.HasOne("CIAC_TAS_Service.Domain.ASA.ImagenAsa", "ImagenAsa")
-                        .WithMany("PreguntaAsaImagenAsas")
-                        .HasForeignKey("ImagenAsaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CIAC_TAS_Service.Domain.ASA.PreguntaAsa", "PreguntaAsa")
-                        .WithMany("PreguntaAsaImagenAsas")
-                        .HasForeignKey("PreguntaAsaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ImagenAsa");
-
-                    b.Navigation("PreguntaAsa");
-                });
-
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.Estudiante", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.EstudianteGrupo", b =>
-                {
-                    b.HasOne("CIAC_TAS_Service.Domain.Estudiante.Estudiante", "Estudiante")
-                        .WithMany("EstudianteGrupos")
-                        .HasForeignKey("EstudianteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CIAC_TAS_Service.Domain.General.Grupo", "Grupo")
-                        .WithMany("EstudianteGrupos")
-                        .HasForeignKey("GrupoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Estudiante");
-
-                    b.Navigation("Grupo");
-                });
-
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.EstudiantePrograma", b =>
-                {
-                    b.HasOne("CIAC_TAS_Service.Domain.Estudiante.Estudiante", "Estudiante")
-                        .WithMany("EstudianteProgramas")
-                        .HasForeignKey("EstudianteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CIAC_TAS_Service.Domain.General.Programa", "Programa")
-                        .WithMany("EstudianteProgramas")
-                        .HasForeignKey("ProgramaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Estudiante");
-
-                    b.Navigation("Programa");
-                });
-
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.Menu.MenuModuloWeb", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.Menu.MenuSubModuloWeb", b =>
-                {
-                    b.HasOne("CIAC_TAS_Service.Domain.Menu.MenuModuloWeb", "MenuModuloWeb")
-                        .WithMany("MenuSubModulosWeb")
-                        .HasForeignKey("ModuloId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("MenuModuloWeb");
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.Post", b =>
@@ -900,37 +522,7 @@ namespace CIACTASService.Data.Migrations
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.ASA.ImagenAsa", b =>
                 {
-                    b.Navigation("PreguntaAsaImagenAsas");
-                });
-
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.ASA.PreguntaAsa", b =>
-                {
-                    b.Navigation("PreguntaAsaImagenAsas");
-                });
-
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.Estudiante", b =>
-                {
-                    b.Navigation("EstudianteGrupos");
-
-                    b.Navigation("EstudianteProgramas");
-                });
-
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.General.Grupo", b =>
-                {
-                    b.Navigation("ConfiguracionPreguntaAsa")
-                        .IsRequired();
-
-                    b.Navigation("EstudianteGrupos");
-                });
-
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.General.Programa", b =>
-                {
-                    b.Navigation("EstudianteProgramas");
-                });
-
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.Menu.MenuModuloWeb", b =>
-                {
-                    b.Navigation("MenuSubModulosWeb");
+                    b.Navigation("PreguntasAsa");
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.Post", b =>

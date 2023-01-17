@@ -32,5 +32,10 @@ namespace CIAC_TAS_Service.Services
         {
             return new Uri(_baseUri + ApiRoute.Posts.Get.Replace("{postId}", postId));          
         }
+
+        public Uri GetGrupoUri(string grupoId)
+        {
+            return new Uri(_baseUri + ApiRoute.Grupos.Get.Replace("{grupoId}", grupoId));
+        }
     }
 }

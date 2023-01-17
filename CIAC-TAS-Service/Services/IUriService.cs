@@ -7,5 +7,7 @@ namespace CIAC_TAS_Service.Services
         Uri GetPostUri(string postId);
 
         Uri GetAllPostUri(PaginationQuery pagination = null);
+
+        Uri GetGrupoUri(string grupoId);
     }
 }

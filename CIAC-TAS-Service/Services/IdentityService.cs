@@ -101,10 +101,15 @@ namespace CIAC_TAS_Service.Services
             var userClaims = await _userManager.GetClaimsAsync(user);
             claims.AddRange(userClaims);
 
+            var roles = await _userManager.GetRolesAsync(user);
+            var claimsWithRoles = roles.Select(role => new Claim(ClaimTypes.Role, role));
+            claims.AddRange(claimsWithRoles);
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.Add(_jwtSettings.TokenLifetime),
+                
+                Expires = DateTime.UtcNow.Date.AddDays(_jwtSettings.TokenDaysLifetime),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 

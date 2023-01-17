@@ -25,5 +25,14 @@
         {
             public const string GetAll = $"{Base}/tags";
         }
+
+        public static class Grupos
+        {
+            public const string GetAll = $"{Base}/grupos";
+            public const string Get = Base + "/grupos/{grupoId}";
+            public const string Create = $"{Base}/grupos";
+            public const string Update = Base + "/grupos/{grupoId}";
+            public const string Delete = Base + "/grupos/{grupoId}";
+        }
     }
 }
