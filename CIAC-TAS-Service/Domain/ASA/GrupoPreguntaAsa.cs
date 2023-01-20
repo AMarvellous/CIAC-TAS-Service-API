@@ -8,7 +8,7 @@ namespace CIAC_TAS_Service.Domain.ASA
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string Grupo { get; set; }
+        public string Nombre { get; set; }
 
         // Link to table
         public PreguntaAsa PreguntaAsa { get; set; }

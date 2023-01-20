@@ -55,7 +55,12 @@ namespace CIAC_TAS_Service.Data
                 .HasForeignKey(ep => ep.ProgramaId);
 
             builder.Entity<ConfiguracionPreguntaAsa>()
-                .HasKey(g => new { g.Id, g.GrupoId});
+                .HasIndex(x => x.GrupoId)
+                .IsUnique(false);
+
+            builder.Entity<Estudiante>()
+                .HasIndex(x => x.UserId)
+                .IsUnique();
         }
 
         public DbSet<Post> Posts { get; set; }
@@ -72,5 +77,6 @@ namespace CIAC_TAS_Service.Data
         public DbSet<ConfiguracionPreguntaAsa> ConfiguracionPreguntaAsa { get; set; }
         public DbSet<MenuModuloWeb> MenuModulosWeb { get; set; }
         public DbSet<MenuSubModuloWeb> MenuSubModulosWeb { get; set; }
+        public DbSet<Programa> Programas { get; set; }
     }
 }

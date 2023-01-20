@@ -19,6 +19,12 @@ namespace CIAC_TAS_Service.Installers
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<IGrupoService, GrupoService>();
+            services.AddScoped<IGrupoPreguntaAsaService, GrupoPreguntaAsaService>();
+            services.AddScoped<IProgramaService, ProgramaService>();
+            services.AddScoped<IImagenAsaService, ImagenAsaService>();
+            services.AddScoped<IEstadoPreguntaAsaService, EstadoPreguntaAsaService>();
+            services.AddScoped<IConfiguracionPreguntaAsaService, ConfiguracionPreguntaAsaService>();
+            services.AddScoped<IEstudianteService, EstudianteService>();
         }
     }
 }

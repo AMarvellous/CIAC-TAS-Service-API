@@ -25,7 +25,7 @@ namespace CIAC_TAS_Service.Controllers.V1
                 });
             }
 
-            var authResponse = await _identityService.RegisterAsync(request.Email, request.Password);
+            var authResponse = await _identityService.RegisterAsync(request.UserName , request.Email, request.Password);
 
             if (!authResponse.Success)
             {
@@ -45,7 +45,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         [HttpPost(ApiRoute.Identity.Login)]
         public async Task<IActionResult> Login([FromBody] UserLoginRequest userLoginRequest)
         {
-            var authResponse = await _identityService.LoginAsync(userLoginRequest.Email, userLoginRequest.Password);
+            var authResponse = await _identityService.LoginAsync(userLoginRequest.UserName, userLoginRequest.Password);
 
             if (!authResponse.Success)
             {

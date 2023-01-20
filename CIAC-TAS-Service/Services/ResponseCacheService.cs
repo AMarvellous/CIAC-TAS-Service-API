@@ -20,17 +20,32 @@ namespace CIAC_TAS_Service.Services
 
             var serializedResponse = JsonConvert.SerializeObject(response);
 
-            await _distributedCache.SetStringAsync(cacheKey, serializedResponse, new DistributedCacheEntryOptions
+            try
             {
-                AbsoluteExpirationRelativeToNow = timeLive
-            });
+                await _distributedCache.SetStringAsync(cacheKey, serializedResponse, new DistributedCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = timeLive
+                });
+            }
+            catch (Exception ex)
+            {
+            }
+            
         }
 
         public async Task<string> GetCachedResponseAsync(string cacheKey)
         {
-            var cachedResponse = await _distributedCache.GetStringAsync(cacheKey);
+            try
+            {
+                var cachedResponse = await _distributedCache.GetStringAsync(cacheKey);
 
-            return String.IsNullOrEmpty(cachedResponse) ? null : cachedResponse;
+                return String.IsNullOrEmpty(cachedResponse) ? null : cachedResponse;
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }  
         }
     }
 }

@@ -23,7 +23,7 @@ namespace CIAC_TAS_Service.Sample
 
             var loginResponse = await identityApi.LoginAsync(new Contracts.V1.Requests.UserLoginRequest
             {
-                Email = "sdkaccount@example.com",
+                UserName = "sdkaccount@example.com",
                 Password = "Abc12345!"
             });
 

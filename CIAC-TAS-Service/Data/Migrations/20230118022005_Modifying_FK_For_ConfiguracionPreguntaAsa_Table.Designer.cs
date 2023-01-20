@@ -4,6 +4,7 @@ using CIAC_TAS_Service.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CIACTASService.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230118022005_Modifying_FK_For_ConfiguracionPreguntaAsa_Table")]
+    partial class Modifying_FK_For_ConfiguracionPreguntaAsa_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,8 +45,6 @@ namespace CIACTASService.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GrupoId");
 
                     b.ToTable("ConfiguracionPreguntaAsa");
                 });
@@ -156,9 +156,11 @@ namespace CIACTASService.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ApellidoMaterno")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ApellidoPaterno")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CarnetIdentidad")
@@ -166,18 +168,23 @@ namespace CIACTASService.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Celular")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CelularMadre")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CelularPadre")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CelularTutor")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CodigoSeguro")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CodigoTas")
@@ -185,6 +192,7 @@ namespace CIACTASService.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Domicilio")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -192,6 +200,7 @@ namespace CIACTASService.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EstadoCivil")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("ExamenPsicofisiologico")
@@ -201,24 +210,27 @@ namespace CIACTASService.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FamiliarTutor")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Fecha")
+                    b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("FechaNacimiento")
+                    b.Property<DateTime>("FechaNacimiento")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("FechaSeguro")
+                    b.Property<DateTime>("FechaSeguro")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("InstruccionPrevia")
                         .HasColumnType("bit");
 
                     b.Property<string>("LugarNacimiento")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nacionalidad")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombre")
@@ -226,18 +238,23 @@ namespace CIACTASService.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NombreMadre")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NombrePadre")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NombreTutor")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sexo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Telefono")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
@@ -249,8 +266,7 @@ namespace CIACTASService.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("Estudiante");
                 });
@@ -293,11 +309,16 @@ namespace CIACTASService.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("GrupoId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GrupoId");
 
                     b.ToTable("Grupo");
                 });
@@ -665,17 +686,6 @@ namespace CIACTASService.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.ASA.ConfiguracionPreguntaAsa", b =>
-                {
-                    b.HasOne("CIAC_TAS_Service.Domain.General.Grupo", "Grupo")
-                        .WithOne("ConfiguracionPreguntaAsa")
-                        .HasForeignKey("CIAC_TAS_Service.Domain.ASA.ConfiguracionPreguntaAsa", "GrupoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Grupo");
-                });
-
             modelBuilder.Entity("CIAC_TAS_Service.Domain.ASA.PreguntaAsa", b =>
                 {
                     b.HasOne("CIAC_TAS_Service.Domain.ASA.EstadoPreguntaAsa", "EstadoPreguntaAsa")
@@ -761,6 +771,17 @@ namespace CIACTASService.Data.Migrations
                     b.Navigation("Estudiante");
 
                     b.Navigation("Programa");
+                });
+
+            modelBuilder.Entity("CIAC_TAS_Service.Domain.General.Grupo", b =>
+                {
+                    b.HasOne("CIAC_TAS_Service.Domain.ASA.ConfiguracionPreguntaAsa", "ConfiguracionPreguntaAsa")
+                        .WithMany("Grupo")
+                        .HasForeignKey("GrupoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ConfiguracionPreguntaAsa");
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.Menu.MenuModuloWeb", b =>
@@ -869,6 +890,11 @@ namespace CIACTASService.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("CIAC_TAS_Service.Domain.ASA.ConfiguracionPreguntaAsa", b =>
+                {
+                    b.Navigation("Grupo");
+                });
+
             modelBuilder.Entity("CIAC_TAS_Service.Domain.ASA.EstadoPreguntaAsa", b =>
                 {
                     b.Navigation("PreguntaAsa")
@@ -900,9 +926,6 @@ namespace CIACTASService.Data.Migrations
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.General.Grupo", b =>
                 {
-                    b.Navigation("ConfiguracionPreguntaAsa")
-                        .IsRequired();
-
                     b.Navigation("EstudianteGrupos");
                 });
 

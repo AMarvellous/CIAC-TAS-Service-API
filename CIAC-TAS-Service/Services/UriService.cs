@@ -37,5 +37,35 @@ namespace CIAC_TAS_Service.Services
         {
             return new Uri(_baseUri + ApiRoute.Grupos.Get.Replace("{grupoId}", grupoId));
         }
+
+        public Uri GetGrupoPreguntaAsaUri(string grupoPreguntaAsaId)
+        {
+            return new Uri(_baseUri + ApiRoute.GrupoPreguntaAsas.Get.Replace("{grupoPreguntaAsaId}", grupoPreguntaAsaId));
+        }
+
+        public Uri GetProgramaUri(string programaId)
+        {
+            return new Uri(_baseUri + ApiRoute.Programas.Get.Replace("{programaId}", programaId));
+        }
+
+        public Uri GetImagenAsaUri(string imagenAsaId)
+        {
+            return new Uri(_baseUri + ApiRoute.ImagenAsas.Get.Replace("{imagenAsaId}", imagenAsaId));
+        }
+
+        public Uri GetEstadoPreguntaAsaUri(string estadoPreguntaAsaId)
+        {
+            return new Uri(_baseUri + ApiRoute.EstadoPreguntaAsas.Get.Replace("{estadoPreguntaAsaId}", estadoPreguntaAsaId));
+        }
+
+        public Uri GetConfiguracionPreguntaAsaUri(string configuracionPreguntaAsaId)
+        {
+            return new Uri(_baseUri + ApiRoute.ConfiguracionPreguntaAsas.Get.Replace("{configuracionPreguntaAsaId}", configuracionPreguntaAsaId));
+        }
+
+        public Uri GetEstudianteUri(string estudianteId)
+        {
+            return new Uri(_baseUri + ApiRoute.Estudiantes.Get.Replace("{estudianteId}", estudianteId));
+        }
     }
 }

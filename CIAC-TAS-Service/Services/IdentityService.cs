@@ -25,15 +25,15 @@ namespace CIAC_TAS_Service.Services
             _dataContext = dataContext;
         }
 
-        public async Task<AuthenticationResult> RegisterAsync(string email, string password)
+        public async Task<AuthenticationResult> RegisterAsync(string userName, string email, string password)
         {
-            var existingUser = await _userManager.FindByEmailAsync(email);
+            var existingUser = await _userManager.FindByNameAsync(userName);
 
             if (existingUser != null)
             {
                 return new AuthenticationResult
                 {
-                    Errors = new[] { "User with this email address already exists" }
+                    Errors = new[] { "User with this name already exists" }
                 };
             }
 
@@ -42,7 +42,7 @@ namespace CIAC_TAS_Service.Services
             {
                 Id = newUserId.ToString(),
                 Email = email,
-                UserName = email
+                UserName = userName
             };
 
             var createdUser = await _userManager.CreateAsync(newUser, password);
@@ -55,14 +55,14 @@ namespace CIAC_TAS_Service.Services
                 };
             }
 
-            await _userManager.AddClaimAsync(newUser, new Claim("tags.view", "true"));
+            //await _userManager.AddClaimAsync(newUser, new Claim("tags.view", "true"));
 
             return await GenerateAuthenticationResultForUserAsync(newUser);
         }
 
-        public async Task<AuthenticationResult> LoginAsync(string email, string password)
+        public async Task<AuthenticationResult> LoginAsync(string userName, string password)
         {
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByNameAsync(userName);
 
             if (user == null)
             {
@@ -109,7 +109,7 @@ namespace CIAC_TAS_Service.Services
             {
                 Subject = new ClaimsIdentity(claims),
                 
-                Expires = DateTime.UtcNow.Date.AddDays(_jwtSettings.TokenDaysLifetime),
+                Expires = DateTime.UtcNow.Add(_jwtSettings.TokenLifetime),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
