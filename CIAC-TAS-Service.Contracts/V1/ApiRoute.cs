@@ -88,5 +88,57 @@
             public const string Update = Base + "/estudiantes/{estudianteId}";
             public const string Delete = Base + "/estudiantes/{estudianteId}";
         }
+
+        public static class EstudianteGrupos
+        {
+            public const string GetAll = $"{Base}/estudianteGrupos";
+            public const string Get = Base + "/estudianteGrupos/{estudianteId}/{grupoId}";
+            public const string Create = $"{Base}/estudianteGrupos";
+            public const string Delete = Base + "/estudianteGrupos/{estudianteId}/{grupoId}";
+        }
+
+        public static class EstudianteProgramas
+        {
+            public const string GetAll = $"{Base}/estudianteProgramas";
+            public const string Get = Base + "/estudianteProgramas/{estudianteId}/{programaId}";
+            public const string Create = $"{Base}/estudianteProgramas";
+            public const string Delete = Base + "/estudianteProgramas/{estudianteId}/{programaId}";
+        }
+
+        public static class MenuModulosWebs
+        {
+            public const string GetAll = $"{Base}/menuModulosWebs";
+            public const string Get = Base + "/menuModulosWebs/{menuModulosWebId}";
+            public const string Create = $"{Base}/menuModulosWebs";
+            public const string Update = Base + "/menuModulosWebs/{menuModulosWebId}";
+            public const string Delete = Base + "/menuModulosWebs/{menuModulosWebId}";
+        }
+
+        public static class MenuSubModulosWebs
+        {
+            public const string GetAll = $"{Base}/menuSubModulosWebs";
+            public const string Get = Base + "/menuSubModulosWebs/{menuSubModulosWebId}";
+            public const string Create = $"{Base}/menuSubModulosWebs";
+            public const string Update = Base + "/menuSubModulosWebs/{menuSubModulosWebId}";
+            public const string Delete = Base + "/menuSubModulosWebs/{menuSubModulosWebId}";
+        }
+
+        public static class PreguntaAsas
+        {
+            public const string GetAll = $"{Base}/preguntaAsas";
+            public const string Get = Base + "/preguntaAsas/{preguntaAsaId}";
+            public const string Create = $"{Base}/preguntaAsas";
+            public const string Update = Base + "/preguntaAsas/{preguntaAsaId}";
+            public const string Delete = Base + "/preguntaAsas/{preguntaAsaId}";
+        }
+
+        public static class PreguntaAsaImagenAsas
+        {
+            public const string GetAll = $"{Base}/preguntaAsaImagenAsas";
+            public const string Get = Base + "/preguntaAsaImagenAsas/{preguntaAsaId}/{imagenAsaId}";
+            public const string Create = $"{Base}/preguntaAsaImagenAsas";
+            public const string Update = Base + "/preguntaAsaImagenAsas/{preguntaAsaId}/{imagenAsaId}";
+            public const string Delete = Base + "/preguntaAsaImagenAsas/{preguntaAsaId}/{imagenAsaId}";
+        }
     }
 }

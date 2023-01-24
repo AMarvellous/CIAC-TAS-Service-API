@@ -15,6 +15,7 @@ namespace CIAC_TAS_Service.Installers
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<DataContext>();
+            services.AddScoped<IIdentityRoleService, IdentityRoleService>();
 
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<ITagService, TagService>();
@@ -25,6 +26,12 @@ namespace CIAC_TAS_Service.Installers
             services.AddScoped<IEstadoPreguntaAsaService, EstadoPreguntaAsaService>();
             services.AddScoped<IConfiguracionPreguntaAsaService, ConfiguracionPreguntaAsaService>();
             services.AddScoped<IEstudianteService, EstudianteService>();
+            services.AddScoped<IEstudianteGrupoService, EstudianteGrupoService>();
+            services.AddScoped<IEstudianteProgramaService, EstudianteProgramaService>();
+            services.AddScoped<IMenuModulosWebService, MenuModulosWebService>();
+            services.AddScoped<IMenuSubModulosWebService, MenuSubModulosWebService>();
+            services.AddScoped<IPreguntaAsaService, PreguntaAsaService>();
+            services.AddScoped<IPreguntaAsaImagenAsaService, PreguntaAsaImagenAsaService>();
         }
     }
 }

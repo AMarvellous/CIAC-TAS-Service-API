@@ -63,5 +63,10 @@ namespace CIAC_TAS_Service.Services
 
             return deleted > 0;
         }
+
+        public async Task<bool> CheckGrupoPreguntaAsaExists(int grupoPreguntaAsaId)
+        {
+            return await _dataContext.GrupoPreguntaAsa.SingleOrDefaultAsync(x => x.Id == grupoPreguntaAsaId) != null;
+        }
     }
 }

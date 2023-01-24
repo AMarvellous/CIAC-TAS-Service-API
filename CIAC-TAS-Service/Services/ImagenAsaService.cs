@@ -63,5 +63,10 @@ namespace CIAC_TAS_Service.Services
 
             return deleted > 0;
         }
+
+        public async Task<bool> CheckExistsImagenAsaAsync(int imagenAsaId)
+        {
+            return await _dataContext.ImagenAsa.SingleOrDefaultAsync(x => x.Id == imagenAsaId) != null;
+        }
     }
 }

@@ -61,6 +61,13 @@ namespace CIAC_TAS_Service.Data
             builder.Entity<Estudiante>()
                 .HasIndex(x => x.UserId)
                 .IsUnique();
+
+            builder.Entity<PreguntaAsa>()
+                .HasIndex(x => x.GrupoPreguntaAsaId)
+                .IsUnique(false);
+            builder.Entity<PreguntaAsa>()
+                .HasIndex(x => x.EstadoPreguntaAsaId)
+                .IsUnique(false);
         }
 
         public DbSet<Post> Posts { get; set; }
@@ -72,11 +79,12 @@ namespace CIAC_TAS_Service.Data
         public DbSet<ImagenAsa> ImagenAsa { get; set; }
         public DbSet<Estudiante> Estudiante { get; set; }
         public DbSet<Grupo> Grupo { get; set; }
-        public DbSet<EstudianteGrupo> EstudianteGrupos { get; set; }
+        public DbSet<EstudianteGrupo> EstudianteGrupo { get; set; }
         public DbSet<PreguntaAsaImagenAsa> PreguntaAsaImagenAsa { get; set; }
         public DbSet<ConfiguracionPreguntaAsa> ConfiguracionPreguntaAsa { get; set; }
         public DbSet<MenuModuloWeb> MenuModulosWeb { get; set; }
         public DbSet<MenuSubModuloWeb> MenuSubModulosWeb { get; set; }
-        public DbSet<Programa> Programas { get; set; }
+        public DbSet<Programa> Programa { get; set; }
+        public DbSet<EstudiantePrograma> EstudiantePrograma { get; set; }
     }
 }

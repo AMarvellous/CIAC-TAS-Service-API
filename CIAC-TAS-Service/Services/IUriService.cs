@@ -16,5 +16,11 @@ namespace CIAC_TAS_Service.Services
         Uri GetEstadoPreguntaAsaUri(string estadoPreguntaAsaId);
         Uri GetConfiguracionPreguntaAsaUri(string configuracionPreguntaAsaId);
         Uri GetEstudianteUri(string estudianteId);
+        Uri GetEstudianteGrupoUri(string estudianteId, string grupoId);
+        Uri GetEstudianteProgramaUri(string estudianteId, string programaId);
+        Uri GetMenuModulosWebUri(string menuModulosWebId);
+        Uri GetMenuSubModulosWebUri(string menuSubModulosWebId);
+        Uri GetPreguntaAsaUri(string preguntaAsaId);
+        Uri GetPreguntaAsaImagenAsaUri(string preguntaAsaId, string imagenAsaId);
     }
 }

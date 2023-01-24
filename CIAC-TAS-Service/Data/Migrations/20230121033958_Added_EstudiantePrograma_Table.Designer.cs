@@ -4,6 +4,7 @@ using CIAC_TAS_Service.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CIACTASService.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230121033958_Added_EstudiantePrograma_Table")]
+    partial class Added_EstudiantePrograma_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,9 +125,11 @@ namespace CIACTASService.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EstadoPreguntaAsaId");
+                    b.HasIndex("EstadoPreguntaAsaId")
+                        .IsUnique();
 
-                    b.HasIndex("GrupoPreguntaAsaId");
+                    b.HasIndex("GrupoPreguntaAsaId")
+                        .IsUnique();
 
                     b.ToTable("PreguntaAsa");
                 });

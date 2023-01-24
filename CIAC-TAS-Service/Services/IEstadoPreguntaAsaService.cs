@@ -10,5 +10,6 @@ namespace CIAC_TAS_Service.Services
         Task<EstadoPreguntaAsa> GetEstadoPreguntaAsaByIdAsync(int id);
         Task<bool> UpdateEstadoPreguntaAsaAsync(EstadoPreguntaAsa estadoPreguntaAsa);
         Task<bool> DeleteEstadoPreguntaAsaAsync(int id);
+        Task<bool> CheckEstadoPreguntaAsaExists(int estadoPreguntaAsaId);
     }
 }

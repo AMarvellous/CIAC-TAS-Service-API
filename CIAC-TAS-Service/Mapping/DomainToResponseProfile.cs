@@ -4,6 +4,7 @@ using CIAC_TAS_Service.Domain;
 using CIAC_TAS_Service.Domain.ASA;
 using CIAC_TAS_Service.Domain.Estudiante;
 using CIAC_TAS_Service.Domain.General;
+using CIAC_TAS_Service.Domain.Menu;
 
 namespace CIAC_TAS_Service.Mapping
 {
@@ -28,6 +29,12 @@ namespace CIAC_TAS_Service.Mapping
             CreateMap<EstadoPreguntaAsa, EstadoPreguntaAsaResponse>();
             CreateMap<ConfiguracionPreguntaAsa, ConfiguracionPreguntaAsaResponse>();
             CreateMap<Estudiante, EstudianteResponse>();
+            CreateMap<EstudianteGrupo, EstudianteGrupoResponse>();
+            CreateMap<EstudiantePrograma, EstudianteProgramaResponse>();
+            CreateMap<MenuModuloWeb, MenuModulosWebResponse>();
+            CreateMap<MenuSubModuloWeb, MenuSubModulosWebResponse>();
+            CreateMap<PreguntaAsa, PreguntaAsaResponse>();
+            CreateMap<PreguntaAsaImagenAsa, PreguntaAsaImagenAsaResponse>();
         }
     }
 }

@@ -10,5 +10,6 @@ namespace CIAC_TAS_Service.Services
         Task<ImagenAsa> GetImagenAsaByIdAsync(int id);
         Task<bool> UpdateImagenAsaAsync(ImagenAsa imagenAsa);
         Task<bool> DeleteImagenAsaAsync(int id);
+        Task<bool> CheckExistsImagenAsaAsync(int imagenAsaId);
     }
 }
