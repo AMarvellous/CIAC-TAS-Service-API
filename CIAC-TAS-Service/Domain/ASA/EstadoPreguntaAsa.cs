@@ -11,6 +11,6 @@ namespace CIAC_TAS_Service.Domain.ASA
         public char Estado { get; set; }
 
         // Link to table
-        public PreguntaAsa PreguntaAsa { get; set; }
+        public virtual PreguntaAsa PreguntaAsa { get; set; }
     }
 }

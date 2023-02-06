@@ -74,9 +74,10 @@ namespace CIAC_TAS_Service.Controllers.V1
             var preguntaAsa = new PreguntaAsa
             {
                 NumeroPregunta = preguntaAsaRequest.NumeroPregunta,
+                Ruta = preguntaAsaRequest.Ruta,
                 Pregunta = preguntaAsaRequest.Pregunta,
                 GrupoPreguntaAsaId = preguntaAsaRequest.GrupoPreguntaAsaId,
-                EstadoPreguntaAsaId = preguntaAsaRequest.EstadoPreguntaAsaId
+                EstadoPreguntaAsaId = preguntaAsaRequest.EstadoPreguntaAsaId,
             };
 
             if (!await _grupoPreguntaAsaService.CheckGrupoPreguntaAsaExists(preguntaAsaRequest.GrupoPreguntaAsaId))
@@ -129,6 +130,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             var preguntaAsa = await _preguntaAsaService.GetPreguntaAsaByIdAsync(preguntaAsaId);
             preguntaAsa.NumeroPregunta = request.NumeroPregunta;
             preguntaAsa.Pregunta = request.Pregunta;
+            preguntaAsa.Ruta = request.Ruta;
             preguntaAsa.GrupoPreguntaAsaId = request.GrupoPreguntaAsaId;
             preguntaAsa.EstadoPreguntaAsaId = request.EstadoPreguntaAsaId;
 

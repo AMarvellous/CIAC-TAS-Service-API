@@ -16,22 +16,30 @@ namespace CIAC_TAS_Service.Services
 
         public async Task<List<PreguntaAsa>> GetPreguntaAsasAsync(PaginationFilter paginationFilter = null)
         {
-            var queryable = _dataContext.PreguntaAsa.AsQueryable();
+            var queryable = _dataContext.PreguntaAsa.AsQueryable()
+                .Include(x => x.GrupoPreguntaAsa);
+                //.Include(x => x.EstadoPreguntaAsa);
 
             if (paginationFilter == null)
             {
-                return await queryable.ToListAsync();
+                return await queryable
+                    .ToListAsync();
             }
 
             var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
-            return await queryable.Skip(skip)
+            return await queryable
+                .Skip(skip)
                 .Take(paginationFilter.PageSize)
                 .ToListAsync();
         }
 
         public async Task<PreguntaAsa> GetPreguntaAsaByIdAsync(int id)
         {
-            return await _dataContext.PreguntaAsa.SingleOrDefaultAsync(x => x.Id == id);
+            return await _dataContext.PreguntaAsa
+                .Include(x => x.GrupoPreguntaAsa)
+                .Include(x => x.EstadoPreguntaAsa)
+                .Include(x => x.PreguntaAsaOpciones)
+                .SingleOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<bool> CreatePreguntaAsaAsync(PreguntaAsa preguntaAsa)

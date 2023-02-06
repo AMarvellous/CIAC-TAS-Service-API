@@ -22,5 +22,7 @@ namespace CIAC_TAS_Service.Services
         Uri GetMenuSubModulosWebUri(string menuSubModulosWebId);
         Uri GetPreguntaAsaUri(string preguntaAsaId);
         Uri GetPreguntaAsaImagenAsaUri(string preguntaAsaId, string imagenAsaId);
+        Uri GetPreguntaAsaOpcionUri(string preguntaAsaOpcionId);
+        Uri GetRespuestasAsaUri(string respuestasAsaId);
     }
 }

@@ -67,13 +67,6 @@ namespace CIAC_TAS_Service.Services
             return deleted > 0;
         }
 
-        public async Task<bool> CheckUserExistsByUserIdAsync(string userId)
-        {
-            var user = await _userManager.FindByIdAsync(userId);
-
-            return user != null;
-        }
-
         public async Task<bool> CheckUserIdIsAssignedAsync(string userId)
         {
             var user = await _dataContext.Estudiante.AsNoTracking()

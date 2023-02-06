@@ -6,18 +6,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static CIAC_TAS_Service.Contracts.V1.ApiRoute;
 
 namespace CIAC_TAS_Service.Sdk
 {
     public interface IIdentityApi
     {
-        [Post("/api/v1/identity/register")]
+        [Post("/" + Identity.Register)]
         Task<ApiResponse<AuthSuccessResponse>> RegisterAsync([Body] UserRegistrationRequest registrationRequest);
 
-        [Post("/api/v1/identity/login")]
+        [Post("/" + Identity.Login)]
         Task<ApiResponse<AuthSuccessResponse>> LoginAsync([Body] UserLoginRequest userLoginRequest);
 
-        [Post("/api/v1/identity/refresh")]
+        [Post("/" + Identity.Refresh)]
         Task<ApiResponse<AuthSuccessResponse>> RefreshAsync([Body] RefreshTokenRequest refreshTokenRequest);
+
+        [Get("/" + Identity.GetRolesNames)]
+        Task<ApiResponse<IEnumerable<string>>> GetRolesNamesAsync();
+
+        [Get("/" + Identity.GetRolesUserName)]
+        Task<ApiResponse<IEnumerable<string>>> GetRolesByUserNameAsync(string userName);
+
+        [Get("/" + Identity.GetUsers)]
+        Task<ApiResponse<PagedResponse<IdentityUserResponse>>> GetUsersAsync();
+
+        [Get("/" + Identity.GetUserByName)]
+        Task<ApiResponse<IdentityUserResponse>> GetUserByNameAsync(string userName);
+
+        [Post("/" + Identity.GetAsignToRole)]
+        Task<ApiResponse<PagedResponse<bool>>> AsignUserToRoleAsync([Body] AsignRoleToUserRequest request);
+
     }
 }

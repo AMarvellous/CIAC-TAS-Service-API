@@ -13,16 +13,18 @@ namespace CIAC_TAS_Service.Services
     public class IdentityService : IIdentityService
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _managerRole;
         private readonly JwtSettings _jwtSettings;
         private readonly TokenValidationParameters _tokenValidationParameters;
         private readonly DataContext _dataContext;
 
-        public IdentityService(UserManager<IdentityUser> userManager, JwtSettings jwtSettings, TokenValidationParameters tokenValidationParameters, DataContext dataContext)
+        public IdentityService(UserManager<IdentityUser> userManager, JwtSettings jwtSettings, TokenValidationParameters tokenValidationParameters, DataContext dataContext, RoleManager<IdentityRole> managerRole)
         {
             _userManager = userManager;
             _jwtSettings = jwtSettings;
             _tokenValidationParameters = tokenValidationParameters;
             _dataContext = dataContext;
+            _managerRole = managerRole;
         }
 
         public async Task<AuthenticationResult> RegisterAsync(string userName, string email, string password)
@@ -85,55 +87,6 @@ namespace CIAC_TAS_Service.Services
             return await GenerateAuthenticationResultForUserAsync(user);
         }
 
-        private async Task<AuthenticationResult> GenerateAuthenticationResultForUserAsync(IdentityUser user)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
-
-            var claims = new List<Claim>
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim("id", user.Id)
-            };
-
-            var userClaims = await _userManager.GetClaimsAsync(user);
-            claims.AddRange(userClaims);
-
-            var roles = await _userManager.GetRolesAsync(user);
-            var claimsWithRoles = roles.Select(role => new Claim(ClaimTypes.Role, role));
-            claims.AddRange(claimsWithRoles);
-
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(claims),
-                
-                Expires = DateTime.UtcNow.Add(_jwtSettings.TokenLifetime),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-
-            var refreshToken = new RefreshToken
-            {
-                JwtId = token.Id,
-                UserId = user.Id,
-                CreationDate = DateTime.UtcNow,
-                ExpiryDate = DateTime.UtcNow.AddMonths(6)
-            };
-
-            await _dataContext.RefreshTokens.AddAsync(refreshToken);
-            await _dataContext.SaveChangesAsync();
-
-            return new AuthenticationResult
-            {
-                Success = true,
-                Token = tokenHandler.WriteToken(token),
-                RefreshToken = refreshToken.Token
-            };
-        }
-
         public async Task<AuthenticationResult> RefreshTokenAsync(string token, string refreshToken)
         {
             var validatedToken = GetPrincipalFromToken(token);
@@ -189,6 +142,90 @@ namespace CIAC_TAS_Service.Services
             return await GenerateAuthenticationResultForUserAsync(user);
         }
 
+        public async Task<IEnumerable<string>> GetRolesByUserNameAsync(string userName)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+
+            if (user == null)
+            {
+                return Enumerable.Empty<string>();
+            }
+
+            return await _userManager.GetRolesAsync(user);
+        }
+
+        public async Task<IEnumerable<IdentityUser>> GetUsersAsync()
+        {
+            return await _userManager.Users.ToListAsync();
+        }
+
+        public async Task<IdentityUser> GetUserByNameAsync(string userName)
+        {
+            return await _userManager.FindByNameAsync(userName);
+        }
+
+        public async Task<bool> CheckUserExistsByUserIdAsync(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            return user != null;
+        }
+
+        public async Task<IdentityResult> AddUserToRoleAsync(string userId, string roleName)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            return await _userManager.AddToRoleAsync(user, roleName);
+        }
+
+        private async Task<AuthenticationResult> GenerateAuthenticationResultForUserAsync(IdentityUser user)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
+
+            var claims = new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                new Claim("id", user.Id)
+            };
+
+            var userClaims = await _userManager.GetClaimsAsync(user);
+            claims.AddRange(userClaims);
+
+            var roles = await _userManager.GetRolesAsync(user);
+            var claimsWithRoles = roles.Select(role => new Claim(ClaimTypes.Role, role));
+            claims.AddRange(claimsWithRoles);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+
+                Expires = DateTime.UtcNow.Add(_jwtSettings.TokenLifetime),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            var refreshToken = new RefreshToken
+            {
+                JwtId = token.Id,
+                UserId = user.Id,
+                CreationDate = DateTime.UtcNow,
+                ExpiryDate = DateTime.UtcNow.AddMonths(6)
+            };
+
+            await _dataContext.RefreshTokens.AddAsync(refreshToken);
+            await _dataContext.SaveChangesAsync();
+
+            return new AuthenticationResult
+            {
+                Success = true,
+                Token = tokenHandler.WriteToken(token),
+                RefreshToken = refreshToken.Token
+            };
+        }
         private ClaimsPrincipal GetPrincipalFromToken(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();

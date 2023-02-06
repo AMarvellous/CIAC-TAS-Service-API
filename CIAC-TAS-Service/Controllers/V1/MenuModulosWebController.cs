@@ -14,7 +14,7 @@ using System.Net;
 
 namespace CIAC_TAS_Service.Controllers.V1
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
     [Produces("application/json")]
     public class MenuModulosWebController : Controller
     {
@@ -31,6 +31,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             _identityRoleService = identityRoleService;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpGet(ApiRoute.MenuModulosWebs.GetAll)]
         [ProducesResponseType(typeof(MenuModulosWebResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
@@ -49,6 +50,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(paginationResponse);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpGet(ApiRoute.MenuModulosWebs.Get)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(MenuModulosWebResponse), (int)HttpStatusCode.OK)]
@@ -64,6 +66,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(_mapper.Map<MenuModulosWebResponse>(menuModulosWeb));
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPost(ApiRoute.MenuModulosWebs.Create)]
         [ProducesResponseType(typeof(MenuModulosWebResponse), (int)HttpStatusCode.Created)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
@@ -107,6 +110,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Created(locationUri, response);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPut(ApiRoute.MenuModulosWebs.Update)]
         [ProducesResponseType(typeof(MenuModulosWebResponse), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
@@ -139,6 +143,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(_mapper.Map<MenuModulosWebResponse>(menuModulosWeb));
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpDelete(ApiRoute.MenuModulosWebs.Delete)]
         [ProducesResponseType(typeof(MenuModulosWebResponse), (int)HttpStatusCode.NoContent)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
@@ -152,6 +157,25 @@ namespace CIAC_TAS_Service.Controllers.V1
             }
 
             return NoContent();
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Estudiante,Instructor")]
+        [HttpGet(ApiRoute.MenuModulosWebs.GetByRoleName)]
+        [ProducesResponseType(typeof(MenuModulosWebResponse), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetByRoleAsync([FromRoute] string roleName , [FromQuery] PaginationQuery paginationQuery)
+        {
+            var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
+            var menuModulosWebs = await _menuModulosWebService.GetMenuModulosWebsByRoleNameAsync(roleName, pagination);
+            var menuModulosWebResponses = _mapper.Map<List<MenuModulosWebResponse>>(menuModulosWebs);
+
+            if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
+            {
+                return Ok(new PagedResponse<MenuModulosWebResponse>(menuModulosWebResponses));
+            }
+
+            var paginationResponse = PaginationHelpers.CreatePaginatedResponse(_uriService, pagination, menuModulosWebResponses);
+
+            return Ok(paginationResponse);
         }
     }
 }

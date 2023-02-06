@@ -12,5 +12,6 @@ namespace CIAC_TAS_Service.Contracts.V1.Responses
         public string RoleId { get; set; }
         public string Nombre { get; set; }
         public string Estilo { get; set; }
+        public ICollection<MenuSubModulosWebResponse> MenuSubModulosWebResponse { get; set; }
     }
 }

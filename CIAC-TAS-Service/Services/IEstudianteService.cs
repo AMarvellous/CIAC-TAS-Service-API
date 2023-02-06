@@ -10,7 +10,6 @@ namespace CIAC_TAS_Service.Services
         Task<Estudiante> GetEstudianteByIdAsync(int id);
         Task<bool> UpdateEstudianteAsync(Estudiante estudiante);
         Task<bool> DeleteEstudianteAsync(int id);
-        Task<bool> CheckUserExistsByUserIdAsync(string userId);
         Task<bool> CheckUserIdIsAssignedAsync(string userId);
         Task<bool> CheckUserIdIsAssignableToThisEstudianteAsync(int estudianteId, string proposedUserId);
     }

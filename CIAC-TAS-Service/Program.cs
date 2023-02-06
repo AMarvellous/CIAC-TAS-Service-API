@@ -23,7 +23,7 @@ var app = builder.Build();
 using (var serviceScope = app.Services.CreateScope())
 {
     var dbContext = serviceScope.ServiceProvider.GetRequiredService<DataContext>();
-
+    dbContext.ChangeTracker.LazyLoadingEnabled = false;
     await dbContext.Database.MigrateAsync();
 
     //Roles
@@ -35,16 +35,22 @@ using (var serviceScope = app.Services.CreateScope())
         await roleManager.CreateAsync(adminRole);
     }
 
-    if (!await roleManager.RoleExistsAsync("Poster"))
-    {
-        var posterRole = new IdentityRole("Poster");
-        await roleManager.CreateAsync(posterRole);
-    }
+    //if (!await roleManager.RoleExistsAsync("Poster"))
+    //{
+    //    var posterRole = new IdentityRole("Poster");
+    //    await roleManager.CreateAsync(posterRole);
+    //}
 
     if (!await roleManager.RoleExistsAsync("Estudiante"))
     {
         var estudianteRole = new IdentityRole("Estudiante");
         await roleManager.CreateAsync(estudianteRole);
+    }
+
+    if (!await roleManager.RoleExistsAsync("Instructor"))
+    {
+        var instructorRole = new IdentityRole("Instructor");
+        await roleManager.CreateAsync(instructorRole);
     }
 
     //Users

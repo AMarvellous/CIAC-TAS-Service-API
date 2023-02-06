@@ -11,5 +11,6 @@ namespace CIAC_TAS_Service.Services
         Task<bool> UpdateMenuModulosWebAsync(MenuModuloWeb menuModulosWeb);
         Task<bool> DeleteMenuModulosWebAsync(int id);
         Task<bool> CheckModuloExists(int moduloId);
+        Task<List<MenuModuloWeb>> GetMenuModulosWebsByRoleNameAsync(string roleName, PaginationFilter paginationFilter = null);
     }
 }

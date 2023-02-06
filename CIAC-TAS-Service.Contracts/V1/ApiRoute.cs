@@ -19,6 +19,11 @@
             public const string Login = $"{Base}/identity/login";
             public const string Register = $"{Base}/identity/register";
             public const string Refresh = $"{Base}/identity/refresh";
+            public const string GetRolesNames = Base + "/identity/roles/names";
+            public const string GetRolesUserName = Base + "/identity/roles/{userName}";
+            public const string GetUsers = Base + "/identity/users/";
+            public const string GetUserByName = Base + "/identity/users/{userName}";
+            public const string GetAsignToRole = Base + "/identity/user/role";
         }
 
         public static class Tags
@@ -112,6 +117,7 @@
             public const string Create = $"{Base}/menuModulosWebs";
             public const string Update = Base + "/menuModulosWebs/{menuModulosWebId}";
             public const string Delete = Base + "/menuModulosWebs/{menuModulosWebId}";
+            public const string GetByRoleName = Base + "/ menuModulosWebs/{roleName}";
         }
 
         public static class MenuSubModulosWebs
@@ -139,6 +145,24 @@
             public const string Create = $"{Base}/preguntaAsaImagenAsas";
             public const string Update = Base + "/preguntaAsaImagenAsas/{preguntaAsaId}/{imagenAsaId}";
             public const string Delete = Base + "/preguntaAsaImagenAsas/{preguntaAsaId}/{imagenAsaId}";
+        }
+
+        public static class PreguntaAsaOpciones
+        {
+            public const string GetAll = $"{Base}/preguntaAsaOpciones";
+            public const string Get = Base + "/preguntaAsaOpciones/{preguntaAsaOpcionId}";
+            public const string Create = $"{Base}/preguntaAsaOpciones";
+            public const string Update = Base + "/preguntaAsaOpciones/{preguntaAsaOpcionId}";
+            public const string Delete = Base + "/preguntaAsaOpciones/{preguntaAsaOpcionId}";
+        }
+
+        public static class RespuestasAsas
+        {
+            public const string GetAll = $"{Base}/respuestasAsas";
+            public const string Get = Base + "/respuestasAsas/{RespuestasAsaId}";
+            public const string Create = $"{Base}/respuestasAsas";
+            public const string Update = Base + "/respuestasAsas/{RespuestasAsaId}";
+            public const string Delete = Base + "/respuestasAsas/{RespuestasAsaId}";
         }
     }
 }

@@ -68,5 +68,27 @@ namespace CIAC_TAS_Service.Services
         {
             return await _dataContext.MenuModulosWeb.SingleOrDefaultAsync(x => x.Id == moduloId) != null;
         }
+
+        public async Task<List<MenuModuloWeb>> GetMenuModulosWebsByRoleNameAsync(string roleName, PaginationFilter paginationFilter = null)
+        {
+            var role = await _dataContext.Roles.SingleOrDefaultAsync(x => x.Name == roleName);
+            
+            if (role == null)
+            {
+                return new List<MenuModuloWeb>();
+            }
+
+            var queryable = _dataContext.MenuModulosWeb.Include(sub => sub.MenuSubModulosWeb).AsQueryable();
+
+            if (paginationFilter == null)
+            {
+                return await queryable.Where(x => x.RoleId == role.Id).ToListAsync();
+            }
+
+            var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
+            return await queryable.Where(x => x.RoleId == role.Id).Skip(skip)
+                .Take(paginationFilter.PageSize)
+                .ToListAsync();
+        }
     }
 }

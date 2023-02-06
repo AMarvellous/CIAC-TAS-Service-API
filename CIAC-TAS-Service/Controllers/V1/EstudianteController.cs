@@ -21,12 +21,14 @@ namespace CIAC_TAS_Service.Controllers.V1
         private readonly IMapper _mapper;
         private readonly IEstudianteService _estudianteService;
         private readonly IUriService _uriService;
+        private readonly IIdentityService _identityService;
 
-        public EstudianteController(IMapper mapper, IEstudianteService estudianteService, IUriService uriService)
+        public EstudianteController(IMapper mapper, IEstudianteService estudianteService, IUriService uriService, IIdentityService identityService)
         {
             _mapper = mapper;
             _estudianteService = estudianteService;
             _uriService = uriService;
+            _identityService = identityService;
         }
 
         [HttpGet(ApiRoute.Estudiantes.GetAll)]
@@ -69,7 +71,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         {
             var estudiante = _mapper.Map<Estudiante>(estudianteRequest);
 
-            if (!await _estudianteService.CheckUserExistsByUserIdAsync(estudiante.UserId))
+            if (!await _identityService.CheckUserExistsByUserIdAsync(estudiante.UserId))
             {
                 return BadRequest(new ErrorResponse
                 {
@@ -126,7 +128,7 @@ namespace CIAC_TAS_Service.Controllers.V1
 
             _mapper.Map(request, estudiante);
 
-            if (!await _estudianteService.CheckUserExistsByUserIdAsync(estudiante.UserId))
+            if (!await _identityService.CheckUserExistsByUserIdAsync(estudiante.UserId))
             {
                 return BadRequest(new ErrorResponse
                 {

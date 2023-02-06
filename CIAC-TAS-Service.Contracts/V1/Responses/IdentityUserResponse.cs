@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CIAC_TAS_Service.Contracts.V1.Responses
+{
+    public class IdentityUserResponse
+    {
+        public string Id { get; set; }
+        public string Email { get; set; }
+        public string UserName { get; set; }
+    }
+}

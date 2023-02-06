@@ -32,6 +32,8 @@ namespace CIAC_TAS_Service.Installers
             services.AddScoped<IMenuSubModulosWebService, MenuSubModulosWebService>();
             services.AddScoped<IPreguntaAsaService, PreguntaAsaService>();
             services.AddScoped<IPreguntaAsaImagenAsaService, PreguntaAsaImagenAsaService>();
+            services.AddScoped<IPreguntaAsaOpcionService, PreguntaAsaOpcionService>();
+            services.AddScoped<IRespuestasAsaService, RespuestasAsaService>();
         }
     }
 }

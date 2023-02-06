@@ -97,5 +97,15 @@ namespace CIAC_TAS_Service.Services
         {
             return new Uri(_baseUri + ApiRoute.PreguntaAsaImagenAsas.Get.Replace("{preguntaAsaId}", preguntaAsaId).Replace("{ImagenAsaId}", imagenAsaId));
         }
+
+        public Uri GetPreguntaAsaOpcionUri(string preguntaAsaOpcionId)
+        {
+            return new Uri(_baseUri + ApiRoute.PreguntaAsaOpciones.Get.Replace("{preguntaAsaOpcionId}", preguntaAsaOpcionId));
+        }
+
+        public Uri GetRespuestasAsaUri(string respuestasAsaId)
+        {
+            return new Uri(_baseUri + ApiRoute.RespuestasAsas.Get.Replace("{respuestasAsaId}", respuestasAsaId));
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace CIAC_TAS_Service.Data
         public DataContext(DbContextOptions<DataContext> options)
             : base(options)
         {
+            ChangeTracker.LazyLoadingEnabled = false;
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -68,6 +69,39 @@ namespace CIAC_TAS_Service.Data
             builder.Entity<PreguntaAsa>()
                 .HasIndex(x => x.EstadoPreguntaAsaId)
                 .IsUnique(false);
+
+
+
+            builder.Entity<GrupoPreguntaAsa>()
+                .HasData(
+                new Domain.ASA.GrupoPreguntaAsa { Id = 1, Nombre = "AIRFRAME" },
+                new Domain.ASA.GrupoPreguntaAsa { Id = 2,Nombre = "GENERAL" },
+                new Domain.ASA.GrupoPreguntaAsa { Id = 3, Nombre = "POWERPLANT" }
+                );
+            builder.Entity<EstadoPreguntaAsa>()
+                .HasData(
+                new EstadoPreguntaAsa { Id = 1, Estado = 'A'},
+                new EstadoPreguntaAsa { Id = 2, Estado = 'I' }
+                );
+
+            //RoleId need to be changed depends on what was generated
+            //Insert INTO MenuModulosWeb
+            //(RoleId, Nombre, Estilo)
+            //VALUES
+            //(, 'Usuarios', 'fa-users'),
+            //(, 'Estudiantes', 'fa-book'),
+            //(, 'ASA', 'fa-list'),
+            //(para el estudiante, 'ASA', 'fa-list');
+
+            // Submodulos, check the ModuloId
+            //Insert INTO MenuSubModulosWeb
+            //(ModuloId, Nombre, Pagina, Estilo)
+            //VALUES
+            //(, 'Usuarios Lista', '/Usuario/Usuarios', ''),
+            //(, 'Estudiantes Lista', '/Estudiante/Estudiantes', ''),
+            //(, 'ASA Configuracion', '/ASA/Configuracion', ''),
+            //(, 'ASA Pregunta', '/ASA/PreguntasAsa', '')
+            //(, 'Cuestionario ASA', '/ASA/CuestionarioASA', '');
         }
 
         public DbSet<Post> Posts { get; set; }
@@ -86,5 +120,7 @@ namespace CIAC_TAS_Service.Data
         public DbSet<MenuSubModuloWeb> MenuSubModulosWeb { get; set; }
         public DbSet<Programa> Programa { get; set; }
         public DbSet<EstudiantePrograma> EstudiantePrograma { get; set; }
+        public DbSet<PreguntaAsaOpcion> PreguntaAsaOpcion { get; set; }
+        public DbSet<RespuestasAsa> RespuestasAsas { get; set; }
     }
 }
