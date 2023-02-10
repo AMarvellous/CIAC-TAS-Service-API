@@ -70,6 +70,9 @@ namespace CIAC_TAS_Service.Data
                 .HasIndex(x => x.EstadoPreguntaAsaId)
                 .IsUnique(false);
 
+            builder.Entity<RespuestasAsaConsolidado>()
+                .HasKey(r => new { r.Id, r.LoteRespuestasId });
+
 
 
             builder.Entity<GrupoPreguntaAsa>()
@@ -83,6 +86,31 @@ namespace CIAC_TAS_Service.Data
                 new EstadoPreguntaAsa { Id = 1, Estado = 'A'},
                 new EstadoPreguntaAsa { Id = 2, Estado = 'I' }
                 );
+
+
+            //Script para llenar las preguntasAsa
+            //INSERT INTO[CIAC_TAS_DEV].[dbo].[PreguntaAsa]
+            //(NumeroPregunta, Pregunta, GrupoPreguntaAsaId, EstadoPreguntaAsaId, Ruta)
+            //Select ASAPregunta.NroPregunta, ASAPregunta.Pregunta,
+            // CAST(
+            //  CASE
+            //     WHEN ASAPregunta.GrupoPregunta = 'AIRFRAME'
+            //         THEN 1
+            //     WHEN ASAPregunta.GrupoPregunta = 'GENERAL'
+
+            //        THEN 2
+            //     ELSE 3
+            //  END AS bit) as GrupoPreguntaId,
+            //  1 as EstadoPreguntaAsaId, '' as Ruta
+            //From[PROSIANAdministrador2018].[dbo].[ASAPregunta] AS ASAPregunta;
+
+
+
+            //            INSERT INTO[CIAC_TAS_DEV].[dbo].[PreguntaAsaOpcion]
+            //Select ASAPreguntaRespuesta.Opcion, ASAPreguntaRespuesta.Respuesta, ASAPreguntaRespuesta.Correcto, PreguntaAsa.Id as PreguntaAsaId
+            //From[PROSIANAdministrador2018].[dbo].[ASAPreguntaRespuesta] AS ASAPreguntaRespuesta
+            //JOIN[CIAC_TAS_DEV].[dbo].[PreguntaAsa] ON ASAPreguntaRespuesta.NroPregunta = PreguntaAsa.NumeroPregunta;
+
 
             //RoleId need to be changed depends on what was generated
             //Insert INTO MenuModulosWeb
@@ -122,5 +150,6 @@ namespace CIAC_TAS_Service.Data
         public DbSet<EstudiantePrograma> EstudiantePrograma { get; set; }
         public DbSet<PreguntaAsaOpcion> PreguntaAsaOpcion { get; set; }
         public DbSet<RespuestasAsa> RespuestasAsas { get; set; }
+        public DbSet<RespuestasAsaConsolidado> RespuestasAsaConsolidado { get; set; }
     }
 }

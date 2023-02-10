@@ -63,5 +63,10 @@ namespace CIAC_TAS_Service.Services
 
             return deleted > 0;
         }
+
+        public async Task<bool> CheckPreguntaAsaOpcionExistsAsync(int id)
+        {
+            return await _dataContext.PreguntaAsaOpcion.SingleOrDefaultAsync(x => x.Id == id) != null;
+        }
     }
 }

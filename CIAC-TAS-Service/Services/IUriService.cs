@@ -24,5 +24,6 @@ namespace CIAC_TAS_Service.Services
         Uri GetPreguntaAsaImagenAsaUri(string preguntaAsaId, string imagenAsaId);
         Uri GetPreguntaAsaOpcionUri(string preguntaAsaOpcionId);
         Uri GetRespuestasAsaUri(string respuestasAsaId);
+        Uri GetRespuestasAsaConsolidadoUri(string userId);
     }
 }

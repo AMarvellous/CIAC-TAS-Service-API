@@ -53,6 +53,7 @@ namespace CIAC_TAS_Service.Mapping
             CreateMap<IdentityUser, IdentityUserResponse>();
             CreateMap<PreguntaAsaOpcion, PreguntaAsaOpcionResponse>();
             CreateMap<RespuestasAsa, RespuestasAsaResponse>();
+            CreateMap<RespuestasAsaConsolidado, RespuestasAsaConsolidadoResponse>();
         }
     }
 }

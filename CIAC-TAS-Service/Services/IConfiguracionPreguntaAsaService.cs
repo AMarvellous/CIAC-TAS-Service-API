@@ -10,5 +10,6 @@ namespace CIAC_TAS_Service.Services
         Task<ConfiguracionPreguntaAsa> GetConfiguracionPreguntaAsaByIdAsync(int id);
         Task<bool> UpdateConfiguracionPreguntaAsaAsync(ConfiguracionPreguntaAsa configuracionPreguntaAsa);
         Task<bool> DeleteConfiguracionPreguntaAsaAsync(int id);
+        Task<bool> CheckConfiguracionPreguntaAsaExistsAsync(int id);
     }
 }

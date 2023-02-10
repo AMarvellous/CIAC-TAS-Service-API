@@ -16,8 +16,9 @@ namespace CIAC_TAS_Service.Services
 
         public async Task<List<PreguntaAsa>> GetPreguntaAsasAsync(PaginationFilter paginationFilter = null)
         {
-            var queryable = _dataContext.PreguntaAsa.AsQueryable()
-                .Include(x => x.GrupoPreguntaAsa);
+            var queryable = _dataContext.PreguntaAsa
+                .Include(x => x.GrupoPreguntaAsa)
+                .AsQueryable();
                 //.Include(x => x.EstadoPreguntaAsa);
 
             if (paginationFilter == null)
@@ -75,6 +76,47 @@ namespace CIAC_TAS_Service.Services
         public async Task<bool> CheckExistsPreguntaAsaAsync(int preguntaAsaId)
         {
             return await _dataContext.PreguntaAsa.SingleOrDefaultAsync(x => x.Id == preguntaAsaId) != null;
+        }
+
+        public async Task<List<PreguntaAsa>> GetRandomGeneratedPreguntasAsaAsync(int numeroPreguntas, int preguntaIni, int preguntaFin, List<int> grupoPreguntaAsaIds, PaginationFilter paginationFilter = null)
+        {
+            var queryable = _dataContext.PreguntaAsa
+                .Include(x => x.GrupoPreguntaAsa)
+                .AsQueryable();
+
+            if (grupoPreguntaAsaIds.Count() > 0)
+            {
+                queryable = queryable.Where(x => grupoPreguntaAsaIds.Contains(x.GrupoPreguntaAsaId));
+            }
+
+            if (preguntaIni > 0)
+            {
+                queryable = queryable.Where(x => x.NumeroPregunta >= preguntaIni);
+            }
+
+            if (preguntaFin > 0)
+            {
+                queryable = queryable.Where(x => x.NumeroPregunta <= preguntaFin);
+            }
+
+            if (numeroPreguntas > 0)
+            {
+                Random random = new Random();
+                queryable = queryable.OrderByDescending(x => Guid.NewGuid()).Take(numeroPreguntas);
+            }
+
+
+            if (paginationFilter == null)
+            {
+                return await queryable
+                    .ToListAsync();
+            }
+
+            var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
+            return await queryable
+                .Skip(skip)
+                .Take(paginationFilter.PageSize)
+                .ToListAsync();
         }
     }
 }

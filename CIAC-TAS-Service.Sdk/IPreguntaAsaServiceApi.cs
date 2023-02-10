@@ -27,5 +27,8 @@ namespace CIAC_TAS_Service.Sdk
 
         [Delete("/" + PreguntaAsas.Delete)]
         Task<ApiResponse<PreguntaAsaResponse>> DeleteAsync(int preguntaAsaId);
+
+        [Get("/" + PreguntaAsas.GetRandomPreguntasAsa)]
+        Task<ApiResponse<PagedResponse<PreguntaAsaResponse>>> GetPreguntasRandomAsync(int numeroPreguntas, int preguntaIni, int preguntaFin, [Query(CollectionFormat.Multi)] List<int> grupoPreguntaAsaIds);
     }
 }

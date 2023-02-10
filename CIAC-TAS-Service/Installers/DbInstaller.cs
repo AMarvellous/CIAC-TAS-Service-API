@@ -34,6 +34,7 @@ namespace CIAC_TAS_Service.Installers
             services.AddScoped<IPreguntaAsaImagenAsaService, PreguntaAsaImagenAsaService>();
             services.AddScoped<IPreguntaAsaOpcionService, PreguntaAsaOpcionService>();
             services.AddScoped<IRespuestasAsaService, RespuestasAsaService>();
+            services.AddScoped<IRespuestasAsaConsolidadoService, RespuestasAsaConsolidadoService>();
         }
     }
 }

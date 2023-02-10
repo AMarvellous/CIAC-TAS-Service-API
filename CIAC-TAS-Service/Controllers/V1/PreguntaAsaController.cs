@@ -14,7 +14,6 @@ using System.Net;
 
 namespace CIAC_TAS_Service.Controllers.V1
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
     [Produces("application/json")]
     public class PreguntaAsaController : Controller
     {
@@ -33,6 +32,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             _uriService = uriService;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpGet(ApiRoute.PreguntaAsas.GetAll)]
         [ProducesResponseType(typeof(PreguntaAsaResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
@@ -51,6 +51,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(paginationResponse);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpGet(ApiRoute.PreguntaAsas.Get)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(PreguntaAsaResponse), (int)HttpStatusCode.OK)]
@@ -66,6 +67,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(_mapper.Map<PreguntaAsaResponse>(preguntaAsa));
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPost(ApiRoute.PreguntaAsas.Create)]
         [ProducesResponseType(typeof(PreguntaAsaResponse), (int)HttpStatusCode.Created)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
@@ -122,6 +124,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Created(locationUri, response);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPut(ApiRoute.PreguntaAsas.Update)]
         [ProducesResponseType(typeof(PreguntaAsaResponse), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
@@ -166,6 +169,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(_mapper.Map<PreguntaAsaResponse>(preguntaAsa));
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpDelete(ApiRoute.PreguntaAsas.Delete)]
         [ProducesResponseType(typeof(PreguntaAsaResponse), (int)HttpStatusCode.NoContent)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
@@ -179,6 +183,31 @@ namespace CIAC_TAS_Service.Controllers.V1
             }
 
             return NoContent();
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Estudiante")]
+        [HttpGet(ApiRoute.PreguntaAsas.GetRandomPreguntasAsa)]
+        [ProducesResponseType(typeof(PreguntaAsaResponse), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetPreguntasRandom(
+            [FromQuery] int numeroPreguntas,
+            [FromQuery] int preguntaIni,
+            [FromQuery] int preguntaFin,
+            [FromQuery] List<int> grupoPreguntaAsaIds,
+            [FromQuery] PaginationQuery paginationQuery)
+        {
+            var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
+            var preguntaAsas = await _preguntaAsaService.GetRandomGeneratedPreguntasAsaAsync(
+                numeroPreguntas, preguntaIni, preguntaFin, grupoPreguntaAsaIds, pagination);
+            var preguntaAsaResponses = _mapper.Map<List<PreguntaAsaResponse>>(preguntaAsas);
+
+            if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
+            {
+                return Ok(new PagedResponse<PreguntaAsaResponse>(preguntaAsaResponses));
+            }
+
+            var paginationResponse = PaginationHelpers.CreatePaginatedResponse(_uriService, pagination, preguntaAsaResponses);
+
+            return Ok(paginationResponse);
         }
     }
 }

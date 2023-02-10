@@ -14,9 +14,13 @@ namespace CIAC_TAS_Service.Services
             _dataContext = dataContext;
         }
 
-        public async Task<List<RespuestasAsa>> GetRespuestasAsasAsync(PaginationFilter paginationFilter = null)
+        public async Task<List<RespuestasAsa>> GetRespuestasAsasByUserIdAsync(string userId, PaginationFilter paginationFilter = null)
         {
-            var queryable = _dataContext.RespuestasAsas.AsQueryable();
+            var queryable = _dataContext.RespuestasAsas
+                .Include(x => x.PreguntaAsa)
+                .ThenInclude(p => p.PreguntaAsaOpciones)
+                .Where(x => x.UserId == userId)
+                .AsQueryable();
 
             if (paginationFilter == null)
             {
@@ -62,6 +66,19 @@ namespace CIAC_TAS_Service.Services
             var deleted = await _dataContext.SaveChangesAsync();
 
             return deleted > 0;
+        }
+
+        public async Task<bool> CreateRespuestasAsaBatchAsync(List<RespuestasAsa> respuestasAsa)
+        {
+            await _dataContext.RespuestasAsas.AddRangeAsync(respuestasAsa);
+            var created = await _dataContext.SaveChangesAsync();
+
+            return created > 0;
+        }
+
+        public async Task<bool> GetUserIdHasRespuestasAsaAsync(string userId, PaginationFilter paginationFilter = null)
+        {
+            return await _dataContext.RespuestasAsas.Where(x => x.UserId == userId).FirstOrDefaultAsync() != null;
         }
     }
 }

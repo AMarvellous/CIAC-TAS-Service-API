@@ -136,6 +136,7 @@
             public const string Create = $"{Base}/preguntaAsas";
             public const string Update = Base + "/preguntaAsas/{preguntaAsaId}";
             public const string Delete = Base + "/preguntaAsas/{preguntaAsaId}";
+            public const string GetRandomPreguntasAsa = $"{Base}/preguntaAsas/random";
         }
 
         public static class PreguntaAsaImagenAsas
@@ -158,11 +159,20 @@
 
         public static class RespuestasAsas
         {
-            public const string GetAll = $"{Base}/respuestasAsas";
-            public const string Get = Base + "/respuestasAsas/{RespuestasAsaId}";
+            public const string GetAllByUserId = Base + "/respuestasAsas/userId/{userId}";
+            public const string Get = Base + "/respuestasAsas/{respuestasAsaId}";
             public const string Create = $"{Base}/respuestasAsas";
-            public const string Update = Base + "/respuestasAsas/{RespuestasAsaId}";
-            public const string Delete = Base + "/respuestasAsas/{RespuestasAsaId}";
+            public const string Update = Base + "/respuestasAsas/{respuestasAsaId}";
+            public const string Delete = Base + "/respuestasAsas/{respuestasAsaId}";
+            public const string CreateBatch = $"{Base}/respuestasAsas/batch";
+            public const string Patch = Base + "/respuestasAsas/{respuestasAsaId}";
+            public const string GetUserIdHasRespuestasAsa = Base + "/respuestasAsas/hasRespuestasAsa/{userId}";
+        }
+
+        public static class RespuestasAsasConsolidado
+        {
+            public const string GetAllByUserId = Base + "/respuestasAsasConsolidado/{userId}";
+            public const string CreateBatch = $"{Base}/respuestasAsasConsolidado/batch";
         }
     }
 }

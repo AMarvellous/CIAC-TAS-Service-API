@@ -107,5 +107,10 @@ namespace CIAC_TAS_Service.Services
         {
             return new Uri(_baseUri + ApiRoute.RespuestasAsas.Get.Replace("{respuestasAsaId}", respuestasAsaId));
         }
+
+        public Uri GetRespuestasAsaConsolidadoUri(string userId)
+        {
+            return new Uri(_baseUri + ApiRoute.RespuestasAsasConsolidado.GetAllByUserId.Replace("{userId}", userId));
+        }
     }
 }

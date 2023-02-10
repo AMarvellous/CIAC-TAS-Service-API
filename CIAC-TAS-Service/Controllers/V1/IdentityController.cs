@@ -146,7 +146,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(paginationResponse);
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Estudiante")]
         [Produces("application/json")]
         [HttpGet(ApiRoute.Identity.GetUserByName)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
