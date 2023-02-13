@@ -49,7 +49,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         }
 
         [HttpGet(ApiRoute.Grupos.Get)]
-        [Cached(600)]
+        //[Cached(600)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(GrupoResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get([FromRoute] int grupoId)

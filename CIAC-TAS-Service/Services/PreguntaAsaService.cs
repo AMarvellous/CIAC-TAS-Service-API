@@ -81,6 +81,7 @@ namespace CIAC_TAS_Service.Services
         public async Task<List<PreguntaAsa>> GetRandomGeneratedPreguntasAsaAsync(int numeroPreguntas, int preguntaIni, int preguntaFin, List<int> grupoPreguntaAsaIds, PaginationFilter paginationFilter = null)
         {
             var queryable = _dataContext.PreguntaAsa
+                .Where(x => x.EstadoPreguntaAsaId != 2) // Avoid estado Inactive
                 .Include(x => x.GrupoPreguntaAsa)
                 .AsQueryable();
 

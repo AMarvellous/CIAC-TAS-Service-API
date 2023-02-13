@@ -39,10 +39,26 @@ namespace CIAC_TAS_Service.Services
 
         public async Task<bool> CreateEstudianteAsync(Estudiante estudiante)
         {
-            await _dataContext.Estudiante.AddAsync(estudiante);
+            //estudiante.EstudianteProgramas = new List<EstudiantePrograma>()
+            //{
+            //    new EstudiantePrograma { ProgramaId = 1 }
+            //};
+            var estudianteResponse = await _dataContext.Estudiante.AddAsync(estudiante);
+            
             var created = await _dataContext.SaveChangesAsync();
 
-            return created > 0;
+            if (created > 0)
+            {
+				await _dataContext.EstudiantePrograma.AddAsync(new EstudiantePrograma
+				{
+					EstudianteId = estudiante.Id,
+					ProgramaId = 1 // Programa = TMA
+				}); //Hardcoding this, just chang if we got another programa
+				created = await _dataContext.SaveChangesAsync();
+			}
+			
+
+			return created > 0;
         }
         public async Task<bool> UpdateEstudianteAsync(Estudiante estudiante)
         {

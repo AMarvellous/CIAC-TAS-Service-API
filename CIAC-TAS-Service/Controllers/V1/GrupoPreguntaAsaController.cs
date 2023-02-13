@@ -52,7 +52,7 @@ namespace CIAC_TAS_Service.Controllers.V1
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpGet(ApiRoute.GrupoPreguntaAsas.Get)]
-        [Cached(600)]
+        //[Cached(600)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(GrupoPreguntaAsaResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get([FromRoute] int grupoPreguntaAsaId)

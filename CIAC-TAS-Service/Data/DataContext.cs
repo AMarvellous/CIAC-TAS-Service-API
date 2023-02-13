@@ -5,6 +5,10 @@ using CIAC_TAS_Service.Domain.General;
 using CIAC_TAS_Service.Domain.Menu;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
+using static CIAC_TAS_Service.Contracts.V1.ApiRoute;
+using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace CIAC_TAS_Service.Data
 {
@@ -87,22 +91,25 @@ namespace CIAC_TAS_Service.Data
                 new EstadoPreguntaAsa { Id = 2, Estado = 'I' }
                 );
 
+            builder.Entity<Programa>()
+                .HasData(
+                new Programa {Id = 1, Nombre = "TMA" });
+
 
             //Script para llenar las preguntasAsa
             //INSERT INTO[CIAC_TAS_DEV].[dbo].[PreguntaAsa]
             //(NumeroPregunta, Pregunta, GrupoPreguntaAsaId, EstadoPreguntaAsaId, Ruta)
             //Select ASAPregunta.NroPregunta, ASAPregunta.Pregunta,
-            // CAST(
-            //  CASE
+            //(CASE
             //     WHEN ASAPregunta.GrupoPregunta = 'AIRFRAME'
             //         THEN 1
             //     WHEN ASAPregunta.GrupoPregunta = 'GENERAL'
-
             //        THEN 2
             //     ELSE 3
-            //  END AS bit) as GrupoPreguntaId,
+
+            // END)as GrupoPreguntaId,
             //  1 as EstadoPreguntaAsaId, '' as Ruta
-            //From[PROSIANAdministrador2018].[dbo].[ASAPregunta] AS ASAPregunta;
+            //From[CIAC_TAS_OLD].[dbo].[ASAPregunta] AS ASAPregunta;
 
 
 
@@ -114,22 +121,22 @@ namespace CIAC_TAS_Service.Data
 
             //RoleId need to be changed depends on what was generated
             //Insert INTO MenuModulosWeb
-            //(RoleId, Nombre, Estilo)
-            //VALUES
-            //(, 'Usuarios', 'fa-users'),
-            //(, 'Estudiantes', 'fa-book'),
-            //(, 'ASA', 'fa-list'),
-            //(para el estudiante, 'ASA', 'fa-list');
+            //INSERT[dbo].[MenuModulosWeb]( [RoleId], [Nombre], [Estilo]) VALUES((SELECT Id FROM AspNetRoles Where Name = 'Admin'), N'Usuarios', N'fa-users')
+            //INSERT[dbo].[MenuModulosWeb]( [RoleId], [Nombre], [Estilo]) VALUES((SELECT Id FROM AspNetRoles Where Name = 'Admin'), N'Estudiantes', N'fa-book')
+            //INSERT[dbo].[MenuModulosWeb]( [RoleId], [Nombre], [Estilo]) VALUES((SELECT Id FROM AspNetRoles Where Name = 'Admin'), N'ASA', N'fa-list')
+            //INSERT[dbo].[MenuModulosWeb]( [RoleId], [Nombre], [Estilo]) VALUES((SELECT Id FROM AspNetRoles Where Name = 'Estudiante'), N'ASA', N'fa-list')
+            //INSERT[dbo].[MenuModulosWeb]( [RoleId], [Nombre], [Estilo]) VALUES((SELECT Id FROM AspNetRoles Where Name = 'Admin'), N'Instructores', N'fa-chalkboard-teacher')
 
-            // Submodulos, check the ModuloId
-            //Insert INTO MenuSubModulosWeb
-            //(ModuloId, Nombre, Pagina, Estilo)
-            //VALUES
-            //(, 'Usuarios Lista', '/Usuario/Usuarios', ''),
-            //(, 'Estudiantes Lista', '/Estudiante/Estudiantes', ''),
-            //(, 'ASA Configuracion', '/ASA/Configuracion', ''),
-            //(, 'ASA Pregunta', '/ASA/PreguntasAsa', '')
-            //(, 'Cuestionario ASA', '/ASA/CuestionarioASA', '');
+            //INSERT[dbo].[MenuSubModulosWeb]([ModuloId], [Nombre], [Pagina], [Estilo]) VALUES(1, N'Usuarios Lista', N'/Usuario/Usuarios', N'')
+            //INSERT[dbo].[MenuSubModulosWeb]([ModuloId], [Nombre], [Pagina], [Estilo]) VALUES(2, N'Estudiantes Lista', N'/Estudiante/Estudiantes', N'')
+            //INSERT[dbo].[MenuSubModulosWeb]([ModuloId], [Nombre], [Pagina], [Estilo]) VALUES(3, N'ASA Configuracion', N'/ASA/Configuracion', N'')
+            //INSERT[dbo].[MenuSubModulosWeb]( [ModuloId], [Nombre], [Pagina], [Estilo]) VALUES(3, N'ASA Pregunta', N'/ASA/PreguntasAsa', N'')
+            //INSERT[dbo].[MenuSubModulosWeb]( [ModuloId], [Nombre], [Pagina], [Estilo]) VALUES(4, N'Cuestionario ASA', N'/ASA/CuestionarioASA', N'')
+            //INSERT[dbo].[MenuSubModulosWeb]( [ModuloId], [Nombre], [Pagina], [Estilo]) VALUES(3, N'Generar Examen', N'', N'')
+            //INSERT[dbo].[MenuSubModulosWeb]( [ModuloId], [Nombre], [Pagina], [Estilo]) VALUES(3, N'Examen Reporte', N'', N'')
+            //INSERT[dbo].[MenuSubModulosWeb]( [ModuloId], [Nombre], [Pagina], [Estilo]) VALUES(2, N'Asistencia Estudiante', N'', N'')
+            //INSERT[dbo].[MenuSubModulosWeb]( [ModuloId], [Nombre], [Pagina], [Estilo]) VALUES(2, N'Grupos', N'', N'')
+            //INSERT[dbo].[MenuSubModulosWeb]( [ModuloId], [Nombre], [Pagina], [Estilo]) VALUES(5, N'Instructores Lista', N'', N'')
         }
 
         public DbSet<Post> Posts { get; set; }

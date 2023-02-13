@@ -37,6 +37,8 @@ namespace CIAC_TAS_Service.Controllers.V1
         [ProducesResponseType(typeof(PreguntaAsaResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
         {
+            paginationQuery.PageNumber = 1;
+            paginationQuery.PageSize = 5000;
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
             var preguntaAsas = await _preguntaAsaService.GetPreguntaAsasAsync(pagination);
             var preguntaAsaResponses = _mapper.Map<List<PreguntaAsaResponse>>(preguntaAsas);
