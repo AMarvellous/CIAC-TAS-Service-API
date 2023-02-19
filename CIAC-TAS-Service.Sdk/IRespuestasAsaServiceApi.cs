@@ -36,5 +36,11 @@ namespace CIAC_TAS_Service.Sdk
 
         [Get("/" + RespuestasAsas.GetUserIdHasRespuestasAsa)]
         Task<ApiResponse<bool>> GetUserIdHasRespuestasAsaAsync(string userId);
+
+		[Get("/" + RespuestasAsas.GetFirstByUserId)]
+		Task<ApiResponse<RespuestasAsaResponse>> GetFirstByUserIdAsync(string userId);
+
+        [Post("/" + RespuestasAsas.ProcessRespuestasAsa)]
+        Task<ApiResponse<bool>> ProcessRespuestasAsaAsync(string userId);
     }
 }

@@ -15,6 +15,7 @@ namespace CIAC_TAS_Service.Contracts.V1.Responses
         public DateTime FechaEntrada { get; set; }
         public int? OpcionSeleccionadaId { get; set; }
         public bool EsExamen { get; set; }
+        public string? ColorInterfaz { get; set; }
 
         public PreguntaAsaResponse PreguntaAsa { get; set; }
     }

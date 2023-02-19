@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using static CIAC_TAS_Service.Contracts.V1.ApiRoute;
 
 namespace CIAC_TAS_Service.Controllers.V1
 {
@@ -22,10 +23,11 @@ namespace CIAC_TAS_Service.Controllers.V1
         private readonly IUriService _uriService;
         private readonly IIdentityService _identityService;
         private readonly IConfiguracionPreguntaAsaService _configuracionPreguntaAsaService;
+        private readonly IRespuestasAsaConsolidadoService _respuestasAsaConsolidadoService;
         private readonly IPreguntaAsaService _preguntaAsaService;
         private readonly IPreguntaAsaOpcionService _preguntaAsaOpcionService;
 
-        public RespuestasAsaController(IMapper mapper, IRespuestasAsaService respuestasAsaService, IUriService uriService, IIdentityService identityService, IConfiguracionPreguntaAsaService configuracionPreguntaAsaService, IPreguntaAsaService preguntaAsaService, IPreguntaAsaOpcionService preguntaAsaOpcionService)
+        public RespuestasAsaController(IMapper mapper, IRespuestasAsaService respuestasAsaService, IUriService uriService, IIdentityService identityService, IConfiguracionPreguntaAsaService configuracionPreguntaAsaService, IPreguntaAsaService preguntaAsaService, IPreguntaAsaOpcionService preguntaAsaOpcionService, IRespuestasAsaConsolidadoService respuestasAsaConsolidadoService)
         {
             _mapper = mapper;
             _respuestasAsaService = respuestasAsaService;
@@ -34,6 +36,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             _configuracionPreguntaAsaService = configuracionPreguntaAsaService;
             _preguntaAsaService = preguntaAsaService;
             _preguntaAsaOpcionService = preguntaAsaOpcionService;
+            _respuestasAsaConsolidadoService = respuestasAsaConsolidadoService;
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Estudiante")]
@@ -84,7 +87,8 @@ namespace CIAC_TAS_Service.Controllers.V1
                 PreguntaAsaId = respuestasAsaRequest.PreguntaAsaId,
                 FechaEntrada = respuestasAsaRequest.FechaEntrada,
                 OpcionSeleccionadaId = respuestasAsaRequest.OpcionSeleccionadaId,
-                EsExamen = respuestasAsaRequest.EsExamen
+                EsExamen = respuestasAsaRequest.EsExamen,
+                ColorInterfaz = respuestasAsaRequest.ColorInterfaz
             };
 
             var created = await _respuestasAsaService.CreateRespuestasAsaAsync(respuestasAsa);
@@ -120,6 +124,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             respuestasAsa.FechaEntrada = request.FechaEntrada;
             respuestasAsa.OpcionSeleccionadaId = request.OpcionSeleccionadaId;
             respuestasAsa.EsExamen = request.EsExamen;
+            respuestasAsa.ColorInterfaz = request.ColorInterfaz;
 
             var update = await _respuestasAsaService.UpdateRespuestasAsaAsync(respuestasAsa);
 
@@ -209,7 +214,8 @@ namespace CIAC_TAS_Service.Controllers.V1
                     PreguntaAsaId = item.PreguntaAsaId,
                     FechaEntrada = item.FechaEntrada,
                     OpcionSeleccionadaId = item.OpcionSeleccionadaId,
-                    EsExamen = item.EsExamen
+                    EsExamen = item.EsExamen,
+                    ColorInterfaz = item.ColorInterfaz,
                 });
             }            
 
@@ -251,9 +257,18 @@ namespace CIAC_TAS_Service.Controllers.V1
             }
 
             var respuestasAsa = await _respuestasAsaService.GetRespuestasAsaByIdAsync(respuestasAsaId);
-            respuestasAsa .OpcionSeleccionadaId = request.OpcionSeleccionadaId;
 
-            var update = await _respuestasAsaService.UpdateRespuestasAsaAsync(respuestasAsa);
+            if (request.OpcionSeleccionadaId != null)
+            {
+				respuestasAsa.OpcionSeleccionadaId = request.OpcionSeleccionadaId;
+			}
+
+			if (request.ColorInterfaz != null)
+			{
+				respuestasAsa.ColorInterfaz = request.ColorInterfaz;
+			}
+
+			var update = await _respuestasAsaService.UpdateRespuestasAsaAsync(respuestasAsa);
 
             if (!update)
             {
@@ -284,6 +299,55 @@ namespace CIAC_TAS_Service.Controllers.V1
             var hasRespuestasAsa = await _respuestasAsaService.GetUserIdHasRespuestasAsaAsync(userId);
 
             return Ok(hasRespuestasAsa);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Estudiante")]
+        [HttpGet(ApiRoute.RespuestasAsas.GetFirstByUserId)]
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> GetFirstByUserId([FromRoute] string userId)
+        {
+            if (!await _identityService.CheckUserExistsByUserIdAsync(userId))
+            {
+                return BadRequest(new ErrorResponse
+                {
+                    Errors = new List<ErrorModel>
+                    {
+                        new ErrorModel { Message = $"User Id {userId} not found"}
+                    }
+                });
+            }
+
+            var respuestasAsa = await _respuestasAsaService.GetFirstRespuestasAsaByUserIdAsync(userId);
+
+            if (respuestasAsa == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<RespuestasAsaResponse>(respuestasAsa));
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Estudiante")]
+        [HttpPost(ApiRoute.RespuestasAsas.ProcessRespuestasAsa)]
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> ProcessRespuestasAsa([FromRoute] string userId)
+        {
+            if (!await _identityService.CheckUserExistsByUserIdAsync(userId))
+            {
+                return BadRequest(new ErrorResponse
+                {
+                    Errors = new List<ErrorModel>
+                    {
+                        new ErrorModel { Message = $"User Id {userId} not found"}
+                    }
+                });
+            }
+
+            var processSuccessful = await _respuestasAsaConsolidadoService.ProcessRespuestasAsaAsync(userId);
+
+            return Ok(processSuccessful);
         }
     }
 }

@@ -167,12 +167,16 @@
             public const string CreateBatch = $"{Base}/respuestasAsas/batch";
             public const string Patch = Base + "/respuestasAsas/{respuestasAsaId}";
             public const string GetUserIdHasRespuestasAsa = Base + "/respuestasAsas/hasRespuestasAsa/{userId}";
+			public const string GetFirstByUserId = Base + "/respuestasAsas/first/userId/{userId}";
+            public const string ProcessRespuestasAsa = Base + "/respuestasAsas/process/consolidado/{userId}";
         }
 
         public static class RespuestasAsasConsolidado
         {
             public const string GetAllByUserId = Base + "/respuestasAsasConsolidado/{userId}";
             public const string CreateBatch = $"{Base}/respuestasAsasConsolidado/batch";
-        }
+			public const string GetAllByUserIdAndLote = Base + "/respuestasAsasConsolidado/userId/{userId}/loteRespuestas/{loteRespuestasId}";
+			public const string GetAllHeadersByUserId = Base + "/respuestasAsasConsolidado/headers/userId/{userId}";
+		}
     }
 }

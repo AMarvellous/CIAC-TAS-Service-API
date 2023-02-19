@@ -19,5 +19,10 @@ namespace CIAC_TAS_Service.Sdk
         [Post("/" + RespuestasAsasConsolidado.CreateBatch)]
         Task<ApiResponse<List<RespuestasAsaConsolidadoResponse>>> CreateBatchAsync([Body] List<CreateRespuestasAsaConsolidadoRequest> respuestasAsaConsolidadoRequest);
 
-    }
+		[Get("/" + RespuestasAsasConsolidado.GetAllByUserIdAndLote)]
+		Task<ApiResponse<PagedResponse<RespuestasAsaConsolidadoResponse>>> GetAllByUserIdAndLoteAsync(Guid loteRespuestasId, string userId);
+
+		[Get("/" + RespuestasAsasConsolidado.GetAllHeadersByUserId)]
+		Task<ApiResponse<PagedResponse<RespuestasAsaConsolidadoResponse>>> GetAllHeadersByUserId(string userId);
+	}
 }

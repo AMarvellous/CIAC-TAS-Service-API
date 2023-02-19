@@ -119,5 +119,43 @@ namespace CIAC_TAS_Service.Controllers.V1
 
             return Created(locationUri, response);
         }
-    }
+
+		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Estudiante")]
+		[HttpGet(ApiRoute.RespuestasAsasConsolidado.GetAllByUserIdAndLote)]
+		[ProducesResponseType(typeof(List<RespuestasAsaConsolidadoResponse>), (int)HttpStatusCode.OK)]
+		public async Task<IActionResult> GetAllByUserIdAndLote([FromRoute] Guid loteRespuestasId, [FromRoute] string userId, [FromQuery] PaginationQuery paginationQuery)
+		{
+			var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
+			var respuestasAsasConsolidado = await _respuestasAsaConsolidadoService.GetRespuestasAsasConsolidadoByUserIdLoteRespuestasIdAsync(loteRespuestasId, userId, pagination);
+			var respuestasAsaConsolidadoResponses = _mapper.Map<List<RespuestasAsaConsolidadoResponse>>(respuestasAsasConsolidado);
+
+			if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
+			{
+				return Ok(new PagedResponse<RespuestasAsaConsolidadoResponse>(respuestasAsaConsolidadoResponses));
+			}
+
+			var paginationResponse = PaginationHelpers.CreatePaginatedResponse(_uriService, pagination, respuestasAsaConsolidadoResponses);
+
+			return Ok(paginationResponse);
+		}
+
+		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Estudiante")]
+		[HttpGet(ApiRoute.RespuestasAsasConsolidado.GetAllHeadersByUserId)]
+		[ProducesResponseType(typeof(List<RespuestasAsaConsolidadoResponse>), (int)HttpStatusCode.OK)]
+		public async Task<IActionResult> GetAllHeadersByUserIdAndLote([FromRoute] string userId, [FromQuery] PaginationQuery paginationQuery)
+		{
+			var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
+			var respuestasAsasConsolidado = await _respuestasAsaConsolidadoService.GetRespuestasAsasConsolidadoHeadersByUserIdAsync(userId, pagination);
+			var respuestasAsaConsolidadoResponses = _mapper.Map<List<RespuestasAsaConsolidadoResponse>>(respuestasAsasConsolidado);
+
+			if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
+			{
+				return Ok(new PagedResponse<RespuestasAsaConsolidadoResponse>(respuestasAsaConsolidadoResponses));
+			}
+
+			var paginationResponse = PaginationHelpers.CreatePaginatedResponse(_uriService, pagination, respuestasAsaConsolidadoResponses);
+
+			return Ok(paginationResponse);
+		}
+	}
 }

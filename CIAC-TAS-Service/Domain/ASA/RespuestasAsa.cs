@@ -15,9 +15,10 @@ namespace CIAC_TAS_Service.Domain.ASA
         public DateTime FechaEntrada { get; set; }
         public int? OpcionSeleccionadaId { get; set; }
         public bool EsExamen { get; set; }
+		public string? ColorInterfaz { get; set; }
 
 
-        [ForeignKey(nameof(UserId))]
+		[ForeignKey(nameof(UserId))]
         public IdentityUser User { get; set; }
         [ForeignKey(nameof(ConfiguracionId))]
         public ConfiguracionPreguntaAsa ConfiguracionPreguntaAsa { get; set; }

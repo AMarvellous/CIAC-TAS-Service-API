@@ -13,5 +13,8 @@ namespace CIAC_TAS_Service.Services
         Task<bool> CreateRespuestasAsaBatchAsync(List<RespuestasAsa> respuestasAsa);
 
         Task<bool> GetUserIdHasRespuestasAsaAsync(string userId, PaginationFilter paginationFilter = null);
+		Task<RespuestasAsa> GetFirstRespuestasAsaByUserIdAsync(string userId);
+        Task<bool> DeleteRespuestasAsaBatchByUserIdAsync(string userId);
+
     }
 }

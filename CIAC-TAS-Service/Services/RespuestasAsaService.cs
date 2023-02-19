@@ -80,5 +80,22 @@ namespace CIAC_TAS_Service.Services
         {
             return await _dataContext.RespuestasAsas.Where(x => x.UserId == userId).FirstOrDefaultAsync() != null;
         }
+
+		public async Task<RespuestasAsa> GetFirstRespuestasAsaByUserIdAsync(string userId)
+		{
+            return await _dataContext.RespuestasAsas.Where(x => x.UserId == userId).FirstOrDefaultAsync();
+		}
+
+        public async Task<bool> DeleteRespuestasAsaBatchByUserIdAsync(string userId)
+        {
+            var respuestasAsas = await _dataContext.RespuestasAsas
+                .Where(x => x.UserId == userId)
+                .ToListAsync();
+
+            _dataContext.RespuestasAsas.RemoveRange(respuestasAsas);
+            var deleted = await _dataContext.SaveChangesAsync();
+
+            return deleted > 0;
+        }
     }
 }
