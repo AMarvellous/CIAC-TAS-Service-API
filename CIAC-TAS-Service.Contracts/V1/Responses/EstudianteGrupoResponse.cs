@@ -10,5 +10,8 @@ namespace CIAC_TAS_Service.Contracts.V1.Responses
     {
         public int EstudianteId { get; set; }
         public int GrupoId { get; set; }
+
+        public EstudianteResponse EstudianteResponse { get; set; }
+        public GrupoResponse GrupoResponse { get; set; }
     }
 }

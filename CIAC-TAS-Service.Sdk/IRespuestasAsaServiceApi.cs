@@ -41,6 +41,6 @@ namespace CIAC_TAS_Service.Sdk
 		Task<ApiResponse<RespuestasAsaResponse>> GetFirstByUserIdAsync(string userId);
 
         [Post("/" + RespuestasAsas.ProcessRespuestasAsa)]
-        Task<ApiResponse<bool>> ProcessRespuestasAsaAsync(string userId);
+        Task<ApiResponse<Guid>> ProcessRespuestasAsaAsync(string userId);
     }
 }

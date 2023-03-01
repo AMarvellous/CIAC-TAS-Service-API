@@ -8,6 +8,7 @@ namespace CIAC_TAS_Service.Services
         Task<List<Estudiante>> GetEstudiantesAsync(PaginationFilter paginationFilter = null);
         Task<bool> CreateEstudianteAsync(Estudiante estudiante);
         Task<Estudiante> GetEstudianteByIdAsync(int id);
+        Task<Estudiante> GetEstudianteByUserIdAsync(string userId);
         Task<bool> UpdateEstudianteAsync(Estudiante estudiante);
         Task<bool> DeleteEstudianteAsync(int id);
         Task<bool> CheckUserIdIsAssignedAsync(string userId);

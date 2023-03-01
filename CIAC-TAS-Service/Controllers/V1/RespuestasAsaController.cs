@@ -330,7 +330,7 @@ namespace CIAC_TAS_Service.Controllers.V1
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Estudiante")]
         [HttpPost(ApiRoute.RespuestasAsas.ProcessRespuestasAsa)]
-        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> ProcessRespuestasAsa([FromRoute] string userId)
         {
@@ -345,9 +345,9 @@ namespace CIAC_TAS_Service.Controllers.V1
                 });
             }
 
-            var processSuccessful = await _respuestasAsaConsolidadoService.ProcessRespuestasAsaAsync(userId);
+            var guidResponse = await _respuestasAsaConsolidadoService.ProcessRespuestasAsaAsync(userId);
 
-            return Ok(processSuccessful);
+            return Ok(guidResponse);
         }
     }
 }

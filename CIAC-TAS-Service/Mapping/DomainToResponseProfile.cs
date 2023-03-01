@@ -37,15 +37,26 @@ namespace CIAC_TAS_Service.Mapping
                     dest => dest.PreguntaAsaOpcionesResponse,
                     opt => opt.MapFrom(s => s.PreguntaAsaOpciones));
 
-            CreateMap<Tag, TagResponse>();
+            CreateMap<ConfiguracionPreguntaAsa, ConfiguracionPreguntaAsaResponse>()
+                .ForMember(
+                    x => x.GrupoResponse,
+                    opt => opt.MapFrom(s => s.Grupo));
+
+            CreateMap<EstudianteGrupo, EstudianteGrupoResponse>()
+				.ForMember(
+					x => x.EstudianteResponse,
+					opt => opt.MapFrom(s => s.Estudiante))
+				.ForMember(
+					x => x.GrupoResponse,
+					opt => opt.MapFrom(s => s.Grupo));
+
+			CreateMap<Tag, TagResponse>();
             CreateMap<Grupo, GrupoResponse>();
             CreateMap<GrupoPreguntaAsa, GrupoPreguntaAsaResponse>();
             CreateMap<Programa, ProgramaResponse>();
             CreateMap<ImagenAsa, ImagenAsaResponse>();
-            CreateMap<EstadoPreguntaAsa, EstadoPreguntaAsaResponse>();
-            CreateMap<ConfiguracionPreguntaAsa, ConfiguracionPreguntaAsaResponse>();
+            CreateMap<EstadoPreguntaAsa, EstadoPreguntaAsaResponse>();            
             CreateMap<Estudiante, EstudianteResponse>();
-            CreateMap<EstudianteGrupo, EstudianteGrupoResponse>();
             CreateMap<EstudiantePrograma, EstudianteProgramaResponse>();
             CreateMap<MenuSubModuloWeb, MenuSubModulosWebResponse>();
             

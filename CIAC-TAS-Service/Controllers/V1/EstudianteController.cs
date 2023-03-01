@@ -14,7 +14,7 @@ using System.Net;
 
 namespace CIAC_TAS_Service.Controllers.V1
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
     [Produces("application/json")]
     public class EstudianteController : Controller
     {
@@ -31,6 +31,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             _identityService = identityService;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpGet(ApiRoute.Estudiantes.GetAll)]
         [ProducesResponseType(typeof(EstudianteResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
@@ -49,6 +50,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(paginationResponse);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpGet(ApiRoute.Estudiantes.Get)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(EstudianteResponse), (int)HttpStatusCode.OK)]
@@ -64,6 +66,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(_mapper.Map<EstudianteResponse>(estudiante));
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPost(ApiRoute.Estudiantes.Create)]
         [ProducesResponseType(typeof(EstudianteResponse), (int)HttpStatusCode.Created)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
@@ -113,6 +116,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Created(locationUri, response);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPut(ApiRoute.Estudiantes.Update)]
         [ProducesResponseType(typeof(EstudianteResponse), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
@@ -160,6 +164,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(_mapper.Map<EstudianteResponse>(estudiante));
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpDelete(ApiRoute.Estudiantes.Delete)]
         [ProducesResponseType(typeof(EstudianteResponse), (int)HttpStatusCode.NoContent)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
@@ -173,6 +178,22 @@ namespace CIAC_TAS_Service.Controllers.V1
             }
 
             return NoContent();
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin, Estudiante")]
+        [HttpGet(ApiRoute.Estudiantes.GetByUserId)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(EstudianteResponse), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetEstudianteByUserId([FromRoute] string userId)
+        {
+            var estudiante = await _estudianteService.GetEstudianteByUserIdAsync(userId);
+
+            if (estudiante == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<EstudianteResponse>(estudiante));
         }
     }
 }

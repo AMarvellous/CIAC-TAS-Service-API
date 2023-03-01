@@ -92,6 +92,7 @@
             public const string Create = $"{Base}/estudiantes";
             public const string Update = Base + "/estudiantes/{estudianteId}";
             public const string Delete = Base + "/estudiantes/{estudianteId}";
+            public const string GetByUserId = Base + "/estudiantes/userId/{userId}";
         }
 
         public static class EstudianteGrupos
@@ -177,6 +178,7 @@
             public const string CreateBatch = $"{Base}/respuestasAsasConsolidado/batch";
 			public const string GetAllByUserIdAndLote = Base + "/respuestasAsasConsolidado/userId/{userId}/loteRespuestas/{loteRespuestasId}";
 			public const string GetAllHeadersByUserId = Base + "/respuestasAsasConsolidado/headers/userId/{userId}";
-		}
+            public const string UserHasAnswersInConsolidadoByConfiguracionId = Base + "/respuestasAsasConsolidado/configuracionId/{configuracionId}/userId/{userId}";
+        }
     }
 }

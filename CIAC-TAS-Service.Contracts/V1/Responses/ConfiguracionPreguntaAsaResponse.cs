@@ -13,5 +13,7 @@ namespace CIAC_TAS_Service.Contracts.V1.Responses
         public int CantitdadPreguntas { get; set; }
         public DateTime FechaInicial { get; set; }
         public DateTime FechaFin { get; set; }
+
+        public GrupoResponse GrupoResponse { get; set; }
     }
 }

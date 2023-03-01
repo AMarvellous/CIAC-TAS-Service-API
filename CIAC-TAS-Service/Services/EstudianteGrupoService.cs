@@ -16,7 +16,10 @@ namespace CIAC_TAS_Service.Services
 
         public async Task<List<EstudianteGrupo>> GetEstudianteGruposAsync(PaginationFilter paginationFilter = null)
         {
-            var queryable = _dataContext.EstudianteGrupo.AsQueryable();
+            var queryable = _dataContext.EstudianteGrupo
+                .Include(x => x.Estudiante)
+                .Include(x => x.Grupo)
+                .AsQueryable();
 
             if (paginationFilter == null)
             {

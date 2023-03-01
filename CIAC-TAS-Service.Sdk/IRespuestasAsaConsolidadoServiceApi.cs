@@ -24,5 +24,8 @@ namespace CIAC_TAS_Service.Sdk
 
 		[Get("/" + RespuestasAsasConsolidado.GetAllHeadersByUserId)]
 		Task<ApiResponse<PagedResponse<RespuestasAsaConsolidadoResponse>>> GetAllHeadersByUserId(string userId);
-	}
+
+        [Get("/" + RespuestasAsasConsolidado.UserHasAnswersInConsolidadoByConfiguracionId)]
+        Task<ApiResponse<bool>> UserHasAnswersInConsolidadoByConfiguracionId(string userId, int configuracionId);
+    }
 }

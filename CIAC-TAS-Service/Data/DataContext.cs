@@ -79,7 +79,7 @@ namespace CIAC_TAS_Service.Data
 
 
 
-            builder.Entity<GrupoPreguntaAsa>()
+			builder.Entity<GrupoPreguntaAsa>()
                 .HasData(
                 new Domain.ASA.GrupoPreguntaAsa { Id = 1, Nombre = "AIRFRAME" },
                 new Domain.ASA.GrupoPreguntaAsa { Id = 2,Nombre = "GENERAL" },

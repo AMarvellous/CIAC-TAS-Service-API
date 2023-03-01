@@ -157,5 +157,38 @@ namespace CIAC_TAS_Service.Controllers.V1
 
 			return Ok(paginationResponse);
 		}
-	}
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Estudiante")]
+        [HttpGet(ApiRoute.RespuestasAsasConsolidado.UserHasAnswersInConsolidadoByConfiguracionId)]
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UserHasAnswersInConsolidadoByConfiguracionId([FromRoute] string userId, [FromRoute] int configuracionId)
+        {
+            if (!await _identityService.CheckUserExistsByUserIdAsync(userId))
+            {
+                return BadRequest(new ErrorResponse
+                {
+                    Errors = new List<ErrorModel>
+                    {
+                        new ErrorModel { Message = $"User Id {userId} not found"}
+                    }
+                });
+            }
+
+            if (!await _configuracionPreguntaAsaService.CheckConfiguracionPreguntaAsaExistsAsync(configuracionId))
+            {
+                return BadRequest(new ErrorResponse
+                {
+                    Errors = new List<ErrorModel>
+                    {
+                        new ErrorModel { Message = $"Configuracion Id {configuracionId} not found"}
+                    }
+                });
+            }
+
+            var userHasAnswersInConsolidadoByConfiguracionId = await _respuestasAsaConsolidadoService.UserHasAnswersInConsolidadoByConfiguracionIdAsync(userId, configuracionId);
+            
+
+            return Ok(userHasAnswersInConsolidadoByConfiguracionId);
+        }
+    }
 }

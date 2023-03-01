@@ -99,7 +99,7 @@ namespace CIAC_TAS_Service.Services
             return created > 0;
         }
 
-        public async Task<bool> ProcessRespuestasAsaAsync(string userId)
+        public async Task<Guid> ProcessRespuestasAsaAsync(string userId)
         {
             var respuestasAsas = await _dataContext.RespuestasAsas
                 .Include(x => x.PreguntaAsa)
@@ -126,9 +126,16 @@ namespace CIAC_TAS_Service.Services
 
             await CreateRespuestasAsaBatchAsync(respuestasAsaConsolidados);
 
-            var response = await _respuestasAsaService.DeleteRespuestasAsaBatchByUserIdAsync(userId);
+            await _respuestasAsaService.DeleteRespuestasAsaBatchByUserIdAsync(userId);
 
-            return response;
-        }		
-	}
+            return guid;
+        }
+
+        public async Task<bool> UserHasAnswersInConsolidadoByConfiguracionIdAsync(string userId, int configuracionId)
+        {
+            return await _dataContext.RespuestasAsaConsolidado
+                .Where(x => x.UserId == userId && x.ConfiguracionId == configuracionId)
+                .CountAsync() > 0;
+        }
+    }
 }

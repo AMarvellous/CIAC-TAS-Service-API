@@ -14,7 +14,7 @@ using System.Net;
 
 namespace CIAC_TAS_Service.Controllers.V1
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+    
     [Produces("application/json")]
     public class ConfiguracionPreguntaAsaController : Controller
     {
@@ -29,6 +29,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             _uriService = uriService;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin, Estudiante")]
         [HttpGet(ApiRoute.ConfiguracionPreguntaAsas.GetAll)]
         [ProducesResponseType(typeof(ConfiguracionPreguntaAsaResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
@@ -47,6 +48,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(paginationResponse);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpGet(ApiRoute.ConfiguracionPreguntaAsas.Get)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(ConfiguracionPreguntaAsaResponse), (int)HttpStatusCode.OK)]
@@ -62,6 +64,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(_mapper.Map<ConfiguracionPreguntaAsaResponse>(configuracionPreguntaAsa));
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPost(ApiRoute.ConfiguracionPreguntaAsas.Create)]
         [ProducesResponseType(typeof(ConfiguracionPreguntaAsaResponse), (int)HttpStatusCode.Created)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
@@ -89,6 +92,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Created(locationUri, response);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPut(ApiRoute.ConfiguracionPreguntaAsas.Update)]
         [ProducesResponseType(typeof(ConfiguracionPreguntaAsaResponse), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
@@ -107,6 +111,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(_mapper.Map<ConfiguracionPreguntaAsaResponse>(configuracionPreguntaAsa));
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpDelete(ApiRoute.ConfiguracionPreguntaAsas.Delete)]
         [ProducesResponseType(typeof(ConfiguracionPreguntaAsaResponse), (int)HttpStatusCode.NoContent)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
