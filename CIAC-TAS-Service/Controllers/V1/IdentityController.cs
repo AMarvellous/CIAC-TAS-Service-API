@@ -4,6 +4,7 @@ using CIAC_TAS_Service.Contracts.V1.Requests;
 using CIAC_TAS_Service.Contracts.V1.Requests.Queries;
 using CIAC_TAS_Service.Contracts.V1.Responses;
 using CIAC_TAS_Service.Domain;
+using CIAC_TAS_Service.Extensions;
 using CIAC_TAS_Service.Helpers;
 using CIAC_TAS_Service.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using static CIAC_TAS_Service.Contracts.V1.ApiRoute;
 
 namespace CIAC_TAS_Service.Controllers.V1
 {
@@ -201,6 +203,70 @@ namespace CIAC_TAS_Service.Controllers.V1
             }
 
             return Ok(identityResult.Succeeded);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        [Produces("application/json")]
+        [HttpPatch(ApiRoute.Identity.PatchUserPassword)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(AuthFailedResponse), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(AuthSuccessResponse), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> PatchUserPassword([FromRoute] string userName, [FromBody] PatchUsuarioPasswordRequest request)
+        {
+            var user = await _identityService.GetUserByNameAsync(userName);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var result = await _identityService.UpdatePasswordByUserNameAsync(userName, request.NewPassword);
+
+            if (!result.Success)
+            {
+                return BadRequest(new AuthFailedResponse
+                {
+                    Errors = result.Errors
+                });
+            }
+
+            return Ok(new AuthSuccessResponse
+            {
+                Token = result.Token,
+                RefreshToken = result.RefreshToken
+            });
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Estudiante,Instructor")]
+        [Produces("application/json")]
+        [HttpPatch(ApiRoute.Identity.PatchUserPasswordUserOwns)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(AuthFailedResponse), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(AuthSuccessResponse), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> PatchUserPasswordUserOwns([FromRoute] string userName, [FromBody] PatchUsuarioPasswordRequest request)
+        {
+            var userOwnsUser = await _identityService.UserOwnsUserAsync(userName, HttpContext.GetUserId());
+
+            if (!userOwnsUser)
+            {
+                return BadRequest(new { error = "No esta permitido de modificar este Usuario" });
+            }
+
+            var result = await _identityService.UpdatePasswordByUserNameAsync(userName, request.NewPassword);
+
+            if (!result.Success)
+            {
+                return BadRequest(new AuthFailedResponse
+                {
+                    Errors = result.Errors
+                });
+            }
+
+            return Ok(new AuthSuccessResponse
+            {
+                Token = result.Token,
+                RefreshToken = result.RefreshToken
+            });
         }
     }
 }

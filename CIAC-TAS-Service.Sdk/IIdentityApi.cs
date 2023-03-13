@@ -36,5 +36,11 @@ namespace CIAC_TAS_Service.Sdk
         [Post("/" + Identity.GetAsignToRole)]
         Task<ApiResponse<PagedResponse<bool>>> AsignUserToRoleAsync([Body] AsignRoleToUserRequest request);
 
+        [Patch("/" + Identity.PatchUserPassword)]
+        Task<ApiResponse<AuthSuccessResponse>> PatchUserPasswordAsync(string userName, [Body] PatchUsuarioPasswordRequest usuarioPasswordRequest);
+
+        [Patch("/" + Identity.PatchUserPasswordUserOwns)]
+        Task<ApiResponse<AuthSuccessResponse>> PatchUserPasswordUserOwnsForEstudianteOrInstructorAsync(string userName, [Body] PatchUsuarioPasswordRequest usuarioPasswordRequest);
+
     }
 }

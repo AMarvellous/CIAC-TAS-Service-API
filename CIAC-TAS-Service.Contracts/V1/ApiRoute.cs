@@ -24,6 +24,8 @@
             public const string GetUsers = Base + "/identity/users/";
             public const string GetUserByName = Base + "/identity/users/{userName}";
             public const string GetAsignToRole = Base + "/identity/user/role";
+            public const string PatchUserPassword = Base + "/identity/password/user/{userName}";
+            public const string PatchUserPasswordUserOwns = Base + "/identity/password/userOwns/user/{userName}";
         }
 
         public static class Tags

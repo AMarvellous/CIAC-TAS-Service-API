@@ -16,7 +16,7 @@ namespace CIAC_TAS_Service.Services
 
         public async Task<List<ConfiguracionPreguntaAsa>> GetConfiguracionPreguntaAsasAsync(PaginationFilter paginationFilter = null)
         {
-            var queryable = _dataContext.ConfiguracionPreguntaAsa
+			var queryable = _dataContext.ConfiguracionPreguntaAsa
                 .Include(x => x.Grupo)
                 .AsQueryable();
 

@@ -37,6 +37,7 @@ namespace CIAC_TAS_Service.Services
 		{
 			var queryable = _dataContext.RespuestasAsaConsolidado
 				.Where(x => x.UserId == userId && x.LoteRespuestasId == loteRespuestasId)
+                .Include(x => x.ConfiguracionPreguntaAsa)
 				.AsQueryable();
 
 			if (paginationFilter == null)

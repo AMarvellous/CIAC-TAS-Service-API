@@ -82,7 +82,7 @@ namespace CIAC_TAS_Service.Controllers.V1
                     Errors = new List<ErrorModel>
                     {
                         new ErrorModel {
-                            Message = $"EstudianteId {estudiantePrograma.EstudianteId} and ProgramaId {estudiantePrograma.ProgramaId} are already assigned to another Entity"}
+                            Message = $"El Estudiante {estudiantePrograma.EstudianteId} y Programa {estudiantePrograma.ProgramaId} ya fueron asignados previamente"}
                     }
                 });
             }

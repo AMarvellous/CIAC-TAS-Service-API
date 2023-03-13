@@ -84,7 +84,7 @@ namespace CIAC_TAS_Service.Controllers.V1
                     Errors = new List<ErrorModel>
                     {
                         new ErrorModel { 
-                            Message = $"EstudianteId {estudianteGrupo.EstudianteId} and GrupoId {estudianteGrupo.GrupoId} are already assigned to another Entity"}
+                            Message = $"El Estudiante {estudianteGrupo.EstudianteId} y Grupo {estudianteGrupo.GrupoId} ya fueron asignados previamente"}
                     }
                 });
             }

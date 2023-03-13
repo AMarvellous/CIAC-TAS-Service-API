@@ -13,5 +13,7 @@ namespace CIAC_TAS_Service.Services
         Task<bool> CheckUserExistsByUserIdAsync(string userId);
         Task<IdentityResult> AddUserToRoleAsync(string userId, string roleId);
         Task<IdentityUser> GetUserByNameAsync(string userName);
+        Task<AuthenticationResult> UpdatePasswordByUserNameAsync(string userName, string newPassword);
+        Task<bool> UserOwnsUserAsync(string userName, string userId);
     }
 }

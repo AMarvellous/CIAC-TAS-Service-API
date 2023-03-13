@@ -19,5 +19,7 @@ namespace CIAC_TAS_Service.Contracts.V1.Responses
         public string RespuestaTexto { get; set; }
         public bool RespuestaCorrecta { get; set; }
         public bool EsExamen { get; set; }
-    }
+
+		public ConfiguracionPreguntaAsaResponse ConfiguracionPreguntaAsaResponse { get; set; }
+	}
 }

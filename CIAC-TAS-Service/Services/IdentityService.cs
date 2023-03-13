@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using static CIAC_TAS_Service.Contracts.V1.ApiRoute;
 
 namespace CIAC_TAS_Service.Services
 {
@@ -178,6 +179,44 @@ namespace CIAC_TAS_Service.Services
             return await _userManager.AddToRoleAsync(user, roleName);
         }
 
+        public async Task<AuthenticationResult> UpdatePasswordByUserNameAsync(string userName, string newPassword)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            var userUpdated = await _userManager.ResetPasswordAsync(user, token, newPassword);
+
+            if (!userUpdated.Succeeded)
+            {
+                return new AuthenticationResult
+                {
+                    Errors = userUpdated.Errors.Select(error => error.Description)
+                };
+            }
+
+            var userRefreshed = await _userManager.FindByNameAsync(userName);
+
+            return await GenerateAuthenticationResultForUserAsync(userRefreshed);
+        }
+
+        public async Task<bool> UserOwnsUserAsync(string userName, string userId)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            if (user.Id != userId)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         private async Task<AuthenticationResult> GenerateAuthenticationResultForUserAsync(IdentityUser user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -250,6 +289,6 @@ namespace CIAC_TAS_Service.Services
         {
             return (securityToken is JwtSecurityToken jwtSecurity) &&
                 jwtSecurity.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase);
-        }
+        }        
     }
 }
