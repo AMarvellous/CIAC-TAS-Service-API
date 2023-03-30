@@ -14,9 +14,11 @@ namespace CIAC_TAS_Service.Data
 {
     public class DataContext : IdentityDbContext
     {
-        //dotnet ef migrations add "Added_UserId_InPosts" ---Command
-        //dotnet ef database update ---Command
-        public DataContext(DbContextOptions<DataContext> options)
+		//dotnet ef migrations add "Added_UserId_InPosts" ---Command
+		//dotnet ef database update ---Command
+		// Remove-migration if the database update was not run
+		// dotnet ef migrations remove   in order to remove the last migration applied 
+		public DataContext(DbContextOptions<DataContext> options)
             : base(options)
         {
             ChangeTracker.LazyLoadingEnabled = false;
@@ -95,7 +97,7 @@ namespace CIAC_TAS_Service.Data
                 .HasData(
                 new Programa {Id = 1, Nombre = "TMA" });
 
-
+            
             //Script para llenar las preguntasAsa
             //INSERT INTO[CIAC_TAS_DEV].[dbo].[PreguntaAsa]
             //(NumeroPregunta, Pregunta, GrupoPreguntaAsaId, EstadoPreguntaAsaId, Ruta)
@@ -158,5 +160,6 @@ namespace CIAC_TAS_Service.Data
         public DbSet<PreguntaAsaOpcion> PreguntaAsaOpcion { get; set; }
         public DbSet<RespuestasAsa> RespuestasAsas { get; set; }
         public DbSet<RespuestasAsaConsolidado> RespuestasAsaConsolidado { get; set; }
-    }
+        public DbSet<ExamenGenerado> ExamenGenerado { get; set; }
+	}
 }

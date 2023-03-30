@@ -10,5 +10,6 @@ namespace CIAC_TAS_Service.Services
         Task<Grupo> GetGrupoByIdAsync(int id);
         Task<bool> UpdateGrupoAsync(Grupo grupo);
         Task<bool> DeleteGrupoAsync(int id);
-    }
+		Task<bool> CheckGrupoExistsAsync(int id);
+	}
 }

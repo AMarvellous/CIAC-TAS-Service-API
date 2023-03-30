@@ -56,7 +56,11 @@ namespace CIAC_TAS_Service.Mapping
                     opt => opt.MapFrom(s => s.ConfiguracionPreguntaAsa)
                 );
 
-			CreateMap<Tag, TagResponse>();
+            CreateMap<ExamenGenerado, ExamenGeneradoResponse>()
+                .ForMember(x => x.GrupoResponse,
+                opt => opt.MapFrom(s => s.Grupos));
+
+            CreateMap<Tag, TagResponse>();
             CreateMap<Grupo, GrupoResponse>();
             CreateMap<GrupoPreguntaAsa, GrupoPreguntaAsaResponse>();
             CreateMap<Programa, ProgramaResponse>();
@@ -69,7 +73,7 @@ namespace CIAC_TAS_Service.Mapping
             CreateMap<PreguntaAsaImagenAsa, PreguntaAsaImagenAsaResponse>();
             CreateMap<IdentityUser, IdentityUserResponse>();
             CreateMap<PreguntaAsaOpcion, PreguntaAsaOpcionResponse>();
-            CreateMap<RespuestasAsa, RespuestasAsaResponse>();            
-        }
+            CreateMap<RespuestasAsa, RespuestasAsaResponse>();
+		}
     }
 }

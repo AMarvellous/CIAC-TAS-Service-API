@@ -4,6 +4,7 @@ using CIAC_TAS_Service.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CIACTASService.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230322013956_Updating_Examen_Generado_Pregunta_Table_V3")]
+    partial class Updating_Examen_Generado_Pregunta_Table_V3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,24 +88,35 @@ namespace CIACTASService.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<Guid>("ExamenGeneradoGuid")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("GrupoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("NumeroOpcion")
+                    b.HasKey("Id");
+
+                    b.HasIndex("GrupoId");
+
+                    b.ToTable("ExamenGenerado");
+                });
+
+            modelBuilder.Entity("CIAC_TAS_Service.Domain.ASA.ExamenGeneradoPregunta", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ExamenGeneradoId")
                         .HasColumnType("int");
 
                     b.Property<int>("NumeroPregunta")
                         .HasColumnType("int");
 
-                    b.Property<string>("OpcionTexto")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PreguntaAsaId")
+                        .HasColumnType("int");
 
                     b.Property<string>("PreguntaTexto")
                         .IsRequired()
@@ -111,9 +124,11 @@ namespace CIACTASService.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GrupoId");
+                    b.HasIndex("ExamenGeneradoId");
 
-                    b.ToTable("ExamenGenerado");
+                    b.HasIndex("PreguntaAsaId");
+
+                    b.ToTable("ExamenGeneradoPregunta");
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.ASA.GrupoPreguntaAsa", b =>
@@ -882,6 +897,25 @@ namespace CIACTASService.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Grupos");
+                });
+
+            modelBuilder.Entity("CIAC_TAS_Service.Domain.ASA.ExamenGeneradoPregunta", b =>
+                {
+                    b.HasOne("CIAC_TAS_Service.Domain.ASA.ExamenGenerado", "ExamenGenerados")
+                        .WithMany()
+                        .HasForeignKey("ExamenGeneradoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CIAC_TAS_Service.Domain.ASA.PreguntaAsa", "PreguntasAsa")
+                        .WithMany()
+                        .HasForeignKey("PreguntaAsaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ExamenGenerados");
+
+                    b.Navigation("PreguntasAsa");
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.ASA.PreguntaAsa", b =>

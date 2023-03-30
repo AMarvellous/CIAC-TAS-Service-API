@@ -30,7 +30,10 @@ namespace CIAC_TAS_Service.Sdk
         [Get("/" + Identity.GetUsers)]
         Task<ApiResponse<PagedResponse<IdentityUserResponse>>> GetUsersAsync();
 
-        [Get("/" + Identity.GetUserByName)]
+		[Get("/" + Identity.GetUsersByRoleName)]
+		Task<ApiResponse<PagedResponse<IdentityUserResponse>>> GetUsersByRoleNameAsync(string roleName);
+
+		[Get("/" + Identity.GetUserByName)]
         Task<ApiResponse<IdentityUserResponse>> GetUserByNameAsync(string userName);
 
         [Post("/" + Identity.GetAsignToRole)]

@@ -160,7 +160,12 @@ namespace CIAC_TAS_Service.Services
             return await _userManager.Users.ToListAsync();
         }
 
-        public async Task<IdentityUser> GetUserByNameAsync(string userName)
+		public async Task<IEnumerable<IdentityUser>> GetUsersByRoleAsync(string roleName)
+		{
+			return await _userManager.GetUsersInRoleAsync(roleName);
+		}
+
+		public async Task<IdentityUser> GetUserByNameAsync(string userName)
         {
             return await _userManager.FindByNameAsync(userName);
         }

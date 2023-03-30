@@ -15,5 +15,6 @@ namespace CIAC_TAS_Service.Domain.General
         // Link to table
         public IEnumerable<EstudianteGrupo> EstudianteGrupos { get; set; }
         public IEnumerable<ConfiguracionPreguntaAsa> ConfiguracionPreguntaAsa { get; set; }
+        public IEnumerable<ExamenGenerado> ExamenGenerado { get; set; }
     }
 }

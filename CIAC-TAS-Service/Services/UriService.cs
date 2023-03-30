@@ -112,5 +112,10 @@ namespace CIAC_TAS_Service.Services
         {
             return new Uri(_baseUri + ApiRoute.RespuestasAsasConsolidado.GetAllByUserId.Replace("{userId}", userId));
         }
-    }
+
+		public Uri GetExamenGeneradoUri(string examenGeneradoId)
+		{
+			return new Uri(_baseUri + ApiRoute.ExamenGenerados.Get.Replace("{examenGeneradoId}", examenGeneradoId));
+		}
+	}
 }

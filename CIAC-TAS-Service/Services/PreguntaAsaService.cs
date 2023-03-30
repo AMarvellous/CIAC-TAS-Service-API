@@ -82,6 +82,7 @@ namespace CIAC_TAS_Service.Services
         {
             var queryable = _dataContext.PreguntaAsa
                 .Where(x => x.EstadoPreguntaAsaId != 2) // Avoid estado Inactive
+                .Include(x => x.PreguntaAsaOpciones)
                 .Include(x => x.GrupoPreguntaAsa)
                 .AsQueryable();
 

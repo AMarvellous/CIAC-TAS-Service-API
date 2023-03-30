@@ -10,7 +10,8 @@ namespace CIAC_TAS_Service.Services
         Task<AuthenticationResult> RefreshTokenAsync(string token, string refreshToken);
         Task<IEnumerable<string>> GetRolesByUserNameAsync(string userName);
         Task<IEnumerable<IdentityUser>> GetUsersAsync();
-        Task<bool> CheckUserExistsByUserIdAsync(string userId);
+        Task<IEnumerable<IdentityUser>> GetUsersByRoleAsync(string roleName);
+		Task<bool> CheckUserExistsByUserIdAsync(string userId);
         Task<IdentityResult> AddUserToRoleAsync(string userId, string roleId);
         Task<IdentityUser> GetUserByNameAsync(string userName);
         Task<AuthenticationResult> UpdatePasswordByUserNameAsync(string userName, string newPassword);

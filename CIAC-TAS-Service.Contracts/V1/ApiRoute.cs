@@ -22,7 +22,8 @@
             public const string GetRolesNames = Base + "/identity/roles/names";
             public const string GetRolesUserName = Base + "/identity/roles/{userName}";
             public const string GetUsers = Base + "/identity/users/";
-            public const string GetUserByName = Base + "/identity/users/{userName}";
+			public const string GetUsersByRoleName = Base + "/identity/users/roleName/{roleName}";
+			public const string GetUserByName = Base + "/identity/users/{userName}";
             public const string GetAsignToRole = Base + "/identity/user/role";
             public const string PatchUserPassword = Base + "/identity/password/user/{userName}";
             public const string PatchUserPasswordUserOwns = Base + "/identity/password/userOwns/user/{userName}";
@@ -182,5 +183,17 @@
 			public const string GetAllHeadersByUserId = Base + "/respuestasAsasConsolidado/headers/userId/{userId}";
             public const string UserHasAnswersInConsolidadoByConfiguracionId = Base + "/respuestasAsasConsolidado/configuracionId/{configuracionId}/userId/{userId}";
         }
-    }
+
+		public static class ExamenGenerados
+		{
+			public const string GetAll = $"{Base}/examenGenerados";
+			public const string Get = Base + "/examenGenerados/{examenGeneradoId}";
+			public const string Create = $"{Base}/examenGenerados";
+			public const string Update = Base + "/examenGenerados/{examenGeneradoId}";
+			public const string Delete = Base + "/examenGenerados/{examenGeneradoId}";
+			public const string CreatePreguntasExamenGenerado = Base + "/examenGenerado/preguntas/grupo/{grupoId}";
+            public const string GetExamenByGrupoGuid = Base + "/examenGenerados/grupo/{grupoId}/guid/{guid}";
+            public const string GetExamenHeaders = Base + "/examenGenerados/headers";
+        }
+	}
 }

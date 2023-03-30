@@ -148,7 +148,21 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(paginationResponse);
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Estudiante")]
+		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+		[Produces("application/json")]
+		[HttpGet(ApiRoute.Identity.GetUsersByRoleName)]
+		public async Task<IActionResult> GetUsersByRoleName([FromRoute] string roleName, [FromQuery] PaginationQuery paginationQuery)
+		{
+			var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
+			var users = await _identityService.GetUsersByRoleAsync(roleName);
+			var usersResponses = _mapper.Map<List<IdentityUserResponse>>(users);
+
+			var paginationResponse = PaginationHelpers.CreatePaginatedResponse(_uriService, pagination, usersResponses);
+
+			return Ok(paginationResponse);
+		}
+
+		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Estudiante")]
         [Produces("application/json")]
         [HttpGet(ApiRoute.Identity.GetUserByName)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
