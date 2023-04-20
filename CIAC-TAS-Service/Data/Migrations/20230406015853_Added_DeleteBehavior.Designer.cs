@@ -4,6 +4,7 @@ using CIAC_TAS_Service.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CIACTASService.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230406015853_Added_DeleteBehavior")]
+    partial class Added_DeleteBehavior
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -335,29 +337,6 @@ namespace CIACTASService.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("RespuestasAsaConsolidado");
-                });
-
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.AsistenciaEstudiante", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AsistenciaEstudianteHeaderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EstudianteId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AsistenciaEstudianteHeaderId");
-
-                    b.HasIndex("EstudianteId");
-
-                    b.ToTable("AsistenciaEstudiante");
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.AsistenciaEstudianteHeader", b =>
@@ -1089,213 +1068,6 @@ namespace CIACTASService.Data.Migrations
                     b.HasIndex("MateriaId");
 
                     b.ToTable("ModuloMateria");
-
-                    b.HasData(
-                        new
-                        {
-                            ModuloId = 1,
-                            MateriaId = 1
-                        },
-                        new
-                        {
-                            ModuloId = 2,
-                            MateriaId = 2
-                        },
-                        new
-                        {
-                            ModuloId = 2,
-                            MateriaId = 3
-                        },
-                        new
-                        {
-                            ModuloId = 2,
-                            MateriaId = 4
-                        },
-                        new
-                        {
-                            ModuloId = 2,
-                            MateriaId = 5
-                        },
-                        new
-                        {
-                            ModuloId = 2,
-                            MateriaId = 6
-                        },
-                        new
-                        {
-                            ModuloId = 2,
-                            MateriaId = 7
-                        },
-                        new
-                        {
-                            ModuloId = 2,
-                            MateriaId = 8
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 9
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 10
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 11
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 12
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 13
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 14
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 15
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 16
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 17
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 18
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 19
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 20
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 21
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 22
-                        },
-                        new
-                        {
-                            ModuloId = 4,
-                            MateriaId = 23
-                        },
-                        new
-                        {
-                            ModuloId = 4,
-                            MateriaId = 24
-                        },
-                        new
-                        {
-                            ModuloId = 4,
-                            MateriaId = 25
-                        },
-                        new
-                        {
-                            ModuloId = 4,
-                            MateriaId = 26
-                        },
-                        new
-                        {
-                            ModuloId = 5,
-                            MateriaId = 27
-                        },
-                        new
-                        {
-                            ModuloId = 5,
-                            MateriaId = 28
-                        },
-                        new
-                        {
-                            ModuloId = 5,
-                            MateriaId = 29
-                        },
-                        new
-                        {
-                            ModuloId = 5,
-                            MateriaId = 30
-                        },
-                        new
-                        {
-                            ModuloId = 5,
-                            MateriaId = 31
-                        },
-                        new
-                        {
-                            ModuloId = 6,
-                            MateriaId = 32
-                        },
-                        new
-                        {
-                            ModuloId = 6,
-                            MateriaId = 33
-                        },
-                        new
-                        {
-                            ModuloId = 6,
-                            MateriaId = 34
-                        },
-                        new
-                        {
-                            ModuloId = 7,
-                            MateriaId = 35
-                        },
-                        new
-                        {
-                            ModuloId = 8,
-                            MateriaId = 36
-                        },
-                        new
-                        {
-                            ModuloId = 9,
-                            MateriaId = 37
-                        },
-                        new
-                        {
-                            ModuloId = 10,
-                            MateriaId = 38
-                        },
-                        new
-                        {
-                            ModuloId = 11,
-                            MateriaId = 39
-                        },
-                        new
-                        {
-                            ModuloId = 11,
-                            MateriaId = 40
-                        },
-                        new
-                        {
-                            ModuloId = 12,
-                            MateriaId = 41
-                        });
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.General.Programa", b =>
@@ -1701,7 +1473,7 @@ namespace CIACTASService.Data.Migrations
                     b.HasOne("CIAC_TAS_Service.Domain.ASA.GrupoPreguntaAsa", "GrupoPreguntaAsa")
                         .WithOne("PreguntaAsa")
                         .HasForeignKey("CIAC_TAS_Service.Domain.ASA.PreguntaAsa", "GrupoPreguntaAsaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("EstadoPreguntaAsa");
@@ -1733,7 +1505,7 @@ namespace CIACTASService.Data.Migrations
                     b.HasOne("CIAC_TAS_Service.Domain.ASA.PreguntaAsa", "PreguntaAsa")
                         .WithMany("PreguntaAsaOpciones")
                         .HasForeignKey("PreguntaAsaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("PreguntaAsa");
@@ -1788,25 +1560,6 @@ namespace CIACTASService.Data.Migrations
                     b.Navigation("ConfiguracionPreguntaAsa");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.AsistenciaEstudiante", b =>
-                {
-                    b.HasOne("CIAC_TAS_Service.Domain.Estudiante.AsistenciaEstudianteHeader", "AsistenciaEstudianteHeader")
-                        .WithMany("AsistenciaEstudiantes")
-                        .HasForeignKey("AsistenciaEstudianteHeaderId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("CIAC_TAS_Service.Domain.Estudiante.Estudiante", "Estudiante")
-                        .WithMany("AsistenciaEstudiantes")
-                        .HasForeignKey("EstudianteId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("AsistenciaEstudianteHeader");
-
-                    b.Navigation("Estudiante");
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.AsistenciaEstudianteHeader", b =>
@@ -2072,15 +1825,8 @@ namespace CIACTASService.Data.Migrations
                     b.Navigation("PreguntaAsaOpciones");
                 });
 
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.AsistenciaEstudianteHeader", b =>
-                {
-                    b.Navigation("AsistenciaEstudiantes");
-                });
-
             modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.Estudiante", b =>
                 {
-                    b.Navigation("AsistenciaEstudiantes");
-
                     b.Navigation("EstudianteGrupos");
 
                     b.Navigation("EstudianteProgramas");

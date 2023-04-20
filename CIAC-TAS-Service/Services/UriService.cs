@@ -117,5 +117,40 @@ namespace CIAC_TAS_Service.Services
 		{
 			return new Uri(_baseUri + ApiRoute.ExamenGenerados.Get.Replace("{examenGeneradoId}", examenGeneradoId));
 		}
-	}
+
+        public Uri GetInstructorUri(string instructorId)
+        {
+            return new Uri(_baseUri + ApiRoute.Instructores.Get.Replace("{instructorId}", instructorId));
+        }
+
+        public Uri GetAdministrativoUri(string administrativoId)
+        {
+            return new Uri(_baseUri + ApiRoute.Administrativos.Get.Replace("{administrativoId}", administrativoId));
+        }
+
+        public Uri GetMateriaUri(string materiaId)
+        {
+            return new Uri(_baseUri + ApiRoute.Materias.Get.Replace("{materiaId}", materiaId));
+        }
+
+        public Uri GetModuloUri(string moduloId)
+        {
+            return new Uri(_baseUri + ApiRoute.Modulos.Get.Replace("{moduloId}", moduloId));
+        }
+
+        public Uri GetModuloMateriaUri(string moduloId, string materiaId)
+        {
+            return new Uri(_baseUri + ApiRoute.ModuloMaterias.Get.Replace("{moduloId}", moduloId).Replace("{materiaId}", materiaId));
+        }
+
+        public Uri GetAsistenciaEstudianteHeaderUri(string asistenciaEstudianteHeaderId)
+        {
+            return new Uri(_baseUri + ApiRoute.AsistenciaEstudianteHeaders.Get.Replace("{asistenciaEstudianteHeaderId}", asistenciaEstudianteHeaderId));
+        }
+
+        public Uri GetAsistenciaEstudianteUri(string asistenciaEstudianteId)
+        {
+            return new Uri(_baseUri + ApiRoute.AsistenciaEstudiantes.Get.Replace("{asistenciaEstudianteId}", asistenciaEstudianteId));
+        }
+    }
 }

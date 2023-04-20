@@ -4,6 +4,7 @@ using CIAC_TAS_Service.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CIACTASService.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230405230831_Added_Misc_Tables")]
+    partial class Added_Misc_Tables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -335,29 +337,6 @@ namespace CIACTASService.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("RespuestasAsaConsolidado");
-                });
-
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.AsistenciaEstudiante", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AsistenciaEstudianteHeaderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EstudianteId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AsistenciaEstudianteHeaderId");
-
-                    b.HasIndex("EstudianteId");
-
-                    b.ToTable("AsistenciaEstudiante");
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.AsistenciaEstudianteHeader", b =>
@@ -720,9 +699,8 @@ namespace CIACTASService.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("MateriaCodigo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("MateriaCodigo")
+                        .HasColumnType("int");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -731,254 +709,6 @@ namespace CIACTASService.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Materia");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            MateriaCodigo = "1.1",
-                            Nombre = "Requerimientos, Leyes y Reglamentos de Aviación Civil"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            MateriaCodigo = "2.1",
-                            Nombre = "Matemáticas"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            MateriaCodigo = "2.2",
-                            Nombre = "Física"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            MateriaCodigo = "2.3",
-                            Nombre = "Química"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            MateriaCodigo = "2.4",
-                            Nombre = "Dibujo Técnico"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            MateriaCodigo = "2.5",
-                            Nombre = "Control de vuelo y aerodinámica en ala fija y helicóptero"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            MateriaCodigo = "2.6",
-                            Nombre = "Peso y balance"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            MateriaCodigo = "2.7",
-                            Nombre = "Lineas de fluidos y terminales"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            MateriaCodigo = "3.1",
-                            Nombre = "Materiales y Procesos"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            MateriaCodigo = "3.2",
-                            Nombre = "Electricidad básica"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            MateriaCodigo = "3.3",
-                            Nombre = "Soldadura"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            MateriaCodigo = "3.4",
-                            Nombre = "Corrosión"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            MateriaCodigo = "3.5",
-                            Nombre = "Operación y servicio en tierra"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            MateriaCodigo = "3.6",
-                            Nombre = "Ensayos no destructivos"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            MateriaCodigo = "3.7",
-                            Nombre = "Estructuras I"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            MateriaCodigo = "3.8",
-                            Nombre = "Sistema de tren de aterrizaje"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            MateriaCodigo = "3.9",
-                            Nombre = "Sistema hidráulico y neumático"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            MateriaCodigo = "3.10",
-                            Nombre = "Sistema de control atmosférico (cabina)"
-                        },
-                        new
-                        {
-                            Id = 19,
-                            MateriaCodigo = "3.11",
-                            Nombre = "Sistema de combustible"
-                        },
-                        new
-                        {
-                            Id = 20,
-                            MateriaCodigo = "3.12",
-                            Nombre = "Sistema de control de lluvia y hielo"
-                        },
-                        new
-                        {
-                            Id = 21,
-                            MateriaCodigo = "3.13",
-                            Nombre = "Sistema de protección de fuego"
-                        },
-                        new
-                        {
-                            Id = 22,
-                            MateriaCodigo = "3.14",
-                            Nombre = "Estructuras II"
-                        },
-                        new
-                        {
-                            Id = 23,
-                            MateriaCodigo = "4.1",
-                            Nombre = "Motores recíprocos"
-                        },
-                        new
-                        {
-                            Id = 24,
-                            MateriaCodigo = "4.2",
-                            Nombre = "Hélices"
-                        },
-                        new
-                        {
-                            Id = 25,
-                            MateriaCodigo = "4.3",
-                            Nombre = "Motores a turbina"
-                        },
-                        new
-                        {
-                            Id = 26,
-                            MateriaCodigo = "4.4",
-                            Nombre = "Sistema de combustible"
-                        },
-                        new
-                        {
-                            Id = 27,
-                            MateriaCodigo = "5.1",
-                            Nombre = "Materiales y prácticas de mantenimiento"
-                        },
-                        new
-                        {
-                            Id = 28,
-                            MateriaCodigo = "5.2",
-                            Nombre = "Fundamentos de Electricidad y Electrónica"
-                        },
-                        new
-                        {
-                            Id = 29,
-                            MateriaCodigo = "5.3",
-                            Nombre = "Técnicas digitales, computadoras y dispositivos asociados"
-                        },
-                        new
-                        {
-                            Id = 30,
-                            MateriaCodigo = "5.4",
-                            Nombre = "Sistemas eléctricos de aeronaves"
-                        },
-                        new
-                        {
-                            Id = 31,
-                            MateriaCodigo = "5.5",
-                            Nombre = "Sistemas de instrumentos de aeronaves"
-                        },
-                        new
-                        {
-                            Id = 32,
-                            MateriaCodigo = "6.1",
-                            Nombre = "Sistemas automáticos de control de vuelo (AFCS): Ala Fija y Rotatoria"
-                        },
-                        new
-                        {
-                            Id = 33,
-                            MateriaCodigo = "6.2",
-                            Nombre = "Sistemas de navegación Inercial de aeronaves (INS)"
-                        },
-                        new
-                        {
-                            Id = 34,
-                            MateriaCodigo = "6.3",
-                            Nombre = "Sistemas de radio y radio navegación de aeronaves"
-                        },
-                        new
-                        {
-                            Id = 35,
-                            MateriaCodigo = "7.1",
-                            Nombre = "Actuación humana"
-                        },
-                        new
-                        {
-                            Id = 36,
-                            MateriaCodigo = "8.1",
-                            Nombre = "Prácticas de habilidades de mantenimiento: Célula"
-                        },
-                        new
-                        {
-                            Id = 37,
-                            MateriaCodigo = "9.1",
-                            Nombre = "Prácticas de habilidades de mantenimiento: Sistema Motopropulsor"
-                        },
-                        new
-                        {
-                            Id = 38,
-                            MateriaCodigo = "10.1",
-                            Nombre = "Prácticas de habilidades de mantenimiento: Aviónica, Electricidad, instrumentos, radio y vuelo automático."
-                        },
-                        new
-                        {
-                            Id = 39,
-                            MateriaCodigo = "11.1",
-                            Nombre = "Prácticas aplicadas a las operaciones de mantenimiento de Línea"
-                        },
-                        new
-                        {
-                            Id = 40,
-                            MateriaCodigo = "11.2",
-                            Nombre = "Prácticas aplicadas a las operaciones de producción de Base"
-                        },
-                        new
-                        {
-                            Id = 41,
-                            MateriaCodigo = "12.1",
-                            Nombre = "Inglés"
-                        });
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.General.Modulo", b =>
@@ -989,9 +719,8 @@ namespace CIACTASService.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("ModuloCodigo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ModuloCodigo")
+                        .HasColumnType("int");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -1000,80 +729,6 @@ namespace CIACTASService.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Modulo");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ModuloCodigo = "1",
-                            Nombre = "Modulo 1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ModuloCodigo = "2",
-                            Nombre = "Modulo 2"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ModuloCodigo = "3",
-                            Nombre = "Modulo 3"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            ModuloCodigo = "4",
-                            Nombre = "Modulo 4"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            ModuloCodigo = "5",
-                            Nombre = "Modulo 5"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            ModuloCodigo = "6",
-                            Nombre = "Modulo 6"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            ModuloCodigo = "7",
-                            Nombre = "Modulo 7"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            ModuloCodigo = "8",
-                            Nombre = "Modulo 8"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            ModuloCodigo = "9",
-                            Nombre = "Modulo 9"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            ModuloCodigo = "10",
-                            Nombre = "Modulo 10"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            ModuloCodigo = "11",
-                            Nombre = "Modulo 11"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            ModuloCodigo = "12",
-                            Nombre = "Modulo 12"
-                        });
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.General.ModuloMateria", b =>
@@ -1089,213 +744,6 @@ namespace CIACTASService.Data.Migrations
                     b.HasIndex("MateriaId");
 
                     b.ToTable("ModuloMateria");
-
-                    b.HasData(
-                        new
-                        {
-                            ModuloId = 1,
-                            MateriaId = 1
-                        },
-                        new
-                        {
-                            ModuloId = 2,
-                            MateriaId = 2
-                        },
-                        new
-                        {
-                            ModuloId = 2,
-                            MateriaId = 3
-                        },
-                        new
-                        {
-                            ModuloId = 2,
-                            MateriaId = 4
-                        },
-                        new
-                        {
-                            ModuloId = 2,
-                            MateriaId = 5
-                        },
-                        new
-                        {
-                            ModuloId = 2,
-                            MateriaId = 6
-                        },
-                        new
-                        {
-                            ModuloId = 2,
-                            MateriaId = 7
-                        },
-                        new
-                        {
-                            ModuloId = 2,
-                            MateriaId = 8
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 9
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 10
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 11
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 12
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 13
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 14
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 15
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 16
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 17
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 18
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 19
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 20
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 21
-                        },
-                        new
-                        {
-                            ModuloId = 3,
-                            MateriaId = 22
-                        },
-                        new
-                        {
-                            ModuloId = 4,
-                            MateriaId = 23
-                        },
-                        new
-                        {
-                            ModuloId = 4,
-                            MateriaId = 24
-                        },
-                        new
-                        {
-                            ModuloId = 4,
-                            MateriaId = 25
-                        },
-                        new
-                        {
-                            ModuloId = 4,
-                            MateriaId = 26
-                        },
-                        new
-                        {
-                            ModuloId = 5,
-                            MateriaId = 27
-                        },
-                        new
-                        {
-                            ModuloId = 5,
-                            MateriaId = 28
-                        },
-                        new
-                        {
-                            ModuloId = 5,
-                            MateriaId = 29
-                        },
-                        new
-                        {
-                            ModuloId = 5,
-                            MateriaId = 30
-                        },
-                        new
-                        {
-                            ModuloId = 5,
-                            MateriaId = 31
-                        },
-                        new
-                        {
-                            ModuloId = 6,
-                            MateriaId = 32
-                        },
-                        new
-                        {
-                            ModuloId = 6,
-                            MateriaId = 33
-                        },
-                        new
-                        {
-                            ModuloId = 6,
-                            MateriaId = 34
-                        },
-                        new
-                        {
-                            ModuloId = 7,
-                            MateriaId = 35
-                        },
-                        new
-                        {
-                            ModuloId = 8,
-                            MateriaId = 36
-                        },
-                        new
-                        {
-                            ModuloId = 9,
-                            MateriaId = 37
-                        },
-                        new
-                        {
-                            ModuloId = 10,
-                            MateriaId = 38
-                        },
-                        new
-                        {
-                            ModuloId = 11,
-                            MateriaId = 39
-                        },
-                        new
-                        {
-                            ModuloId = 11,
-                            MateriaId = 40
-                        },
-                        new
-                        {
-                            ModuloId = 12,
-                            MateriaId = 41
-                        });
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.General.Programa", b =>
@@ -1673,7 +1121,7 @@ namespace CIACTASService.Data.Migrations
                     b.HasOne("CIAC_TAS_Service.Domain.General.Grupo", "Grupo")
                         .WithMany("ConfiguracionPreguntaAsa")
                         .HasForeignKey("GrupoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Grupo");
@@ -1684,7 +1132,7 @@ namespace CIACTASService.Data.Migrations
                     b.HasOne("CIAC_TAS_Service.Domain.General.Grupo", "Grupos")
                         .WithMany("ExamenGenerado")
                         .HasForeignKey("GrupoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Grupos");
@@ -1695,7 +1143,7 @@ namespace CIACTASService.Data.Migrations
                     b.HasOne("CIAC_TAS_Service.Domain.ASA.EstadoPreguntaAsa", "EstadoPreguntaAsa")
                         .WithOne("PreguntaAsa")
                         .HasForeignKey("CIAC_TAS_Service.Domain.ASA.PreguntaAsa", "EstadoPreguntaAsaId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CIAC_TAS_Service.Domain.ASA.GrupoPreguntaAsa", "GrupoPreguntaAsa")
@@ -1714,13 +1162,13 @@ namespace CIACTASService.Data.Migrations
                     b.HasOne("CIAC_TAS_Service.Domain.ASA.ImagenAsa", "ImagenAsa")
                         .WithMany("PreguntaAsaImagenAsas")
                         .HasForeignKey("ImagenAsaId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CIAC_TAS_Service.Domain.ASA.PreguntaAsa", "PreguntaAsa")
                         .WithMany("PreguntaAsaImagenAsas")
                         .HasForeignKey("PreguntaAsaId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ImagenAsa");
@@ -1743,24 +1191,22 @@ namespace CIACTASService.Data.Migrations
                 {
                     b.HasOne("CIAC_TAS_Service.Domain.ASA.ConfiguracionPreguntaAsa", "ConfiguracionPreguntaAsa")
                         .WithMany()
-                        .HasForeignKey("ConfiguracionId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("ConfiguracionId");
 
                     b.HasOne("CIAC_TAS_Service.Domain.ASA.PreguntaAsaOpcion", "PreguntaAsaOpcionSeleccionada")
                         .WithMany()
-                        .HasForeignKey("OpcionSeleccionadaId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("OpcionSeleccionadaId");
 
                     b.HasOne("CIAC_TAS_Service.Domain.ASA.PreguntaAsa", "PreguntaAsa")
                         .WithMany()
                         .HasForeignKey("PreguntaAsaId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ConfiguracionPreguntaAsa");
@@ -1776,13 +1222,12 @@ namespace CIACTASService.Data.Migrations
                 {
                     b.HasOne("CIAC_TAS_Service.Domain.ASA.ConfiguracionPreguntaAsa", "ConfiguracionPreguntaAsa")
                         .WithMany()
-                        .HasForeignKey("ConfiguracionId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("ConfiguracionId");
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ConfiguracionPreguntaAsa");
@@ -1790,55 +1235,36 @@ namespace CIACTASService.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.AsistenciaEstudiante", b =>
-                {
-                    b.HasOne("CIAC_TAS_Service.Domain.Estudiante.AsistenciaEstudianteHeader", "AsistenciaEstudianteHeader")
-                        .WithMany("AsistenciaEstudiantes")
-                        .HasForeignKey("AsistenciaEstudianteHeaderId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("CIAC_TAS_Service.Domain.Estudiante.Estudiante", "Estudiante")
-                        .WithMany("AsistenciaEstudiantes")
-                        .HasForeignKey("EstudianteId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("AsistenciaEstudianteHeader");
-
-                    b.Navigation("Estudiante");
-                });
-
             modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.AsistenciaEstudianteHeader", b =>
                 {
                     b.HasOne("CIAC_TAS_Service.Domain.General.Grupo", "Grupo")
                         .WithMany("AsistenciaEstudianteHeaders")
                         .HasForeignKey("GrupoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CIAC_TAS_Service.Domain.General.Instructor", "Instructor")
                         .WithMany("AsistenciaEstudianteHeaders")
                         .HasForeignKey("InstructorId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CIAC_TAS_Service.Domain.General.Materia", "Materia")
                         .WithMany("AsistenciaEstudianteHeaders")
                         .HasForeignKey("MateriaId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CIAC_TAS_Service.Domain.General.Modulo", "Modulo")
                         .WithMany("AsistenciaEstudianteHeaders")
                         .HasForeignKey("ModuloId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CIAC_TAS_Service.Domain.General.Programa", "Programa")
                         .WithMany("AsistenciaEstudianteHeaders")
                         .HasForeignKey("ProgramaId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Grupo");
@@ -1857,7 +1283,7 @@ namespace CIACTASService.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -1868,13 +1294,13 @@ namespace CIACTASService.Data.Migrations
                     b.HasOne("CIAC_TAS_Service.Domain.Estudiante.Estudiante", "Estudiante")
                         .WithMany("EstudianteGrupos")
                         .HasForeignKey("EstudianteId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CIAC_TAS_Service.Domain.General.Grupo", "Grupo")
                         .WithMany("EstudianteGrupos")
                         .HasForeignKey("GrupoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Estudiante");
@@ -1887,13 +1313,13 @@ namespace CIACTASService.Data.Migrations
                     b.HasOne("CIAC_TAS_Service.Domain.Estudiante.Estudiante", "Estudiante")
                         .WithMany("EstudianteProgramas")
                         .HasForeignKey("EstudianteId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CIAC_TAS_Service.Domain.General.Programa", "Programa")
                         .WithMany("EstudianteProgramas")
                         .HasForeignKey("ProgramaId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Estudiante");
@@ -1906,7 +1332,7 @@ namespace CIACTASService.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -1917,7 +1343,7 @@ namespace CIACTASService.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -1928,13 +1354,13 @@ namespace CIACTASService.Data.Migrations
                     b.HasOne("CIAC_TAS_Service.Domain.General.Materia", "Materia")
                         .WithMany("ModuloMaterias")
                         .HasForeignKey("MateriaId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CIAC_TAS_Service.Domain.General.Modulo", "Modulo")
                         .WithMany("ModuloMaterias")
                         .HasForeignKey("ModuloId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Materia");
@@ -1947,7 +1373,7 @@ namespace CIACTASService.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Role");
@@ -1958,7 +1384,7 @@ namespace CIACTASService.Data.Migrations
                     b.HasOne("CIAC_TAS_Service.Domain.Menu.MenuModuloWeb", "MenuModuloWeb")
                         .WithMany("MenuSubModulosWeb")
                         .HasForeignKey("ModuloId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("MenuModuloWeb");
@@ -1969,7 +1395,7 @@ namespace CIACTASService.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -1980,7 +1406,7 @@ namespace CIACTASService.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -1991,7 +1417,7 @@ namespace CIACTASService.Data.Migrations
                     b.HasOne("CIAC_TAS_Service.Domain.Post", "Post")
                         .WithMany("Tags")
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Post");
@@ -2002,7 +1428,7 @@ namespace CIACTASService.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -2011,7 +1437,7 @@ namespace CIACTASService.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -2020,7 +1446,7 @@ namespace CIACTASService.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -2029,13 +1455,13 @@ namespace CIACTASService.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -2044,7 +1470,7 @@ namespace CIACTASService.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -2072,15 +1498,8 @@ namespace CIACTASService.Data.Migrations
                     b.Navigation("PreguntaAsaOpciones");
                 });
 
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.AsistenciaEstudianteHeader", b =>
-                {
-                    b.Navigation("AsistenciaEstudiantes");
-                });
-
             modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.Estudiante", b =>
                 {
-                    b.Navigation("AsistenciaEstudiantes");
-
                     b.Navigation("EstudianteGrupos");
 
                     b.Navigation("EstudianteProgramas");

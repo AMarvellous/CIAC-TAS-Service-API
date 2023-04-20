@@ -17,3 +17,15 @@ WORKDIR /app
 COPY --from=build /build/out .
 
 ENTRYPOINT ["dotnet", "CIAC-TAS-Service.dll"]
+
+
+
+
+
+
+
+
+
+
+
+

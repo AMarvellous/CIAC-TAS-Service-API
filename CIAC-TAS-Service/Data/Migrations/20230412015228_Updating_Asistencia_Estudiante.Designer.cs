@@ -4,6 +4,7 @@ using CIAC_TAS_Service.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CIACTASService.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230412015228_Updating_Asistencia_Estudiante")]
+    partial class Updating_Asistencia_Estudiante
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1701,7 +1703,7 @@ namespace CIACTASService.Data.Migrations
                     b.HasOne("CIAC_TAS_Service.Domain.ASA.GrupoPreguntaAsa", "GrupoPreguntaAsa")
                         .WithOne("PreguntaAsa")
                         .HasForeignKey("CIAC_TAS_Service.Domain.ASA.PreguntaAsa", "GrupoPreguntaAsaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("EstadoPreguntaAsa");
@@ -1733,7 +1735,7 @@ namespace CIACTASService.Data.Migrations
                     b.HasOne("CIAC_TAS_Service.Domain.ASA.PreguntaAsa", "PreguntaAsa")
                         .WithMany("PreguntaAsaOpciones")
                         .HasForeignKey("PreguntaAsaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("PreguntaAsa");

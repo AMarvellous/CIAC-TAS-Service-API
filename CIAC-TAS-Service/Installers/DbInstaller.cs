@@ -36,6 +36,13 @@ namespace CIAC_TAS_Service.Installers
             services.AddScoped<IRespuestasAsaService, RespuestasAsaService>();
             services.AddScoped<IRespuestasAsaConsolidadoService, RespuestasAsaConsolidadoService>();
 			services.AddScoped<IExamenGeneradoService, ExamenGeneradoService>();
-		}
+            services.AddScoped<IInstructorService, InstructorService>();
+            services.AddScoped<IAdministrativoService, AdministrativoService>();
+            services.AddScoped<IMateriaService, MateriaService>();
+            services.AddScoped<IModuloService, ModuloService>();
+            services.AddScoped<IModuloMateriaService, ModuloMateriaService>();
+            services.AddScoped<IAsistenciaEstudianteHeaderService, AsistenciaEstudianteHeaderService>();
+            services.AddScoped<IAsistenciaEstudianteService, AsistenciaEstudianteService>();
+        }
 	}
 }

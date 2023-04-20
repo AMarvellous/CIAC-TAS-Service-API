@@ -195,5 +195,67 @@
             public const string GetExamenByGrupoGuid = Base + "/examenGenerados/grupo/{grupoId}/guid/{guid}";
             public const string GetExamenHeaders = Base + "/examenGenerados/headers";
         }
-	}
+
+        public static class Instructores
+        {
+            public const string GetAll = $"{Base}/instructores";
+            public const string Get = Base + "/instructores/{instructorId}";
+            public const string Create = $"{Base}/instructores";
+            public const string Update = Base + "/instructores/{instructorId}";
+            public const string Delete = Base + "/instructores/{instructorId}";
+        }
+
+        public static class Administrativos
+        {
+            public const string GetAll = $"{Base}/administrativos";
+            public const string Get = Base + "/administrativos/{administrativoId}";
+            public const string Create = $"{Base}/administrativos";
+            public const string Update = Base + "/administrativos/{administrativoId}";
+            public const string Delete = Base + "/administrativos/{administrativoId}";
+        }
+
+        public static class Materias
+        {
+            public const string GetAll = $"{Base}/materias";
+            public const string Get = Base + "/materias/{materiaId}";
+            public const string Create = $"{Base}/materias";
+            public const string Update = Base + "/materias/{materiaId}";
+            public const string Delete = Base + "/materias/{materiaId}";
+        }
+
+        public static class Modulos
+        {
+            public const string GetAll = $"{Base}/modulos";
+            public const string Get = Base + "/modulos/{moduloId}";
+            public const string Create = $"{Base}/modulos";
+            public const string Update = Base + "/modulos/{moduloId}";
+            public const string Delete = Base + "/modulos/{moduloId}";
+        }
+
+        public static class ModuloMaterias
+        {
+            public const string GetAll = $"{Base}/moduloMaterias";
+            public const string Get = Base + "/moduloMaterias/{moduloId}/{materiaId}";
+            public const string Create = $"{Base}/moduloMaterias";
+            public const string Delete = Base + "/moduloMaterias/{moduloId}/{materiaId}";
+        }
+
+        public static class AsistenciaEstudianteHeaders
+        {
+            public const string GetAll = $"{Base}/asistenciaEstudianteHeaders";
+            public const string Get = Base + "/asistenciaEstudianteHeaders/{asistenciaEstudianteHeaderId}";
+            public const string Create = $"{Base}/asistenciaEstudianteHeaders";
+            public const string Update = Base + "/asistenciaEstudianteHeaders/{asistenciaEstudianteHeaderId}";
+            public const string Delete = Base + "/asistenciaEstudianteHeaders/{asistenciaEstudianteHeaderId}";
+        }
+
+        public static class AsistenciaEstudiantes
+        {
+            public const string GetAll = $"{Base}/asistenciaEstudiantes";
+            public const string Get = Base + "/asistenciaEstudiantes/{asistenciaEstudianteId}";
+            public const string Create = $"{Base}/asistenciaEstudiantes";
+            public const string Update = Base + "/asistenciaEstudiantes/{asistenciaEstudianteId}";
+            public const string Delete = Base + "/asistenciaEstudiantes/{asistenciaEstudianteId}";
+        }
+    }
 }

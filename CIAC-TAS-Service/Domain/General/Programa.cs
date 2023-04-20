@@ -1,4 +1,5 @@
-﻿using CIAC_TAS_Service.Domain.Estudiante;
+﻿using CIAC_TAS_Service.Domain.ASA;
+using CIAC_TAS_Service.Domain.Estudiante;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -13,5 +14,6 @@ namespace CIAC_TAS_Service.Domain.General
 
         // Link to tables
         public IEnumerable<EstudiantePrograma> EstudianteProgramas { get; set; }
+        public IEnumerable<AsistenciaEstudianteHeader> AsistenciaEstudianteHeaders { get; set; }
     }
 }

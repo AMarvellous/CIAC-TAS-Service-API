@@ -60,6 +60,39 @@ namespace CIAC_TAS_Service.Mapping
                 .ForMember(x => x.GrupoResponse,
                 opt => opt.MapFrom(s => s.Grupos));
 
+            CreateMap<ModuloMateria, ModuloMateriaResponse>()
+                .ForMember(
+                    x => x.ModuloResponse,
+                    opt => opt.MapFrom(m => m.Modulo))
+                .ForMember(
+                    x => x.MateriaResponse,
+                    opt => opt.MapFrom(m => m.Materia));
+
+            CreateMap<AsistenciaEstudianteHeader, AsistenciaEstudianteHeaderResponse>()
+                .ForMember(
+                    x => x.ProgramaResponse,
+                    opt => opt.MapFrom(m => m.Programa))
+                .ForMember(
+                    x => x.GrupoResponse,
+                    opt => opt.MapFrom(m => m.Grupo))
+                .ForMember(
+                    x => x.MateriaResponse,
+                    opt => opt.MapFrom(m => m.Materia))
+                .ForMember(
+                    x => x.ModuloResponse,
+                    opt => opt.MapFrom(m => m.Modulo))
+                .ForMember(
+                    x => x.InstructorResponse,
+                    opt => opt.MapFrom(m => m.Instructor))
+                .ForMember(
+                    x => x.AsistenciaEstudiantesResponse,
+                    opt => opt.MapFrom(m => m.AsistenciaEstudiantes));
+
+            CreateMap<AsistenciaEstudiante, AsistenciaEstudianteResponse>()
+                .ForMember(
+                    x => x.EstudianteResponse,
+                    opt => opt.MapFrom(m => m.Estudiante));
+
             CreateMap<Tag, TagResponse>();
             CreateMap<Grupo, GrupoResponse>();
             CreateMap<GrupoPreguntaAsa, GrupoPreguntaAsaResponse>();
@@ -74,6 +107,10 @@ namespace CIAC_TAS_Service.Mapping
             CreateMap<IdentityUser, IdentityUserResponse>();
             CreateMap<PreguntaAsaOpcion, PreguntaAsaOpcionResponse>();
             CreateMap<RespuestasAsa, RespuestasAsaResponse>();
-		}
+            CreateMap<Instructor, InstructorResponse>();
+            CreateMap<Administrativo, AdministrativoResponse>();
+            CreateMap<Materia, MateriaResponse>();
+            CreateMap<Modulo, ModuloResponse>();
+        }
     }
 }
