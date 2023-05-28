@@ -43,6 +43,7 @@ namespace CIAC_TAS_Service.Installers
             services.AddScoped<IModuloMateriaService, ModuloMateriaService>();
             services.AddScoped<IAsistenciaEstudianteHeaderService, AsistenciaEstudianteHeaderService>();
             services.AddScoped<IAsistenciaEstudianteService, AsistenciaEstudianteService>();
+            services.AddScoped<IEstudianteMateriaService, EstudianteMateriaService>();
         }
 	}
 }

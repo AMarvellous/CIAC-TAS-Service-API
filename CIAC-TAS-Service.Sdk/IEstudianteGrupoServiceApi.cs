@@ -23,6 +23,15 @@ namespace CIAC_TAS_Service.Sdk
         Task<ApiResponse<EstudianteGrupoResponse>> CreateAsync([Body] CreateEstudianteGrupoRequest estudianteGrupoRequest);
 
         [Delete("/" + EstudianteGrupos.Delete)]
-        Task<ApiResponse<EstudianteGrupoResponse>> DeleteAsync(int estudianteId, int GrupoId);
+        Task<ApiResponse<EstudianteGrupoResponse>> DeleteAsync(int estudianteId, int grupoId);
+        
+        [Get("/" + EstudianteGrupos.GetHeaders)]
+        Task<ApiResponse<PagedResponse<EstudianteGrupoResponse>>> GetAllGrupoHeadersAsync();
+
+        [Post("/" + EstudianteGrupos.CreateBatch)]
+        Task<ApiResponse<List<EstudianteGrupoResponse>>> CreateBatchAsync([Body] List<CreateEstudianteGrupoRequest> estudiantesGruposRequest);
+
+        [Get("/" + EstudianteGrupos.GetAllByGrupoId)]
+        Task<ApiResponse<PagedResponse<EstudianteGrupoResponse>>> GetAllByGrupoIdAsync(int grupoId);
     }
 }

@@ -27,5 +27,8 @@ namespace CIAC_TAS_Service.Sdk
 
         [Delete("/" + Grupos.Delete)]
         Task<ApiResponse<GrupoResponse>> DeleteAsync(int grupoId);
-    }
+
+		[Get("/" + Grupos.GetAllNotAssignedEstudents)]
+		Task<ApiResponse<PagedResponse<GrupoResponse>>> GetAllNotAssignedEstudentsAsync();
+	}
 }

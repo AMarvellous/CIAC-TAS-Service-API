@@ -90,6 +90,22 @@ namespace CIAC_TAS_Service.Data
                 .WithMany(m => m.ModuloMaterias)
                 .HasForeignKey(mm => mm.MateriaId);
 
+            builder.Entity<EstudianteMateria>()
+                .HasKey(eg => new { eg.EstudianteId, eg.GrupoId, eg.MateriaId });
+            builder.Entity<EstudianteMateria>()
+                .HasOne<Estudiante>(eg => eg.Estudiante)
+                .WithMany(e => e.EstudianteMaterias)
+                .HasForeignKey(eg => eg.EstudianteId);
+            builder.Entity<EstudianteMateria>()
+                .HasOne<Grupo>(eg => eg.Grupo)
+                .WithMany(e => e.EstudianteMaterias)
+                .HasForeignKey(eg => eg.GrupoId);
+            builder.Entity<EstudianteMateria>()
+                .HasOne<Materia>(eg => eg.Materia)
+                .WithMany(g => g.EstudianteMaterias)
+                .HasForeignKey(eg => eg.MateriaId);
+
+
 
             builder.Entity<GrupoPreguntaAsa>()
                 .HasData(
@@ -296,5 +312,6 @@ namespace CIAC_TAS_Service.Data
         public DbSet<ModuloMateria> ModuloMateria { get; set; }
         public DbSet<AsistenciaEstudianteHeader> AsistenciaEstudianteHeader { get; set; }
         public DbSet<AsistenciaEstudiante> AsistenciaEstudiante { get; set; }
+        public DbSet<EstudianteMateria> EstudianteMateria { get; set; }
     }
 }

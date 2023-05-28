@@ -13,5 +13,6 @@ namespace CIAC_TAS_Service.Services
         Task<bool> DeleteEstudianteAsync(int id);
         Task<bool> CheckUserIdIsAssignedAsync(string userId);
         Task<bool> CheckUserIdIsAssignableToThisEstudianteAsync(int estudianteId, string proposedUserId);
+        Task<List<Estudiante>> GetAllNotAssignedToGrupoAsync(int grupoId, PaginationFilter paginationFilter = null);
     }
 }

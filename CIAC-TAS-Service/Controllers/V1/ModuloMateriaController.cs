@@ -107,5 +107,20 @@ namespace CIAC_TAS_Service.Controllers.V1
 
             return NoContent();
         }
+
+        [HttpGet(ApiRoute.ModuloMaterias.GetModuloByMateria)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ModuloMateriaResponse), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetModuloByMateria([FromRoute] int materiaId)
+        {
+            var moduloMateria = await _moduloMateriaService.GetModuloMateriaByMateriaIdAsync(materiaId);
+
+            if (moduloMateria == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<ModuloMateriaResponse>(moduloMateria));
+        }
     }
 }

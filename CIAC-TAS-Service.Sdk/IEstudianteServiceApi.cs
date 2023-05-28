@@ -30,5 +30,8 @@ namespace CIAC_TAS_Service.Sdk
 
         [Get("/" + Estudiantes.GetByUserId)]
         Task<ApiResponse<EstudianteResponse>> GetByUserIdAsync(string userId);
+
+        [Get("/" + Estudiantes.GetAllNotAssignedToGrupo)]
+        Task<ApiResponse<PagedResponse<EstudianteResponse>>> GetAllNotAssignedToGrupoAsync(int grupoId);
     }
 }

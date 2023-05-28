@@ -67,5 +67,13 @@ namespace CIAC_TAS_Service.Services
 
             return deleted > 0;
         }
+
+        public async Task<bool> CreateAsistenciaEstudianteBatchAsync(List<AsistenciaEstudiante> asistenciaEstudiante)
+        {
+            await _dataContext.AsistenciaEstudiante.AddRangeAsync(asistenciaEstudiante);
+            var created = await _dataContext.SaveChangesAsync();
+
+            return created > 0;
+        }
     }
 }

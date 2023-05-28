@@ -4,6 +4,7 @@ using CIAC_TAS_Service.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CIACTASService.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230525013804_Added_EstudianteMateria")]
+    partial class Added_EstudianteMateria
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -529,15 +531,10 @@ namespace CIACTASService.Data.Migrations
                     b.Property<int>("EstudianteId")
                         .HasColumnType("int");
 
-                    b.Property<int>("GrupoId")
-                        .HasColumnType("int");
-
                     b.Property<int>("MateriaId")
                         .HasColumnType("int");
 
-                    b.HasKey("EstudianteId", "GrupoId", "MateriaId");
-
-                    b.HasIndex("GrupoId");
+                    b.HasKey("EstudianteId", "MateriaId");
 
                     b.HasIndex("MateriaId");
 
@@ -1910,12 +1907,6 @@ namespace CIACTASService.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CIAC_TAS_Service.Domain.General.Grupo", "Grupo")
-                        .WithMany("EstudianteMaterias")
-                        .HasForeignKey("GrupoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("CIAC_TAS_Service.Domain.General.Materia", "Materia")
                         .WithMany("EstudianteMaterias")
                         .HasForeignKey("MateriaId")
@@ -1923,8 +1914,6 @@ namespace CIACTASService.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Estudiante");
-
-                    b.Navigation("Grupo");
 
                     b.Navigation("Materia");
                 });
@@ -2142,8 +2131,6 @@ namespace CIACTASService.Data.Migrations
                     b.Navigation("ConfiguracionPreguntaAsa");
 
                     b.Navigation("EstudianteGrupos");
-
-                    b.Navigation("EstudianteMaterias");
 
                     b.Navigation("ExamenGenerado");
                 });

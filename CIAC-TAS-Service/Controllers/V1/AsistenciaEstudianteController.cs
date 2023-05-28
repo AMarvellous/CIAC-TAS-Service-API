@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using static CIAC_TAS_Service.Contracts.V1.ApiRoute;
 
 namespace CIAC_TAS_Service.Controllers.V1
 {
@@ -126,6 +127,43 @@ namespace CIAC_TAS_Service.Controllers.V1
             }
 
             return NoContent();
+        }
+
+        [HttpPost(ApiRoute.AsistenciaEstudiantes.CreateBatch)]
+        [ProducesResponseType(typeof(List<AsistenciaEstudianteResponse>), (int)HttpStatusCode.Created)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> CreateBatch([FromBody] List<CreateAsistenciaEstudianteRequest> asistenciaEstudianteRequest)
+        {
+            List<AsistenciaEstudiante> asistenciaEstudiantes = new List<AsistenciaEstudiante>();
+            foreach (var item in asistenciaEstudianteRequest)
+            {
+                var asistenciaEstudiante = new AsistenciaEstudiante
+                {
+                    EstudianteId = item.EstudianteId,
+                    AsistenciaEstudianteHeaderId = item.AsistenciaEstudianteHeaderId
+                };
+
+                asistenciaEstudiantes.Add(asistenciaEstudiante);
+            }
+            
+            var created = await _asistenciaEstudianteService.CreateAsistenciaEstudianteBatchAsync(asistenciaEstudiantes);
+
+            if (!created)
+            {
+                return BadRequest(new ErrorResponse
+                {
+                    Errors = new List<ErrorModel>
+                {
+                    new ErrorModel { Message = "Unable to create [AsistenciaEstudiante]"}
+                    }
+                });
+            }
+
+            var locationUri = _uriService.GetAsistenciaEstudianteUri(string.Join(",", asistenciaEstudiantes.Select(x => x.Id.ToString()).ToArray()));
+
+            var response = _mapper.Map<List<AsistenciaEstudianteResponse>>(asistenciaEstudiantes);
+
+            return Created(locationUri, response);
         }
     }
 }

@@ -79,5 +79,30 @@ namespace CIAC_TAS_Service.Services
 
             return deleted > 0;
         }
+
+        public async Task<List<AsistenciaEstudianteHeader>> GetAsistenciaEstudianteHeadersByGrupoIdMateriaIdAsync(int grupoId, int materiaId, PaginationFilter paginationFilter = null)
+        {
+            var queryable = _dataContext.AsistenciaEstudianteHeader
+                .Where(x => x.GrupoId == grupoId && x.MateriaId == materiaId)
+                .Include(x => x.Programa)
+                .Include(x => x.Grupo)
+                .Include(x => x.Materia)
+                .Include(x => x.Modulo)
+                .Include(x => x.Instructor)
+                .Include(x => x.AsistenciaEstudiantes)
+                .ThenInclude(x => x.Estudiante)
+                .OrderBy(x => x.Fecha)
+                .AsQueryable();
+
+            if (paginationFilter == null)
+            {
+                return await queryable.ToListAsync();
+            }
+
+            var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
+            return await queryable.Skip(skip)
+                .Take(paginationFilter.PageSize)
+                .ToListAsync();
+        }
     }
 }

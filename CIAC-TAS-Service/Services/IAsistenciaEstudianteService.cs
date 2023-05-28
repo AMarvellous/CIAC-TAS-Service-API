@@ -10,5 +10,6 @@ namespace CIAC_TAS_Service.Services
         Task<AsistenciaEstudiante> GetAsistenciaEstudianteByIdAsync(int id);
         Task<bool> UpdateAsistenciaEstudianteAsync(AsistenciaEstudiante asistenciaEstudiante);
         Task<bool> DeleteAsistenciaEstudianteAsync(int id);
+        Task<bool> CreateAsistenciaEstudianteBatchAsync(List<AsistenciaEstudiante> asistenciaEstudiante);
     }
 }

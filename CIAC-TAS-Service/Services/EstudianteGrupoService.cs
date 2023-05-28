@@ -1,7 +1,9 @@
 ﻿using CIAC_TAS_Service.Data;
 using CIAC_TAS_Service.Domain;
+using CIAC_TAS_Service.Domain.ASA;
 using CIAC_TAS_Service.Domain.Estudiante;
 using Microsoft.EntityFrameworkCore;
+using static CIAC_TAS_Service.Contracts.V1.ApiRoute;
 
 namespace CIAC_TAS_Service.Services
 {
@@ -67,6 +69,59 @@ namespace CIAC_TAS_Service.Services
             var deleted = await _dataContext.SaveChangesAsync();
 
             return deleted > 0;
+        }
+
+        public async Task<List<EstudianteGrupo>> GetEstudianteGruposHeadersAsync(PaginationFilter paginationFilter = null)
+        {
+            var resultGrouping = _dataContext.EstudianteGrupo
+                .Include(x => x.Grupo)
+                .GroupBy(x => new { x.GrupoId, x.Grupo.Nombre })
+                .Select(x => new
+                {
+                    GrupoId = x.Key.GrupoId,
+                    GrupoNombre = x.Key.Nombre
+                })
+                .AsQueryable();
+
+            List<EstudianteGrupo> estudianteGrupos = new List<EstudianteGrupo>();
+
+            await resultGrouping.ForEachAsync(x =>
+            {
+                estudianteGrupos.Add(new EstudianteGrupo
+                {
+                    GrupoId = x.GrupoId,
+                    Grupo = new Domain.General.Grupo { Nombre = x.GrupoNombre },
+                });
+            });
+
+            return estudianteGrupos;
+        }
+
+        public async Task<bool> CreateEstudianteGrupoBatchAsync(List<EstudianteGrupo> estudiantesGrupo)
+        {
+            await _dataContext.EstudianteGrupo.AddRangeAsync(estudiantesGrupo);
+            var created = await _dataContext.SaveChangesAsync();
+
+            return created > 0;
+        }
+
+        public async Task<List<EstudianteGrupo>> GetEstudianteGruposByGrupoIdAsync(int grupoId, PaginationFilter paginationFilter = null)
+        {
+            var queryable = _dataContext.EstudianteGrupo
+                .Where(x => x.GrupoId == grupoId)
+                .Include(x => x.Estudiante)
+                .Include(x => x.Grupo)
+                .AsQueryable();
+
+            if (paginationFilter == null)
+            {
+                return await queryable.ToListAsync();
+            }
+
+            var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
+            return await queryable.Skip(skip)
+                .Take(paginationFilter.PageSize)
+                .ToListAsync();
         }
     }
 }

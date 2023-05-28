@@ -27,5 +27,8 @@ namespace CIAC_TAS_Service.Sdk
 
         [Delete("/" + AsistenciaEstudiantes.Delete)]
         Task<ApiResponse<AsistenciaEstudianteResponse>> DeleteAsync(int asistenciaEstudianteId);
+
+        [Post("/" + AsistenciaEstudiantes.CreateBatch)]
+        Task<ApiResponse<List<AsistenciaEstudianteResponse>>> CreateBatchAsync([Body] List<CreateAsistenciaEstudianteRequest> asistenciaEstudianteRequest);
     }
 }

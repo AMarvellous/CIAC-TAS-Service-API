@@ -108,5 +108,26 @@ namespace CIAC_TAS_Service.Services
         {
             return await _dataContext.Estudiante.SingleOrDefaultAsync(x => x.UserId == userId);
         }
+
+        public async Task<List<Estudiante>> GetAllNotAssignedToGrupoAsync(int grupoId, PaginationFilter paginationFilter = null)
+        {
+            var queryable = _dataContext
+                .Estudiante
+                .Where(e => !_dataContext.EstudianteGrupo
+                    .Where(x => x.GrupoId == grupoId)
+                    .Select(x => x.EstudianteId)
+                    .Contains(e.Id))
+                .AsQueryable();
+
+            if (paginationFilter == null)
+            {
+                return await queryable.ToListAsync();
+            }
+
+            var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
+            return await queryable.Skip(skip)
+                .Take(paginationFilter.PageSize)
+                .ToListAsync();
+        }
     }
 }

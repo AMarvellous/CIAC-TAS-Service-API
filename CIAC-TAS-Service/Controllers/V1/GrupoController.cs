@@ -140,5 +140,24 @@ namespace CIAC_TAS_Service.Controllers.V1
 
             return NoContent();
         }
-    }
+
+
+		[HttpGet(ApiRoute.Grupos.GetAllNotAssignedEstudents)]
+		[ProducesResponseType(typeof(GrupoResponse), (int)HttpStatusCode.OK)]
+		public async Task<IActionResult> GetAllNotAssignedEstudents([FromQuery] PaginationQuery paginationQuery)
+		{
+			var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
+			var grupos = await _grupoService.GetGruposNotAssignedEstudentsAsync(pagination);
+			var grupoResponses = _mapper.Map<List<GrupoResponse>>(grupos);
+
+			if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
+			{
+				return Ok(new PagedResponse<GrupoResponse>(grupoResponses));
+			}
+
+			var paginationResponse = PaginationHelpers.CreatePaginatedResponse(_uriService, pagination, grupoResponses);
+
+			return Ok(paginationResponse);
+		}
+	}
 }

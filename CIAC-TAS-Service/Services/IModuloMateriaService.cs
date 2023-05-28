@@ -9,5 +9,6 @@ namespace CIAC_TAS_Service.Services
         Task<bool> CreateModuloMateriaAsync(ModuloMateria moduloMateria);
         Task<ModuloMateria> GetModuloMateriaByIdAsync(int moduloId, int materiaId);
         Task<bool> DeleteModuloMateriaAsync(int moduloId, int materiaId);
+        Task<ModuloMateria> GetModuloMateriaByMateriaIdAsync(int materiaId);
     }
 }

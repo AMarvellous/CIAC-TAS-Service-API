@@ -27,5 +27,8 @@ namespace CIAC_TAS_Service.Sdk
 
         [Delete("/" + AsistenciaEstudianteHeaders.Delete)]
         Task<ApiResponse<AsistenciaEstudianteHeaderResponse>> DeleteAsync(int asistenciaEstudianteHeaderId);
+
+        [Get("/" + AsistenciaEstudianteHeaders.GetAllHeadersByGrupoAndMateriaId)]
+        Task<ApiResponse<PagedResponse<AsistenciaEstudianteHeaderResponse>>> GetAllHeadersByGrupoIdMateriaIdAsync(int grupoId, int materiaId);
     }
 }

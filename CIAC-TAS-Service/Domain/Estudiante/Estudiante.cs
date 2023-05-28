@@ -47,5 +47,6 @@ namespace CIAC_TAS_Service.Domain.Estudiante
         public IEnumerable<EstudianteGrupo> EstudianteGrupos { get; set; }
         public IEnumerable<EstudiantePrograma> EstudianteProgramas { get; set; }
         public IEnumerable<AsistenciaEstudiante> AsistenciaEstudiantes { get; set; }
+        public IEnumerable<EstudianteMateria> EstudianteMaterias { get; set; }
     }
 }

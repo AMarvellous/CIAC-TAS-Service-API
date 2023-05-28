@@ -14,5 +14,6 @@ namespace CIAC_TAS_Service.Domain.General
 
         public IEnumerable<ModuloMateria> ModuloMaterias { get; set; }
         public IEnumerable<AsistenciaEstudianteHeader> AsistenciaEstudianteHeaders { get; set; }
+        public IEnumerable<EstudianteMateria> EstudianteMaterias { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using CIAC_TAS_Service.Domain.General;
 using CIAC_TAS_Service.Domain;
 using Microsoft.EntityFrameworkCore;
+using static CIAC_TAS_Service.Contracts.V1.ApiRoute;
 
 namespace CIAC_TAS_Service.Services
 {
@@ -61,6 +62,14 @@ namespace CIAC_TAS_Service.Services
             var deleted = await _dataContext.SaveChangesAsync();
 
             return deleted > 0;
+        }
+
+        public async Task<ModuloMateria> GetModuloMateriaByMateriaIdAsync(int materiaId)
+        {
+            return await _dataContext.ModuloMateria
+                .Include(x => x.Materia)
+                .Include(x => x.Modulo)
+                .SingleOrDefaultAsync(x => x.MateriaId == materiaId);
         }
     }
 }

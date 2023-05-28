@@ -4,6 +4,7 @@ using CIAC_TAS_Service.Contracts.V1.Requests;
 using CIAC_TAS_Service.Contracts.V1.Requests.Queries;
 using CIAC_TAS_Service.Contracts.V1.Responses;
 using CIAC_TAS_Service.Domain;
+using CIAC_TAS_Service.Domain.ASA;
 using CIAC_TAS_Service.Domain.Estudiante;
 using CIAC_TAS_Service.Helpers;
 using CIAC_TAS_Service.Services;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using static CIAC_TAS_Service.Contracts.V1.ApiRoute;
 
 namespace CIAC_TAS_Service.Controllers.V1
 {
@@ -123,6 +125,96 @@ namespace CIAC_TAS_Service.Controllers.V1
             }
 
             return NoContent();
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin, Estudiante")]
+        [HttpGet(ApiRoute.EstudianteGrupos.GetHeaders)]
+        [ProducesResponseType(typeof(EstudianteGrupoResponse), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAllGrupoHeaders([FromQuery] PaginationQuery paginationQuery)
+        {
+            var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
+            var estudianteGrupos = await _estudianteGrupoService.GetEstudianteGruposHeadersAsync(pagination);
+            var estudianteGrupoResponses = _mapper.Map<List<EstudianteGrupoResponse>>(estudianteGrupos);
+
+            if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
+            {
+                return Ok(new PagedResponse<EstudianteGrupoResponse>(estudianteGrupoResponses));
+            }
+
+            var paginationResponse = PaginationHelpers.CreatePaginatedResponse(_uriService, pagination, estudianteGrupoResponses);
+
+            return Ok(paginationResponse);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        [HttpPost(ApiRoute.EstudianteGrupos.CreateBatch)]
+        [ProducesResponseType(typeof(List<EstudianteGrupoResponse>), (int)HttpStatusCode.Created)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> CreateBatch([FromBody] List<CreateEstudianteGrupoRequest> estudianteGrupoRequest)
+        {
+            List<EstudianteGrupo> estudianteGrupos = new List<EstudianteGrupo>();
+            foreach (var item in estudianteGrupoRequest)
+            {
+                var estudianteGrupo = new EstudianteGrupo
+                {
+                    EstudianteId = item.EstudianteId,
+                    GrupoId = item.GrupoId
+                };
+
+                var estudianteGrupoDB = await _estudianteGrupoService.GetEstudianteGrupoByIdAsync(estudianteGrupo.EstudianteId, estudianteGrupo.GrupoId);
+                if (estudianteGrupoDB != null)
+                {
+                    return BadRequest(new ErrorResponse
+                    {
+                        Errors = new List<ErrorModel>
+                        {
+                            new ErrorModel {
+                                Message = $"El Estudiante {estudianteGrupo.EstudianteId} y Grupo {estudianteGrupo.GrupoId} ya fueron asignados previamente"}
+                        }
+                    });
+                }
+
+                estudianteGrupos.Add(estudianteGrupo);
+            }
+            
+
+            var created = await _estudianteGrupoService.CreateEstudianteGrupoBatchAsync(estudianteGrupos);
+
+            if (!created)
+            {
+                return BadRequest(new ErrorResponse
+                {
+                    Errors = new List<ErrorModel>
+                {
+                    new ErrorModel { Message = "Unable to create [EstudianteGrupo]"}
+                }
+                });
+            }
+
+            var locationUri = _uriService.GetEstudianteGrupoUri(string.Join(",", estudianteGrupos.Select(x => x.EstudianteId.ToString()).ToArray()), string.Join(",", estudianteGrupos.Select(x => x.GrupoId.ToString()).ToArray()));
+
+            var response = _mapper.Map<List<EstudianteGrupoResponse>>(estudianteGrupos);
+
+            return Created(locationUri, response);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin, Estudiante")]
+        [HttpGet(ApiRoute.EstudianteGrupos.GetAllByGrupoId)]
+        [ProducesResponseType(typeof(List<EstudianteGrupoResponse>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAllByGrupoId([FromRoute] int grupoId, [FromQuery] PaginationQuery paginationQuery)
+        {
+            var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
+            var estudianteGrupos = await _estudianteGrupoService.GetEstudianteGruposByGrupoIdAsync(grupoId, pagination);
+            var estudianteGrupoResponses = _mapper.Map<List<EstudianteGrupoResponse>>(estudianteGrupos);
+
+            if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
+            {
+                return Ok(new PagedResponse<EstudianteGrupoResponse>(estudianteGrupoResponses));
+            }
+
+            var paginationResponse = PaginationHelpers.CreatePaginatedResponse(_uriService, pagination, estudianteGrupoResponses);
+
+            return Ok(paginationResponse);
         }
     }
 }

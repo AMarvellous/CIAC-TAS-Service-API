@@ -41,7 +41,8 @@
             public const string Create = $"{Base}/grupos";
             public const string Update = Base + "/grupos/{grupoId}";
             public const string Delete = Base + "/grupos/{grupoId}";
-        }
+			public const string GetAllNotAssignedEstudents = $"{Base}/grupos/NoAssigned/Estudents";
+		}
 
         public static class GrupoPreguntaAsas
         {
@@ -96,6 +97,7 @@
             public const string Update = Base + "/estudiantes/{estudianteId}";
             public const string Delete = Base + "/estudiantes/{estudianteId}";
             public const string GetByUserId = Base + "/estudiantes/userId/{userId}";
+            public const string GetAllNotAssignedToGrupo = Base + "/estudiantes/noAssigned/grupo/{grupoId}";
         }
 
         public static class EstudianteGrupos
@@ -104,6 +106,9 @@
             public const string Get = Base + "/estudianteGrupos/{estudianteId}/{grupoId}";
             public const string Create = $"{Base}/estudianteGrupos";
             public const string Delete = Base + "/estudianteGrupos/{estudianteId}/{grupoId}";
+            public const string GetHeaders = $"{Base}/estudianteGrupos/grupo/headers";
+            public const string CreateBatch = $"{Base}/estudianteGrupos/batch";
+            public const string GetAllByGrupoId = Base + "/estudianteGrupos/grupo/{grupoId}";
         }
 
         public static class EstudianteProgramas
@@ -238,6 +243,7 @@
             public const string Get = Base + "/moduloMaterias/{moduloId}/{materiaId}";
             public const string Create = $"{Base}/moduloMaterias";
             public const string Delete = Base + "/moduloMaterias/{moduloId}/{materiaId}";
+            public const string GetModuloByMateria = Base + "/moduloMaterias/{materiaId}";
         }
 
         public static class AsistenciaEstudianteHeaders
@@ -247,6 +253,7 @@
             public const string Create = $"{Base}/asistenciaEstudianteHeaders";
             public const string Update = Base + "/asistenciaEstudianteHeaders/{asistenciaEstudianteHeaderId}";
             public const string Delete = Base + "/asistenciaEstudianteHeaders/{asistenciaEstudianteHeaderId}";
+            public const string GetAllHeadersByGrupoAndMateriaId = Base + "/asistenciaEstudianteHeaders/grupo/{grupoId}/materia/{materiaId}";
         }
 
         public static class AsistenciaEstudiantes
@@ -256,6 +263,15 @@
             public const string Create = $"{Base}/asistenciaEstudiantes";
             public const string Update = Base + "/asistenciaEstudiantes/{asistenciaEstudianteId}";
             public const string Delete = Base + "/asistenciaEstudiantes/{asistenciaEstudianteId}";
+            public const string CreateBatch = $"{Base}/asistenciaEstudiantes/batch";
+        }
+
+        public static class EstudianteMaterias
+        {
+            public const string GetAll = $"{Base}/estudianteMaterias";
+            public const string Get = Base + "/estudianteMaterias/{estudianteId}/{grupoId}/{materiaId}";
+            public const string Create = $"{Base}/estudianteMaterias";
+            public const string Delete = Base + "/estudianteMaterias/{estudianteId}/{grupoId}/{materiaId}";
         }
     }
 }

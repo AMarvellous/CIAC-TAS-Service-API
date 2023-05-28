@@ -111,6 +111,7 @@ namespace CIAC_TAS_Service.Mapping
             CreateMap<Administrativo, AdministrativoResponse>();
             CreateMap<Materia, MateriaResponse>();
             CreateMap<Modulo, ModuloResponse>();
+            CreateMap<EstudianteMateria, EstudianteMateriaResponse>();
         }
     }
 }

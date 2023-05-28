@@ -24,5 +24,8 @@ namespace CIAC_TAS_Service.Sdk
 
         [Delete("/" + ModuloMaterias.Delete)]
         Task<ApiResponse<ModuloMateriaResponse>> DeleteAsync(int moduloId, int materiaId);
+
+        [Get("/" + ModuloMaterias.GetModuloByMateria)]
+        Task<ApiResponse<ModuloMateriaResponse>> GetModuloByMateriaAsync(int materiaId);
     }
 }

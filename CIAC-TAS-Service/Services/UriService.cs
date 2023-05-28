@@ -152,5 +152,13 @@ namespace CIAC_TAS_Service.Services
         {
             return new Uri(_baseUri + ApiRoute.AsistenciaEstudiantes.Get.Replace("{asistenciaEstudianteId}", asistenciaEstudianteId));
         }
+
+        public Uri GetEstudianteMateriaUri(string estudianteId, string grupoId, string materiaId)
+        {
+            return new Uri(_baseUri + ApiRoute.EstudianteMaterias.Get
+                .Replace("{estudianteId}", estudianteId)
+                .Replace("{grupoId}", grupoId)
+                .Replace("{materiaId}", materiaId));
+        }
     }
 }

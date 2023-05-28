@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using static CIAC_TAS_Service.Contracts.V1.ApiRoute;
 
 namespace CIAC_TAS_Service.Controllers.V1
 {
@@ -135,6 +136,24 @@ namespace CIAC_TAS_Service.Controllers.V1
             }
 
             return NoContent();
+        }
+
+        [HttpGet(ApiRoute.AsistenciaEstudianteHeaders.GetAllHeadersByGrupoAndMateriaId)]
+        [ProducesResponseType(typeof(AsistenciaEstudianteHeaderResponse), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAllHeadersByGrupoAndMateriaId([FromRoute] int grupoId, [FromRoute] int materiaId, [FromQuery] PaginationQuery paginationQuery)
+        {
+            var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
+            var asistenciaEstudianteHeaders = await _asistenciaEstudianteHeaderService.GetAsistenciaEstudianteHeadersByGrupoIdMateriaIdAsync(grupoId, materiaId, pagination);
+            var asistenciaEstudianteHeaderResponses = _mapper.Map<List<AsistenciaEstudianteHeaderResponse>>(asistenciaEstudianteHeaders);
+
+            if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
+            {
+                return Ok(new PagedResponse<AsistenciaEstudianteHeaderResponse>(asistenciaEstudianteHeaderResponses));
+            }
+
+            var paginationResponse = PaginationHelpers.CreatePaginatedResponse(_uriService, pagination, asistenciaEstudianteHeaderResponses);
+
+            return Ok(paginationResponse);
         }
     }
 }
