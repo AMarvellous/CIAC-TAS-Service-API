@@ -4,6 +4,7 @@ using CIAC_TAS_Service.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CIACTASService.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230713032518_Updating_AsistenciaEstudiante_FK")]
+    partial class Updating_AsistenciaEstudiante_FK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -379,12 +381,6 @@ namespace CIACTASService.Data.Migrations
                     b.Property<int>("GrupoId")
                         .HasColumnType("int");
 
-                    b.Property<TimeSpan>("HoraFin")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan>("HoraInicio")
-                        .HasColumnType("time");
-
                     b.Property<int>("InstructorId")
                         .HasColumnType("int");
 
@@ -395,16 +391,6 @@ namespace CIACTASService.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("ProgramaId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Tema")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TotalHorasPracticas")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalHorasTeoricas")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

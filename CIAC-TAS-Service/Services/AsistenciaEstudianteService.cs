@@ -18,6 +18,7 @@ namespace CIAC_TAS_Service.Services
         {
             var queryable = _dataContext.AsistenciaEstudiante
                 .Include(x => x.Estudiante)
+                .Include(x => x.TipoAsistencia)
                 .AsQueryable();
 
             if (paginationFilter == null)
@@ -35,6 +36,7 @@ namespace CIAC_TAS_Service.Services
         {
             return await _dataContext.AsistenciaEstudiante
                 .Include(x => x.Estudiante)
+                .Include(x => x.TipoAsistencia)
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
 

@@ -15,7 +15,7 @@ using static CIAC_TAS_Service.Contracts.V1.ApiRoute;
 
 namespace CIAC_TAS_Service.Controllers.V1
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Instructor")]
     [Produces("application/json")]
     public class AsistenciaEstudianteController : Controller
     {
@@ -29,6 +29,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             _asistenciaEstudianteService = asistenciaEstudianteService;
             _uriService = uriService;
         }
+
 
         [HttpGet(ApiRoute.AsistenciaEstudiantes.GetAll)]
         [ProducesResponseType(typeof(AsistenciaEstudianteResponse), (int)HttpStatusCode.OK)]
@@ -71,7 +72,8 @@ namespace CIAC_TAS_Service.Controllers.V1
             var asistenciaEstudiante = new AsistenciaEstudiante
             {
                 EstudianteId = asistenciaEstudianteRequest.EstudianteId,
-                AsistenciaEstudianteHeaderId = asistenciaEstudianteRequest.AsistenciaEstudianteHeaderId
+                AsistenciaEstudianteHeaderId = asistenciaEstudianteRequest.AsistenciaEstudianteHeaderId,
+                TipoAsistenciaId = asistenciaEstudianteRequest.TipoAsistenciaId
             };
 
             var created = await _asistenciaEstudianteService.CreateAsistenciaEstudianteAsync(asistenciaEstudiante);
@@ -103,6 +105,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             
             asistenciaEstudiante.EstudianteId = request.EstudianteId;
             asistenciaEstudiante.AsistenciaEstudianteHeaderId = request.AsistenciaEstudianteHeaderId;
+            asistenciaEstudiante.TipoAsistenciaId = request.TipoAsistenciaId;
 
             var update = await _asistenciaEstudianteService.UpdateAsistenciaEstudianteAsync(asistenciaEstudiante);
 
@@ -140,7 +143,8 @@ namespace CIAC_TAS_Service.Controllers.V1
                 var asistenciaEstudiante = new AsistenciaEstudiante
                 {
                     EstudianteId = item.EstudianteId,
-                    AsistenciaEstudianteHeaderId = item.AsistenciaEstudianteHeaderId
+                    AsistenciaEstudianteHeaderId = item.AsistenciaEstudianteHeaderId,
+                    TipoAsistenciaId = item.TipoAsistenciaId
                 };
 
                 asistenciaEstudiantes.Add(asistenciaEstudiante);
@@ -164,6 +168,33 @@ namespace CIAC_TAS_Service.Controllers.V1
             var response = _mapper.Map<List<AsistenciaEstudianteResponse>>(asistenciaEstudiantes);
 
             return Created(locationUri, response);
+        }
+
+        [HttpPatch(ApiRoute.AsistenciaEstudiantes.PatchTipoAsistenciaId)]
+        [ProducesResponseType(typeof(AsistenciaEstudianteResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> PatchTipoAsistenciaId([FromRoute] int asistenciaEstudianteId, [FromBody] PatchAsistenciaEstudianteRequest request)
+        {
+            var asistenciaEstudiante = await _asistenciaEstudianteService.GetAsistenciaEstudianteByIdAsync(asistenciaEstudianteId);
+
+            if (asistenciaEstudiante == null)
+            {
+                return NotFound();
+            }
+
+            if (request.TipoAsistenciaId != null)
+            {
+                asistenciaEstudiante.TipoAsistenciaId = request.TipoAsistenciaId;
+            }
+
+            var update = await _asistenciaEstudianteService.UpdateAsistenciaEstudianteAsync(asistenciaEstudiante);
+
+            if (!update)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<AsistenciaEstudianteResponse>(asistenciaEstudiante));
         }
     }
 }

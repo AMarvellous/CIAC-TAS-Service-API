@@ -30,5 +30,8 @@ namespace CIAC_TAS_Service.Sdk
 
         [Get("/" + PreguntaAsas.GetRandomPreguntasAsa)]
         Task<ApiResponse<PagedResponse<PreguntaAsaResponse>>> GetPreguntasRandomAsync(int numeroPreguntas, int preguntaIni, int preguntaFin, [Query(CollectionFormat.Multi)] List<int> grupoPreguntaAsaIds);
+
+        [Get("/" + PreguntaAsas.GetByNumeroPregunta)]
+        Task<ApiResponse<PreguntaAsaResponse>> GetByNumeroPreguntaAsync(int numeroPregunta);
     }
 }

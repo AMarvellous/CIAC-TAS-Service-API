@@ -50,7 +50,18 @@ namespace CIAC_TAS_Service.Mapping
 					x => x.GrupoResponse,
 					opt => opt.MapFrom(s => s.Grupo));
 
-			CreateMap<RespuestasAsaConsolidado, RespuestasAsaConsolidadoResponse>()
+            CreateMap<EstudianteMateria, EstudianteMateriaResponse>()
+                .ForMember(
+                    x => x.EstudianteResponse,
+                    opt => opt.MapFrom(s => s.Estudiante))
+                .ForMember(
+                    x => x.GrupoResponse,
+                    opt => opt.MapFrom(s => s.Grupo))
+                .ForMember(
+                    x => x.MateriaResponse,
+                    opt => opt.MapFrom(s => s.Materia));
+
+            CreateMap<RespuestasAsaConsolidado, RespuestasAsaConsolidadoResponse>()
                 .ForMember(
                     x => x.ConfiguracionPreguntaAsaResponse,
                     opt => opt.MapFrom(s => s.ConfiguracionPreguntaAsa)
@@ -91,7 +102,10 @@ namespace CIAC_TAS_Service.Mapping
             CreateMap<AsistenciaEstudiante, AsistenciaEstudianteResponse>()
                 .ForMember(
                     x => x.EstudianteResponse,
-                    opt => opt.MapFrom(m => m.Estudiante));
+                    opt => opt.MapFrom(m => m.Estudiante))
+                .ForMember(
+                    x => x.TipoAsistenciaResponse,
+                    opt => opt.MapFrom(m => m.TipoAsistencia));
 
             CreateMap<Tag, TagResponse>();
             CreateMap<Grupo, GrupoResponse>();
@@ -111,7 +125,7 @@ namespace CIAC_TAS_Service.Mapping
             CreateMap<Administrativo, AdministrativoResponse>();
             CreateMap<Materia, MateriaResponse>();
             CreateMap<Modulo, ModuloResponse>();
-            CreateMap<EstudianteMateria, EstudianteMateriaResponse>();
+            CreateMap<TipoAsistencia, TipoAsistenciaResponse>();
         }
     }
 }

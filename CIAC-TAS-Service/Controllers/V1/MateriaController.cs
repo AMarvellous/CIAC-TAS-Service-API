@@ -13,8 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace CIAC_TAS_Service.Controllers.V1
-{
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+{    
     [Produces("application/json")]
     public class MateriaController : Controller
     {
@@ -29,6 +28,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             _uriService = uriService;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Instructor")]
         [HttpGet(ApiRoute.Materias.GetAll)]
         [ProducesResponseType(typeof(MateriaResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
@@ -47,6 +47,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(paginationResponse);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Instructor")]
         [HttpGet(ApiRoute.Materias.Get)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(MateriaResponse), (int)HttpStatusCode.OK)]
@@ -62,6 +63,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(_mapper.Map<MateriaResponse>(materia));
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPost(ApiRoute.Materias.Create)]
         [ProducesResponseType(typeof(MateriaResponse), (int)HttpStatusCode.Created)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
@@ -93,6 +95,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Created(locationUri, response);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPut(ApiRoute.Materias.Update)]
         [ProducesResponseType(typeof(MateriaResponse), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
@@ -113,6 +116,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(_mapper.Map<MateriaResponse>(materia));
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpDelete(ApiRoute.Materias.Delete)]
         [ProducesResponseType(typeof(MateriaResponse), (int)HttpStatusCode.NoContent)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
@@ -126,6 +130,25 @@ namespace CIAC_TAS_Service.Controllers.V1
             }
 
             return NoContent();
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        [HttpGet(ApiRoute.Materias.GetAllNotAssignedMaterias)]
+        [ProducesResponseType(typeof(MateriaResponse), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAllNotAssignedMaterias([FromRoute] int estudianteId, [FromRoute] int grupoId, [FromQuery] PaginationQuery paginationQuery)
+        {
+            var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
+            var materias = await _materiaService.GetAllNotAssignedMateriasAsync(estudianteId, grupoId, pagination);
+            var materiaResponses = _mapper.Map<List<MateriaResponse>>(materias);
+
+            if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
+            {
+                return Ok(new PagedResponse<MateriaResponse>(materiaResponses));
+            }
+
+            var paginationResponse = PaginationHelpers.CreatePaginatedResponse(_uriService, pagination, materiaResponses);
+
+            return Ok(paginationResponse);
         }
     }
 }

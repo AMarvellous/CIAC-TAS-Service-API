@@ -76,7 +76,12 @@ namespace CIAC_TAS_Service.Controllers.V1
                 MateriaId = asistenciaEstudianteHeaderRequest.MateriaId,
                 ModuloId = asistenciaEstudianteHeaderRequest.ModuloId,
                 InstructorId = asistenciaEstudianteHeaderRequest.InstructorId,
-                Fecha = asistenciaEstudianteHeaderRequest.Fecha
+                Fecha = asistenciaEstudianteHeaderRequest.Fecha,
+                HoraInicio = asistenciaEstudianteHeaderRequest.HoraInicio,
+                HoraFin = asistenciaEstudianteHeaderRequest.HoraFin,
+                TotalHorasTeoricas = asistenciaEstudianteHeaderRequest.TotalHorasTeoricas,
+                TotalHorasPracticas = asistenciaEstudianteHeaderRequest.TotalHorasPracticas,
+                Tema = asistenciaEstudianteHeaderRequest.Tema
             };
 
             var created = await _asistenciaEstudianteHeaderService.CreateAsistenciaEstudianteHeaderAsync(asistenciaEstudianteHeader);
@@ -112,6 +117,11 @@ namespace CIAC_TAS_Service.Controllers.V1
             asistenciaEstudianteHeader.ModuloId = request.ModuloId;                
             asistenciaEstudianteHeader.InstructorId = request.InstructorId;           
             asistenciaEstudianteHeader.Fecha = request.Fecha;
+            asistenciaEstudianteHeader.HoraInicio = request.HoraInicio;
+            asistenciaEstudianteHeader.HoraFin = request.HoraFin;
+            asistenciaEstudianteHeader.TotalHorasTeoricas = request.TotalHorasTeoricas;
+            asistenciaEstudianteHeader.TotalHorasPracticas = request.TotalHorasPracticas;
+            asistenciaEstudianteHeader.Tema = request.Tema;
 
             var update = await _asistenciaEstudianteHeaderService.UpdateAsistenciaEstudianteHeaderAsync(asistenciaEstudianteHeader);
 

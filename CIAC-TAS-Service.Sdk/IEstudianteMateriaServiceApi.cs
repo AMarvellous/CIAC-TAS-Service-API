@@ -19,5 +19,14 @@ namespace CIAC_TAS_Service.Sdk
 
         [Delete("/" + EstudianteMaterias.Delete)]
         Task<ApiResponse<EstudianteMateriaResponse>> DeleteAsync(int estudianteId, int grupoId, int materiaId);
+
+        [Get("/" + EstudianteMaterias.GetAllByEstudianteGrupo)]
+        Task<ApiResponse<PagedResponse<EstudianteMateriaResponse>>> GetAllByEstudianteGrupoAsync(int estudianteId, int grupoId);
+
+        [Post("/" + EstudianteMaterias.CreateAsignAllMaterias)]
+        Task<ApiResponse<EstudianteMateriaResponse>> CreateAsignAllMateriasAsync(int estudianteId, int grupoId);
+        
+        [Get("/" + EstudianteMaterias.GetAllByMateriaGrupo)]
+        Task<ApiResponse<PagedResponse<EstudianteMateriaResponse>>> GetAllByMateriaGrupoAsync(int materiaId, int grupoId);
     }
 }

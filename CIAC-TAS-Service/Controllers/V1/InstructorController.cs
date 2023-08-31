@@ -16,7 +16,7 @@ using static CIAC_TAS_Service.Contracts.V1.ApiRoute;
 
 namespace CIAC_TAS_Service.Controllers.V1
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+    
     [Produces("application/json")]
     public class InstructorController : Controller
     {
@@ -33,6 +33,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             _identityService = identityService;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Instructor")]
         [HttpGet(ApiRoute.Instructores.GetAll)]
         [ProducesResponseType(typeof(InstructorResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
@@ -51,6 +52,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(paginationResponse);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Instructor")]
         [HttpGet(ApiRoute.Instructores.Get)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(InstructorResponse), (int)HttpStatusCode.OK)]
@@ -66,6 +68,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(_mapper.Map<InstructorResponse>(instructor));
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPost(ApiRoute.Instructores.Create)]
         [ProducesResponseType(typeof(InstructorResponse), (int)HttpStatusCode.Created)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
@@ -115,6 +118,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Created(locationUri, response);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPut(ApiRoute.Instructores.Update)]
         [ProducesResponseType(typeof(InstructorResponse), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
@@ -161,6 +165,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(_mapper.Map<InstructorResponse>(instructor));
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpDelete(ApiRoute.Instructores.Delete)]
         [ProducesResponseType(typeof(InstructorResponse), (int)HttpStatusCode.NoContent)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]

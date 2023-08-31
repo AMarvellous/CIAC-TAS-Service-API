@@ -12,5 +12,6 @@ namespace CIAC_TAS_Service.Services
         Task<bool> DeletePreguntaAsaAsync(int id);
         Task<bool> CheckExistsPreguntaAsaAsync(int preguntaAsaId);
         Task<List<PreguntaAsa>> GetRandomGeneratedPreguntasAsaAsync(int numeroPreguntas, int preguntaIni, int preguntaFin, List<int>  grupoPreguntaAsaIds, PaginationFilter paginationFilter = null);
+        Task<PreguntaAsa> GetPreguntaAsaByNumeroPreguntaAsync(int numeroPregunta);
     }
 }

@@ -10,5 +10,6 @@ namespace CIAC_TAS_Service.Contracts.V1.Requests
     {
         public int EstudianteId { get; set; }
         public int AsistenciaEstudianteHeaderId { get; set; }
+        public int TipoAsistenciaId { get; set; }
     }
 }

@@ -27,5 +27,8 @@ namespace CIAC_TAS_Service.Sdk
 
         [Delete("/" + Materias.Delete)]
         Task<ApiResponse<MateriaResponse>> DeleteAsync(int materiaId);
+
+        [Get("/" + Materias.GetAllNotAssignedMaterias)]
+        Task<ApiResponse<PagedResponse<MateriaResponse>>> GetAllNotAssignedMateriasAsync(int estudianteId, int grupoId);
     }
 }

@@ -17,6 +17,11 @@ namespace CIAC_TAS_Service.Domain.Estudiante
         public int ModuloId { get; set; }
         public int InstructorId { get; set; }
         public DateTime Fecha { get; set; }
+        public TimeSpan HoraInicio { get; set; }
+        public TimeSpan HoraFin { get; set; }
+        public int TotalHorasTeoricas { get; set; }
+        public int TotalHorasPracticas { get; set; }
+        public string Tema { get; set; }
 
         [ForeignKey(nameof(ProgramaId))]
         public Programa Programa { get; set; }

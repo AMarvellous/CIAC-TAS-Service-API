@@ -160,5 +160,10 @@ namespace CIAC_TAS_Service.Services
                 .Replace("{grupoId}", grupoId)
                 .Replace("{materiaId}", materiaId));
         }
+
+        public Uri GetTipoAsistenciaUri(string tipoAsistenciaId)
+        {
+            return new Uri(_baseUri + ApiRoute.TipoAsistencias.Get.Replace("{tipoAsistenciaId}", tipoAsistenciaId));
+        }
     }
 }

@@ -120,5 +120,14 @@ namespace CIAC_TAS_Service.Services
                 .Take(paginationFilter.PageSize)
                 .ToListAsync();
         }
+
+        public async Task<PreguntaAsa> GetPreguntaAsaByNumeroPreguntaAsync(int numeroPregunta)
+        {
+            return await _dataContext.PreguntaAsa
+                .Include(x => x.GrupoPreguntaAsa)
+                .Include(x => x.EstadoPreguntaAsa)
+                .Include(x => x.PreguntaAsaOpciones)
+                .SingleOrDefaultAsync(x => x.NumeroPregunta == numeroPregunta);
+        }
     }
 }

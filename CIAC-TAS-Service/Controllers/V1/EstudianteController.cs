@@ -31,7 +31,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             _identityService = identityService;
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Instructor")]
         [HttpGet(ApiRoute.Estudiantes.GetAll)]
         [ProducesResponseType(typeof(EstudianteResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
@@ -50,7 +50,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(paginationResponse);
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Instructor")]
         [HttpGet(ApiRoute.Estudiantes.Get)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(EstudianteResponse), (int)HttpStatusCode.OK)]
@@ -180,7 +180,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return NoContent();
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin, Estudiante")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Estudiante,Instructor")]
         [HttpGet(ApiRoute.Estudiantes.GetByUserId)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(EstudianteResponse), (int)HttpStatusCode.OK)]
@@ -196,13 +196,32 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(_mapper.Map<EstudianteResponse>(estudiante));
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Instructor")]
         [HttpGet(ApiRoute.Estudiantes.GetAllNotAssignedToGrupo)]
         [ProducesResponseType(typeof(List<EstudianteResponse>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAllNotAssignedToGrupo([FromRoute] int grupoId, [FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
             var estudiantes = await _estudianteService.GetAllNotAssignedToGrupoAsync(grupoId, pagination);
+            var estudianteResponses = _mapper.Map<List<EstudianteResponse>>(estudiantes);
+
+            if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
+            {
+                return Ok(new PagedResponse<EstudianteResponse>(estudianteResponses));
+            }
+
+            var paginationResponse = PaginationHelpers.CreatePaginatedResponse(_uriService, pagination, estudianteResponses);
+
+            return Ok(paginationResponse);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Instructor")]
+        [HttpGet(ApiRoute.Estudiantes.GetAllNotAssignedAsistenciaEstudiante)]
+        [ProducesResponseType(typeof(List<EstudianteResponse>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAllNotAssignedAsistenciaEstudiante([FromRoute] int materiaId, [FromRoute] int grupoId, [FromRoute] int asistenciaEstudianteHeaderId, [FromQuery] PaginationQuery paginationQuery)
+        {
+            var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
+            var estudiantes = await _estudianteService.GetAllNotAssignedAsistenciaEstudianteAsync(materiaId, grupoId, asistenciaEstudianteHeaderId, pagination);
             var estudianteResponses = _mapper.Map<List<EstudianteResponse>>(estudiantes);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)

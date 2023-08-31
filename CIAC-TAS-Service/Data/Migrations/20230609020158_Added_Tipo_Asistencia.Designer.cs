@@ -4,6 +4,7 @@ using CIAC_TAS_Service.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CIACTASService.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230609020158_Added_Tipo_Asistencia")]
+    partial class Added_Tipo_Asistencia
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -360,7 +362,8 @@ namespace CIACTASService.Data.Migrations
 
                     b.HasIndex("EstudianteId");
 
-                    b.HasIndex("TipoAsistenciaId");
+                    b.HasIndex("TipoAsistenciaId")
+                        .IsUnique();
 
                     b.ToTable("AsistenciaEstudiante");
                 });
@@ -379,12 +382,6 @@ namespace CIACTASService.Data.Migrations
                     b.Property<int>("GrupoId")
                         .HasColumnType("int");
 
-                    b.Property<TimeSpan>("HoraFin")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan>("HoraInicio")
-                        .HasColumnType("time");
-
                     b.Property<int>("InstructorId")
                         .HasColumnType("int");
 
@@ -395,16 +392,6 @@ namespace CIACTASService.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("ProgramaId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Tema")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TotalHorasPracticas")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalHorasTeoricas")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -1880,9 +1867,9 @@ namespace CIACTASService.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("CIAC_TAS_Service.Domain.General.TipoAsistencia", "TipoAsistencia")
-                        .WithMany("AsistenciaEstudiantes")
-                        .HasForeignKey("TipoAsistenciaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithOne("AsistenciaEstudiante")
+                        .HasForeignKey("CIAC_TAS_Service.Domain.Estudiante.AsistenciaEstudiante", "TipoAsistenciaId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("AsistenciaEstudianteHeader");
@@ -2241,7 +2228,8 @@ namespace CIACTASService.Data.Migrations
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.General.TipoAsistencia", b =>
                 {
-                    b.Navigation("AsistenciaEstudiantes");
+                    b.Navigation("AsistenciaEstudiante")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.Menu.MenuModuloWeb", b =>

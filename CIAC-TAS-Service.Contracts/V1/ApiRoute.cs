@@ -98,6 +98,7 @@
             public const string Delete = Base + "/estudiantes/{estudianteId}";
             public const string GetByUserId = Base + "/estudiantes/userId/{userId}";
             public const string GetAllNotAssignedToGrupo = Base + "/estudiantes/noAssigned/grupo/{grupoId}";
+            public const string GetAllNotAssignedAsistenciaEstudiante = Base + "/estudiantes/noAssigned/estudianteMateria/{materiaId}/{grupoId}/{asistenciaEstudianteHeaderId}";
         }
 
         public static class EstudianteGrupos
@@ -146,6 +147,7 @@
             public const string Update = Base + "/preguntaAsas/{preguntaAsaId}";
             public const string Delete = Base + "/preguntaAsas/{preguntaAsaId}";
             public const string GetRandomPreguntasAsa = $"{Base}/preguntaAsas/random";
+            public const string GetByNumeroPregunta = Base + "/preguntaAsas/numeroPregunta/{numeroPregunta}";
         }
 
         public static class PreguntaAsaImagenAsas
@@ -226,6 +228,7 @@
             public const string Create = $"{Base}/materias";
             public const string Update = Base + "/materias/{materiaId}";
             public const string Delete = Base + "/materias/{materiaId}";
+            public const string GetAllNotAssignedMaterias = Base + "/materias/NoAssigned/{estudianteId}/{grupoId}";
         }
 
         public static class Modulos
@@ -264,6 +267,7 @@
             public const string Update = Base + "/asistenciaEstudiantes/{asistenciaEstudianteId}";
             public const string Delete = Base + "/asistenciaEstudiantes/{asistenciaEstudianteId}";
             public const string CreateBatch = $"{Base}/asistenciaEstudiantes/batch";
+            public const string PatchTipoAsistenciaId = Base + "/asistenciaEstudiantes/{asistenciaEstudianteId}";
         }
 
         public static class EstudianteMaterias
@@ -272,6 +276,18 @@
             public const string Get = Base + "/estudianteMaterias/{estudianteId}/{grupoId}/{materiaId}";
             public const string Create = $"{Base}/estudianteMaterias";
             public const string Delete = Base + "/estudianteMaterias/{estudianteId}/{grupoId}/{materiaId}";
+            public const string GetAllByEstudianteGrupo = Base + "/estudianteMaterias/{estudianteId}/{grupoId}";
+            public const string CreateAsignAllMaterias = Base + "/estudianteMaterias/allMaterias/{estudianteId}/{grupoId}";
+            public const string GetAllByMateriaGrupo = Base + "/estudianteMaterias/materiaGrupo/{materiaId}/{grupoId}";
+        }
+
+        public static class TipoAsistencias
+        {
+            public const string GetAll = $"{Base}/tipoAsistencias";
+            public const string Get = Base + "/tipoAsistencias/{tipoAsistenciaId}";
+            public const string Create = $"{Base}/tipoAsistencias";
+            public const string Update = Base + "/tipoAsistencias/{tipoAsistenciaId}";
+            public const string Delete = Base + "/tipoAsistencias/{tipoAsistenciaId}";
         }
     }
 }

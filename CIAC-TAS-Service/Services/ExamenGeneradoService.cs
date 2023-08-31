@@ -75,7 +75,7 @@ namespace CIAC_TAS_Service.Services
 			var guidExamen = Guid.NewGuid();
 			var fecha = DateTime.Now;
 
-			var grupo = await _grupoService.GetGrupoByIdAsync(grupoId);
+			//var grupo = await _grupoService.GetGrupoByIdAsync(grupoId);
 
             var preguntasAsa = await _preguntaAsaService.GetRandomGeneratedPreguntasAsaAsync(numeroPreguntas, 0, 0, new List<int>());
 
@@ -84,13 +84,13 @@ namespace CIAC_TAS_Service.Services
 				examenGeneradoPreguntas.Add(new ExamenGenerado
 				{
 					GrupoId = grupoId,
-					Grupos = grupo,
-					ExamenGeneradoGuid = guidExamen,
-					Fecha = fecha,
-					NumeroPregunta = pregunta.NumeroPregunta,
-					PreguntaTexto = pregunta.Pregunta,
-					NumeroOpcion = opcion.Opcion,
-					OpcionTexto = opcion.Texto
+                    //Grupos = grupo,
+                    Fecha = fecha,
+                    ExamenGeneradoGuid = guidExamen,
+                    NumeroOpcion = opcion.Opcion,
+                    NumeroPregunta = pregunta.NumeroPregunta,
+                    OpcionTexto = opcion.Texto,
+                    PreguntaTexto = pregunta.Pregunta
 				})
 			));
 

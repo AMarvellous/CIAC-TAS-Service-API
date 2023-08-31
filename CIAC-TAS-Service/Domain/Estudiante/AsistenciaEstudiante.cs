@@ -11,11 +11,15 @@ namespace CIAC_TAS_Service.Domain.Estudiante
         public int Id { get; set; }
         public int EstudianteId { get; set; }
         public int AsistenciaEstudianteHeaderId { get; set; }
+        public int TipoAsistenciaId { get; set; }
 
         [ForeignKey(nameof(EstudianteId))]
         public Estudiante Estudiante { get; set; }
 
         [ForeignKey(nameof(AsistenciaEstudianteHeaderId))]
         public AsistenciaEstudianteHeader AsistenciaEstudianteHeader { get; set; }
+
+        [ForeignKey(nameof(TipoAsistenciaId))]
+        public TipoAsistencia TipoAsistencia { get; set; }
     }
 }

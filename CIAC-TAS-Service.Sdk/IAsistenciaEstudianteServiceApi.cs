@@ -30,5 +30,8 @@ namespace CIAC_TAS_Service.Sdk
 
         [Post("/" + AsistenciaEstudiantes.CreateBatch)]
         Task<ApiResponse<List<AsistenciaEstudianteResponse>>> CreateBatchAsync([Body] List<CreateAsistenciaEstudianteRequest> asistenciaEstudianteRequest);
+        
+        [Patch("/" + AsistenciaEstudiantes.PatchTipoAsistenciaId)]
+        Task<ApiResponse<AsistenciaEstudianteResponse>> PatchTipoAsistenciaIdAsync(int asistenciaEstudianteId, [Body] PatchAsistenciaEstudianteRequest asistenciaEstudianteRequest);
     }
 }

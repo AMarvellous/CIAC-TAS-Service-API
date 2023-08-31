@@ -14,7 +14,6 @@ using System.Net;
 
 namespace CIAC_TAS_Service.Controllers.V1
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
     [Produces("application/json")]
     public class ModuloMateriaController : Controller
     {
@@ -29,6 +28,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             _uriService = uriService;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Instructor")]
         [HttpGet(ApiRoute.ModuloMaterias.GetAll)]
         [ProducesResponseType(typeof(ModuloMateriaResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
@@ -47,6 +47,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(paginationResponse);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Instructor")]
         [HttpGet(ApiRoute.ModuloMaterias.Get)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(ModuloMateriaResponse), (int)HttpStatusCode.OK)]
@@ -62,6 +63,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(_mapper.Map<ModuloMateriaResponse>(moduloMateria));
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPost(ApiRoute.ModuloMaterias.Create)]
         [ProducesResponseType(typeof(ModuloMateriaResponse), (int)HttpStatusCode.Created)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
@@ -93,6 +95,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Created(locationUri, response);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpDelete(ApiRoute.ModuloMaterias.Delete)]
         [ProducesResponseType(typeof(ModuloMateriaResponse), (int)HttpStatusCode.NoContent)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
@@ -108,6 +111,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return NoContent();
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Instructor")]
         [HttpGet(ApiRoute.ModuloMaterias.GetModuloByMateria)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(ModuloMateriaResponse), (int)HttpStatusCode.OK)]

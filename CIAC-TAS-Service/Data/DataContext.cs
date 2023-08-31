@@ -74,7 +74,11 @@ namespace CIAC_TAS_Service.Data
                 .IsUnique(false);
             builder.Entity<PreguntaAsa>()
                 .HasIndex(x => x.EstadoPreguntaAsaId)
-                .IsUnique(false);            
+                .IsUnique(false);      
+            
+            builder.Entity<AsistenciaEstudiante>()
+                .HasIndex(x => x.TipoAsistenciaId)
+                .IsUnique(false);
 
             builder.Entity<RespuestasAsaConsolidado>()
                 .HasKey(r => new { r.Id, r.LoteRespuestasId });
@@ -106,7 +110,12 @@ namespace CIAC_TAS_Service.Data
                 .HasForeignKey(eg => eg.MateriaId);
 
 
-
+            builder.Entity<TipoAsistencia>()
+                .HasData(
+                new TipoAsistencia { Id = 1, Nombre = "Presente" },
+                new TipoAsistencia { Id = 2, Nombre = "Justificada" },
+                new TipoAsistencia { Id = 3, Nombre = "Injustificada" }
+                );
             builder.Entity<GrupoPreguntaAsa>()
                 .HasData(
                 new Domain.ASA.GrupoPreguntaAsa { Id = 1, Nombre = "AIRFRAME" },
@@ -283,6 +292,10 @@ namespace CIAC_TAS_Service.Data
                 .HasOne(x => x.PreguntaAsa)
                 .WithMany(p => p.PreguntaAsaOpciones)
                 .OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<AsistenciaEstudiante>()
+                .HasOne(x => x.TipoAsistencia)
+                .WithMany(p => p.AsistenciaEstudiantes)
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
         public DbSet<Post> Posts { get; set; }
@@ -313,5 +326,6 @@ namespace CIAC_TAS_Service.Data
         public DbSet<AsistenciaEstudianteHeader> AsistenciaEstudianteHeader { get; set; }
         public DbSet<AsistenciaEstudiante> AsistenciaEstudiante { get; set; }
         public DbSet<EstudianteMateria> EstudianteMateria { get; set; }
+        public DbSet<TipoAsistencia> TipoAsistencia { get; set; }
     }
 }

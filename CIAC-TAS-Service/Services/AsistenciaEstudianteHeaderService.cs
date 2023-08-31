@@ -47,6 +47,8 @@ namespace CIAC_TAS_Service.Services
                 .Include(x => x.Instructor)
                 .Include(x => x.AsistenciaEstudiantes)
                 .ThenInclude(x => x.Estudiante)
+                .Include(x => x.AsistenciaEstudiantes)
+                .ThenInclude(x => x.TipoAsistencia)
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
 
@@ -91,6 +93,8 @@ namespace CIAC_TAS_Service.Services
                 .Include(x => x.Instructor)
                 .Include(x => x.AsistenciaEstudiantes)
                 .ThenInclude(x => x.Estudiante)
+                .Include(x => x.AsistenciaEstudiantes)
+                .ThenInclude(x => x.TipoAsistencia)
                 .OrderBy(x => x.Fecha)
                 .AsQueryable();
 

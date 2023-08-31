@@ -211,5 +211,21 @@ namespace CIAC_TAS_Service.Controllers.V1
 
             return Ok(paginationResponse);
         }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Estudiante")]
+        [HttpGet(ApiRoute.PreguntaAsas.GetByNumeroPregunta)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(PreguntaAsaResponse), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetByNumeroPregunta([FromRoute] int numeroPregunta)
+        {
+            var preguntaAsa = await _preguntaAsaService.GetPreguntaAsaByNumeroPreguntaAsync(numeroPregunta);
+
+            if (preguntaAsa == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<PreguntaAsaResponse>(preguntaAsa));
+        }
     }
 }
