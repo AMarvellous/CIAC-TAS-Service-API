@@ -34,7 +34,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var tipoAsistencias = await _tipoAsistenciaService.GetTipoAsistenciasAsync(pagination);
+            var tipoAsistencias = await _tipoAsistenciaService.GetTipoAsistenciasAsync();
             var tipoAsistenciaResponses = _mapper.Map<List<TipoAsistenciaResponse>>(tipoAsistencias);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)

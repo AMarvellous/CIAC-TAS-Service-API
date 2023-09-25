@@ -34,7 +34,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var imagenAsas = await _imagenAsaService.GetImagenAsasAsync(pagination);
+            var imagenAsas = await _imagenAsaService.GetImagenAsasAsync();
             var imagenAsaResponses = _mapper.Map<List<ImagenAsaResponse>>(imagenAsas);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)

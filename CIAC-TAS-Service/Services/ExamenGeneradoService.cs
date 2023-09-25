@@ -77,22 +77,26 @@ namespace CIAC_TAS_Service.Services
 
 			//var grupo = await _grupoService.GetGrupoByIdAsync(grupoId);
 
-            var preguntasAsa = await _preguntaAsaService.GetRandomGeneratedPreguntasAsaAsync(numeroPreguntas, 0, 0, new List<int>());
+            var preguntasAsa = await _preguntaAsaService.GetRandomGeneratedPreguntasAsaAsync(numeroPreguntas, 5, 15, new List<int>());
 
-			preguntasAsa.ForEach(pregunta =>
-				pregunta.PreguntaAsaOpciones.ToList().ForEach(opcion =>
-				examenGeneradoPreguntas.Add(new ExamenGenerado
+			foreach (var pregunta in preguntasAsa)
+			{
+				foreach (var opcion in pregunta.PreguntaAsaOpciones)
 				{
-					GrupoId = grupoId,
-                    //Grupos = grupo,
-                    Fecha = fecha,
-                    ExamenGeneradoGuid = guidExamen,
-                    NumeroOpcion = opcion.Opcion,
-                    NumeroPregunta = pregunta.NumeroPregunta,
-                    OpcionTexto = opcion.Texto,
-                    PreguntaTexto = pregunta.Pregunta
-				})
-			));
+					examenGeneradoPreguntas.Add(new ExamenGenerado
+					{
+						GrupoId = grupoId,
+						//Grupos = grupo,
+						Fecha = fecha,
+						ExamenGeneradoGuid = guidExamen,
+						NumeroOpcion = opcion.Opcion,
+						NumeroPregunta = pregunta.NumeroPregunta,
+						OpcionTexto = opcion.Texto,
+						PreguntaTexto = pregunta.Pregunta
+					});
+                }
+
+            }
 
 			await _dataContext.ExamenGenerado.AddRangeAsync(examenGeneradoPreguntas);
 			await _dataContext.SaveChangesAsync();

@@ -37,7 +37,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var estudianteGrupos = await _estudianteGrupoService.GetEstudianteGruposAsync(pagination);
+            var estudianteGrupos = await _estudianteGrupoService.GetEstudianteGruposAsync();
             var estudianteGrupoResponses = _mapper.Map<List<EstudianteGrupoResponse>>(estudianteGrupos);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
@@ -133,7 +133,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         public async Task<IActionResult> GetAllGrupoHeaders([FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var estudianteGrupos = await _estudianteGrupoService.GetEstudianteGruposHeadersAsync(pagination);
+            var estudianteGrupos = await _estudianteGrupoService.GetEstudianteGruposHeadersAsync();
             var estudianteGrupoResponses = _mapper.Map<List<EstudianteGrupoResponse>>(estudianteGrupos);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
@@ -204,7 +204,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         public async Task<IActionResult> GetAllByGrupoId([FromRoute] int grupoId, [FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var estudianteGrupos = await _estudianteGrupoService.GetEstudianteGruposByGrupoIdAsync(grupoId, pagination);
+            var estudianteGrupos = await _estudianteGrupoService.GetEstudianteGruposByGrupoIdAsync(grupoId);
             var estudianteGrupoResponses = _mapper.Map<List<EstudianteGrupoResponse>>(estudianteGrupos);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)

@@ -9,6 +9,7 @@ using StackExchange.Redis;
 using static CIAC_TAS_Service.Contracts.V1.ApiRoute;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using CIAC_TAS_Service.Domain.InstructorDomain;
 
 namespace CIAC_TAS_Service.Data
 {
@@ -108,6 +109,17 @@ namespace CIAC_TAS_Service.Data
                 .HasOne<Materia>(eg => eg.Materia)
                 .WithMany(g => g.EstudianteMaterias)
                 .HasForeignKey(eg => eg.MateriaId);
+
+            builder.Entity<RespuestasAsa>()
+                .HasOne<PreguntaAsa>(p => p.PreguntaAsa)
+                .WithMany(e => e.RespuestasAsas)
+                .HasForeignKey(eg => eg.PreguntaAsaId);
+
+            builder.Entity<InstructorMateria>()
+                .HasKey(im => new { im.InstructorId, im.GrupoId, im.MateriaId });
+
+            builder.Entity<InstructorProgramaAnalitico>()
+                .HasKey(ipa => new { ipa.InstructorId, ipa.ProgramaAnaliticoPdfId });
 
 
             builder.Entity<TipoAsistencia>()
@@ -327,5 +339,8 @@ namespace CIAC_TAS_Service.Data
         public DbSet<AsistenciaEstudiante> AsistenciaEstudiante { get; set; }
         public DbSet<EstudianteMateria> EstudianteMateria { get; set; }
         public DbSet<TipoAsistencia> TipoAsistencia { get; set; }
+        public DbSet<InstructorMateria> InstructorMateria { get; set; }
+        public DbSet<ProgramaAnaliticoPdf> ProgramaAnaliticoPdf { get; set; }
+        public DbSet<InstructorProgramaAnalitico> InstructorProgramaAnalitico { get; set; }
     }
 }

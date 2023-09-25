@@ -12,5 +12,6 @@ namespace CIAC_TAS_Service.Services
         Task<bool> DeleteInstructorAsync(int id);
         Task<bool> CheckUserIdIsAssignedAsync(string userId);
         Task<bool> CheckUserIdIsAssignableToThisInstructorAsync(int instructorId, string proposedUserId);
+        Task<Instructor> GetInstructorByUserIdAsync(string userId);
     }
 }

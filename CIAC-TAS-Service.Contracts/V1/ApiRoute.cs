@@ -210,6 +210,7 @@
             public const string Create = $"{Base}/instructores";
             public const string Update = Base + "/instructores/{instructorId}";
             public const string Delete = Base + "/instructores/{instructorId}";
+            public const string GetByUserId = Base + "/instructores/user/{userId}";
         }
 
         public static class Administrativos
@@ -288,6 +289,34 @@
             public const string Create = $"{Base}/tipoAsistencias";
             public const string Update = Base + "/tipoAsistencias/{tipoAsistenciaId}";
             public const string Delete = Base + "/tipoAsistencias/{tipoAsistenciaId}";
+        }
+
+        public static class ProgramaAnaliticoPdfs
+        {
+            public const string GetAll = $"{Base}/programaAnaliticoPdfs";
+            public const string Get = Base + "/programaAnaliticoPdfs/{programaAnaliticoPdfId}";
+            public const string Create = $"{Base}/programaAnaliticoPdfs";
+            public const string Update = Base + "/programaAnaliticoPdfs/{programaAnaliticoPdfId}";
+            public const string Delete = Base + "/programaAnaliticoPdfs/{programaAnaliticoPdfId}";
+            public const string GetAllNotAssignedInstructor = Base + "/programaAnaliticoPdfs/NoAssigned/Instructor/{instructorId}";
+        }
+
+        public static class InstructorMaterias
+        {
+            public const string GetAll = $"{Base}/instructorMaterias";
+            public const string Get = Base + "/instructorMaterias/{instructorId}/{materiaId}/{grupoId}";
+            public const string Create = $"{Base}/instructorMaterias";
+            public const string Delete = Base + "/instructorMaterias/{instructorId}/{materiaId}/{grupoId}";
+            public const string GetAllByInstructorId = Base + "/instructorMaterias/instructorId/{instructorId}";
+        }
+
+        public static class InstructorProgramaAnaliticos
+        {
+            public const string GetAll = $"{Base}/instructorProgramaAnaliticos";
+            public const string Get = Base + "/instructorProgramaAnaliticos/{instructorId}/{programaAnaliticoPdfId}";
+            public const string Create = $"{Base}/instructorProgramaAnaliticos";
+            public const string Delete = Base + "/instructorProgramaAnaliticos/{instructorId}/{programaAnaliticoPdfId}";
+            public const string GetAllByInstructorId = Base + "/instructorProgramaAnaliticos/instructor/{instructorId}";
         }
     }
 }

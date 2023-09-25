@@ -35,7 +35,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var estudianteMaterias = await _estudianteMateriaService.GetEstudianteMateriasAsync(pagination);
+            var estudianteMaterias = await _estudianteMateriaService.GetEstudianteMateriasAsync();
             var estudianteMateriaResponses = _mapper.Map<List<EstudianteMateriaResponse>>(estudianteMaterias);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
@@ -131,7 +131,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         public async Task<IActionResult> GetAllByEstudianteGrupo([FromRoute] int estudianteId, [FromRoute] int grupoId, [FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var estudianteMaterias = await _estudianteMateriaService.GetAllByEstudianteGrupoAsync(estudianteId, grupoId, pagination);
+            var estudianteMaterias = await _estudianteMateriaService.GetAllByEstudianteGrupoAsync(estudianteId, grupoId);
             var estudianteMateriaResponses = _mapper.Map<List<EstudianteMateriaResponse>>(estudianteMaterias);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
@@ -171,7 +171,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         public async Task<IActionResult> GetAllByMateriaGrupo([FromRoute] int materiaId, [FromRoute] int grupoId, [FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var estudianteMaterias = await _estudianteMateriaService.GetAllByMateriaGrupoAsync(materiaId, grupoId, pagination);
+            var estudianteMaterias = await _estudianteMateriaService.GetAllByMateriaGrupoAsync(materiaId, grupoId);
             var estudianteMateriaResponses = _mapper.Map<List<EstudianteMateriaResponse>>(estudianteMaterias);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)

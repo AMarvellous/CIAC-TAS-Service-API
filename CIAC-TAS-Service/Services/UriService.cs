@@ -165,5 +165,20 @@ namespace CIAC_TAS_Service.Services
         {
             return new Uri(_baseUri + ApiRoute.TipoAsistencias.Get.Replace("{tipoAsistenciaId}", tipoAsistenciaId));
         }
+
+        public Uri GetProgramaAnaliticoPdfUri(string programaAnaliticoPdfId)
+        {
+            return new Uri(_baseUri + ApiRoute.ProgramaAnaliticoPdfs.Get.Replace("{programaAnaliticoPdfId}", programaAnaliticoPdfId));
+        }
+
+        public Uri GetInstructorMateriaUri(string instructorId, string materiaId, string grupoId)
+        {
+            return new Uri(_baseUri + ApiRoute.InstructorMaterias.Get.Replace("{instructorId}", instructorId).Replace("{materiaId}", materiaId).Replace("{grupoId}", grupoId));
+        }
+
+        public Uri GetInstructorProgramaAnaliticoUri(string instructorId, string programaAnaliticoId)
+        {
+            return new Uri(_baseUri + ApiRoute.InstructorProgramaAnaliticos.Get.Replace("{instructorId}", instructorId).Replace("{programaAnaliticoPdfId}", programaAnaliticoId));
+        }
     }
 }

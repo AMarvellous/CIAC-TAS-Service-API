@@ -36,7 +36,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var grupos = await _grupoService.GetGruposAsync(pagination);
+            var grupos = await _grupoService.GetGruposAsync();
             var grupoResponses = _mapper.Map<List<GrupoResponse>>(grupos);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
@@ -152,7 +152,7 @@ namespace CIAC_TAS_Service.Controllers.V1
 		public async Task<IActionResult> GetAllNotAssignedEstudents([FromQuery] PaginationQuery paginationQuery)
 		{
 			var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-			var grupos = await _grupoService.GetGruposNotAssignedEstudentsAsync(pagination);
+			var grupos = await _grupoService.GetGruposNotAssignedEstudentsAsync();
 			var grupoResponses = _mapper.Map<List<GrupoResponse>>(grupos);
 
 			if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)

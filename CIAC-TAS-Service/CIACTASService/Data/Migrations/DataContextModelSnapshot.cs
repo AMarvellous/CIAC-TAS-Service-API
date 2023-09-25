@@ -1363,6 +1363,31 @@ namespace CIACTASService.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("CIAC_TAS_Service.Domain.General.ProgramaAnaliticoPdf", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Gestion")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MateriaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RutaPdf")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MateriaId");
+
+                    b.ToTable("ProgramaAnaliticoPdf");
+                });
+
             modelBuilder.Entity("CIAC_TAS_Service.Domain.General.TipoAsistencia", b =>
                 {
                     b.Property<int>("Id")
@@ -1395,6 +1420,41 @@ namespace CIACTASService.Data.Migrations
                             Id = 3,
                             Nombre = "Injustificada"
                         });
+                });
+
+            modelBuilder.Entity("CIAC_TAS_Service.Domain.InstructorDomain.InstructorMateria", b =>
+                {
+                    b.Property<int>("InstructorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GrupoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MateriaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("InstructorId", "GrupoId", "MateriaId");
+
+                    b.HasIndex("GrupoId");
+
+                    b.HasIndex("MateriaId");
+
+                    b.ToTable("InstructorMateria");
+                });
+
+            modelBuilder.Entity("CIAC_TAS_Service.Domain.InstructorDomain.InstructorProgramaAnalitico", b =>
+                {
+                    b.Property<int>("InstructorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProgramaAnaliticoPdfId")
+                        .HasColumnType("int");
+
+                    b.HasKey("InstructorId", "ProgramaAnaliticoPdfId");
+
+                    b.HasIndex("ProgramaAnaliticoPdfId");
+
+                    b.ToTable("InstructorProgramaAnalitico");
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.Menu.MenuModuloWeb", b =>
@@ -1827,7 +1887,7 @@ namespace CIACTASService.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("CIAC_TAS_Service.Domain.ASA.PreguntaAsa", "PreguntaAsa")
-                        .WithMany()
+                        .WithMany("RespuestasAsas")
                         .HasForeignKey("PreguntaAsaId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -2052,6 +2112,63 @@ namespace CIACTASService.Data.Migrations
                     b.Navigation("Modulo");
                 });
 
+            modelBuilder.Entity("CIAC_TAS_Service.Domain.General.ProgramaAnaliticoPdf", b =>
+                {
+                    b.HasOne("CIAC_TAS_Service.Domain.General.Materia", "Materia")
+                        .WithMany()
+                        .HasForeignKey("MateriaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Materia");
+                });
+
+            modelBuilder.Entity("CIAC_TAS_Service.Domain.InstructorDomain.InstructorMateria", b =>
+                {
+                    b.HasOne("CIAC_TAS_Service.Domain.General.Grupo", "Grupo")
+                        .WithMany("InstructorMaterias")
+                        .HasForeignKey("GrupoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CIAC_TAS_Service.Domain.General.Instructor", "Instructor")
+                        .WithMany("InstructorMaterias")
+                        .HasForeignKey("InstructorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CIAC_TAS_Service.Domain.General.Materia", "Materia")
+                        .WithMany("InstructorMaterias")
+                        .HasForeignKey("MateriaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Grupo");
+
+                    b.Navigation("Instructor");
+
+                    b.Navigation("Materia");
+                });
+
+            modelBuilder.Entity("CIAC_TAS_Service.Domain.InstructorDomain.InstructorProgramaAnalitico", b =>
+                {
+                    b.HasOne("CIAC_TAS_Service.Domain.General.Instructor", "Instructor")
+                        .WithMany("InstructorProgramaAnaliticos")
+                        .HasForeignKey("InstructorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CIAC_TAS_Service.Domain.General.ProgramaAnaliticoPdf", "ProgramaAnaliticoPdf")
+                        .WithMany("InstructorProgramaAnaliticos")
+                        .HasForeignKey("ProgramaAnaliticoPdfId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Instructor");
+
+                    b.Navigation("ProgramaAnaliticoPdf");
+                });
+
             modelBuilder.Entity("CIAC_TAS_Service.Domain.Menu.MenuModuloWeb", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", "Role")
@@ -2180,6 +2297,8 @@ namespace CIACTASService.Data.Migrations
                     b.Navigation("PreguntaAsaImagenAsas");
 
                     b.Navigation("PreguntaAsaOpciones");
+
+                    b.Navigation("RespuestasAsas");
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.AsistenciaEstudianteHeader", b =>
@@ -2209,11 +2328,17 @@ namespace CIACTASService.Data.Migrations
                     b.Navigation("EstudianteMaterias");
 
                     b.Navigation("ExamenGenerado");
+
+                    b.Navigation("InstructorMaterias");
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.General.Instructor", b =>
                 {
                     b.Navigation("AsistenciaEstudianteHeaders");
+
+                    b.Navigation("InstructorMaterias");
+
+                    b.Navigation("InstructorProgramaAnaliticos");
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.General.Materia", b =>
@@ -2221,6 +2346,8 @@ namespace CIACTASService.Data.Migrations
                     b.Navigation("AsistenciaEstudianteHeaders");
 
                     b.Navigation("EstudianteMaterias");
+
+                    b.Navigation("InstructorMaterias");
 
                     b.Navigation("ModuloMaterias");
                 });
@@ -2237,6 +2364,11 @@ namespace CIACTASService.Data.Migrations
                     b.Navigation("AsistenciaEstudianteHeaders");
 
                     b.Navigation("EstudianteProgramas");
+                });
+
+            modelBuilder.Entity("CIAC_TAS_Service.Domain.General.ProgramaAnaliticoPdf", b =>
+                {
+                    b.Navigation("InstructorProgramaAnaliticos");
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.General.TipoAsistencia", b =>

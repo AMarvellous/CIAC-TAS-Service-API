@@ -38,7 +38,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         public async Task<IActionResult> GetAllByUserId([FromRoute] string userId, [FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var respuestasAsasConsolidado = await _respuestasAsaConsolidadoService.GetRespuestasAsasConsolidadoByUserIdAsync(userId, pagination);
+            var respuestasAsasConsolidado = await _respuestasAsaConsolidadoService.GetRespuestasAsasConsolidadoByUserIdAsync(userId);
             var respuestasAsaConsolidadoResponses = _mapper.Map<List<RespuestasAsaConsolidadoResponse>>(respuestasAsasConsolidado);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
@@ -126,7 +126,7 @@ namespace CIAC_TAS_Service.Controllers.V1
 		public async Task<IActionResult> GetAllByUserIdAndLote([FromRoute] Guid loteRespuestasId, [FromRoute] string userId, [FromQuery] PaginationQuery paginationQuery)
 		{
 			var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-			var respuestasAsasConsolidado = await _respuestasAsaConsolidadoService.GetRespuestasAsasConsolidadoByUserIdLoteRespuestasIdAsync(loteRespuestasId, userId, pagination);
+			var respuestasAsasConsolidado = await _respuestasAsaConsolidadoService.GetRespuestasAsasConsolidadoByUserIdLoteRespuestasIdAsync(loteRespuestasId, userId);
 			var respuestasAsaConsolidadoResponses = _mapper.Map<List<RespuestasAsaConsolidadoResponse>>(respuestasAsasConsolidado);
 
 			if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
@@ -145,7 +145,7 @@ namespace CIAC_TAS_Service.Controllers.V1
 		public async Task<IActionResult> GetAllHeadersByUserIdAndLote([FromRoute] string userId, [FromQuery] PaginationQuery paginationQuery)
 		{
 			var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-			var respuestasAsasConsolidado = await _respuestasAsaConsolidadoService.GetRespuestasAsasConsolidadoHeadersByUserIdAsync(userId, pagination);
+			var respuestasAsasConsolidado = await _respuestasAsaConsolidadoService.GetRespuestasAsasConsolidadoHeadersByUserIdAsync(userId);
 			var respuestasAsaConsolidadoResponses = _mapper.Map<List<RespuestasAsaConsolidadoResponse>>(respuestasAsasConsolidado);
 
 			if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)

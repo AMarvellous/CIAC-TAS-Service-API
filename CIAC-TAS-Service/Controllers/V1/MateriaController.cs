@@ -34,7 +34,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var materias = await _materiaService.GetMateriasAsync(pagination);
+            var materias = await _materiaService.GetMateriasAsync();
             var materiaResponses = _mapper.Map<List<MateriaResponse>>(materias);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
@@ -138,7 +138,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         public async Task<IActionResult> GetAllNotAssignedMaterias([FromRoute] int estudianteId, [FromRoute] int grupoId, [FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var materias = await _materiaService.GetAllNotAssignedMateriasAsync(estudianteId, grupoId, pagination);
+            var materias = await _materiaService.GetAllNotAssignedMateriasAsync(estudianteId, grupoId);
             var materiaResponses = _mapper.Map<List<MateriaResponse>>(materias);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)

@@ -36,7 +36,7 @@ namespace CIAC_TAS_Service.Controllers.V1
 		public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
 		{
 			var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-			var examenGenerados = await _examenGeneradoService.GetExamenGeneradosAsync(pagination);
+			var examenGenerados = await _examenGeneradoService.GetExamenGeneradosAsync();
 			var examenGeneradoResponses = _mapper.Map<List<ExamenGeneradoResponse>>(examenGenerados);
 
 			if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
@@ -191,7 +191,7 @@ namespace CIAC_TAS_Service.Controllers.V1
 		{
 			var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
 			pagination.PageSize = 9999;
-            var examenGenerados = await _examenGeneradoService.GetExamenGeneradosByGrupoGuidAsync(grupoId, guid, pagination);
+            var examenGenerados = await _examenGeneradoService.GetExamenGeneradosByGrupoGuidAsync(grupoId, guid);
 			var examenGeneradoResponses = _mapper.Map<List<ExamenGeneradoResponse>>(examenGenerados);
 
 			if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
@@ -209,7 +209,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         public async Task<IActionResult> GetExamenHeaders([FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var examenGenerados = await _examenGeneradoService.GetExamenGeneradosHeadersAsync(pagination);
+            var examenGenerados = await _examenGeneradoService.GetExamenGeneradosHeadersAsync();
             var examenGeneradoResponses = _mapper.Map<List<ExamenGeneradoResponse>>(examenGenerados);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)

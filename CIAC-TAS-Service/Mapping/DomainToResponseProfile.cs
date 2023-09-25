@@ -4,6 +4,7 @@ using CIAC_TAS_Service.Domain;
 using CIAC_TAS_Service.Domain.ASA;
 using CIAC_TAS_Service.Domain.Estudiante;
 using CIAC_TAS_Service.Domain.General;
+using CIAC_TAS_Service.Domain.InstructorDomain;
 using CIAC_TAS_Service.Domain.Menu;
 using Microsoft.AspNetCore.Identity;
 
@@ -126,6 +127,9 @@ namespace CIAC_TAS_Service.Mapping
             CreateMap<Materia, MateriaResponse>();
             CreateMap<Modulo, ModuloResponse>();
             CreateMap<TipoAsistencia, TipoAsistenciaResponse>();
+            CreateMap<ProgramaAnaliticoPdf, ProgramaAnaliticoPdfResponse>();
+            CreateMap<InstructorMateria, InstructorMateriaResponse>();
+            CreateMap<InstructorProgramaAnalitico, InstructorProgramaAnaliticoResponse>();
         }
     }
 }

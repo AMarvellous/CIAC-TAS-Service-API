@@ -34,7 +34,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var moduloMaterias = await _moduloMateriaService.GetModuloMateriasAsync(pagination);
+            var moduloMaterias = await _moduloMateriaService.GetModuloMateriasAsync();
             var moduloMateriaResponses = _mapper.Map<List<ModuloMateriaResponse>>(moduloMaterias);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)

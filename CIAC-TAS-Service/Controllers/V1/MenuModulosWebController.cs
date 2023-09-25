@@ -37,7 +37,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var menuModulosWebs = await _menuModulosWebService.GetMenuModulosWebsAsync(pagination);
+            var menuModulosWebs = await _menuModulosWebService.GetMenuModulosWebsAsync();
             var menuModulosWebResponses = _mapper.Map<List<MenuModulosWebResponse>>(menuModulosWebs);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
@@ -165,7 +165,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         public async Task<IActionResult> GetByRoleAsync([FromRoute] string roleName , [FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var menuModulosWebs = await _menuModulosWebService.GetMenuModulosWebsByRoleNameAsync(roleName, pagination);
+            var menuModulosWebs = await _menuModulosWebService.GetMenuModulosWebsByRoleNameAsync(roleName);
             var menuModulosWebResponses = _mapper.Map<List<MenuModulosWebResponse>>(menuModulosWebs);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)

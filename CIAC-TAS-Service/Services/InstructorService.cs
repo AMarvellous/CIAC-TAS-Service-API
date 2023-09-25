@@ -84,5 +84,10 @@ namespace CIAC_TAS_Service.Services
 
             return !await CheckUserIdIsAssignedAsync(proposedUserId);
         }
+
+        public async Task<Instructor> GetInstructorByUserIdAsync(string userId)
+        {
+            return await _dataContext.Instructor.SingleOrDefaultAsync(x => x.UserId == userId);
+        }
     }
 }

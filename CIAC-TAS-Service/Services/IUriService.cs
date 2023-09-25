@@ -35,5 +35,8 @@ namespace CIAC_TAS_Service.Services
         Uri GetAsistenciaEstudianteUri(string asistenciaEstudianteId);
         Uri GetEstudianteMateriaUri(string estudianteId, string grupoId,string materiaId);
         Uri GetTipoAsistenciaUri(string tipoAsistenciaId);
+        Uri GetProgramaAnaliticoPdfUri(string programaAnaliticoPdfId);
+        Uri GetInstructorMateriaUri(string instructorId, string materiaId, string grupoId);
+        Uri GetInstructorProgramaAnaliticoUri(string instructorId, string programaAnaliticoId);
     }
 }

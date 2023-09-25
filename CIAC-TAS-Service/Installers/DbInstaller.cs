@@ -9,9 +9,10 @@ namespace CIAC_TAS_Service.Installers
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<DataContext>(options =>
-                options.UseSqlServer(
-                    configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<DataContext>(options => {
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                options.EnableSensitiveDataLogging();
+                });
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<DataContext>();
@@ -45,6 +46,9 @@ namespace CIAC_TAS_Service.Installers
             services.AddScoped<IAsistenciaEstudianteService, AsistenciaEstudianteService>();
             services.AddScoped<IEstudianteMateriaService, EstudianteMateriaService>();
             services.AddScoped<ITipoAsistenciaService, TipoAsistenciaService>();
+            services.AddScoped<IProgramaAnaliticoPdfService, ProgramaAnaliticoPdfService>();
+            services.AddScoped<IInstructorMateriaService, InstructorMateriaService>();
+            services.AddScoped<IInstructorProgramaAnaliticoService, InstructorProgramaAnaliticoService>();
         }
-	}
+    }
 }

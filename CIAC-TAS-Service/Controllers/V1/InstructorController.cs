@@ -39,7 +39,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var instructors = await _instructorService.GetInstructorsAsync(pagination);
+            var instructors = await _instructorService.GetInstructorsAsync();
             var instructorResponses = _mapper.Map<List<InstructorResponse>>(instructors);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
@@ -179,6 +179,22 @@ namespace CIAC_TAS_Service.Controllers.V1
             }
 
             return NoContent();
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Instructor")]
+        [HttpGet(ApiRoute.Instructores.GetByUserId)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(InstructorResponse), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetByUserId([FromRoute] string userId)
+        {
+            var instructor = await _instructorService.GetInstructorByUserIdAsync(userId);
+
+            if (instructor == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<InstructorResponse>(instructor));
         }
     }
 }

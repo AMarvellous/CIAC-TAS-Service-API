@@ -23,5 +23,6 @@ namespace CIAC_TAS_Service.Domain.ASA
         // Link to tables
         public virtual IEnumerable<PreguntaAsaOpcion> PreguntaAsaOpciones { get; set; }
         public virtual IEnumerable<PreguntaAsaImagenAsa> PreguntaAsaImagenAsas { get; set; }
+        public virtual IEnumerable<RespuestasAsa> RespuestasAsas { get; set; }
     }
 }

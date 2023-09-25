@@ -37,7 +37,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var estudiantes = await _estudianteService.GetEstudiantesAsync(pagination);
+            var estudiantes = await _estudianteService.GetEstudiantesAsync();
             var estudianteResponses = _mapper.Map<List<EstudianteResponse>>(estudiantes);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
@@ -202,7 +202,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         public async Task<IActionResult> GetAllNotAssignedToGrupo([FromRoute] int grupoId, [FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var estudiantes = await _estudianteService.GetAllNotAssignedToGrupoAsync(grupoId, pagination);
+            var estudiantes = await _estudianteService.GetAllNotAssignedToGrupoAsync(grupoId);
             var estudianteResponses = _mapper.Map<List<EstudianteResponse>>(estudiantes);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
@@ -221,7 +221,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         public async Task<IActionResult> GetAllNotAssignedAsistenciaEstudiante([FromRoute] int materiaId, [FromRoute] int grupoId, [FromRoute] int asistenciaEstudianteHeaderId, [FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var estudiantes = await _estudianteService.GetAllNotAssignedAsistenciaEstudianteAsync(materiaId, grupoId, asistenciaEstudianteHeaderId, pagination);
+            var estudiantes = await _estudianteService.GetAllNotAssignedAsistenciaEstudianteAsync(materiaId, grupoId, asistenciaEstudianteHeaderId);
             var estudianteResponses = _mapper.Map<List<EstudianteResponse>>(estudiantes);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)

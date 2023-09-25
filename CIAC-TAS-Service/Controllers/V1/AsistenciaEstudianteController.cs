@@ -36,7 +36,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var asistenciaEstudiantes = await _asistenciaEstudianteService.GetAsistenciaEstudiantesAsync(pagination);
+            var asistenciaEstudiantes = await _asistenciaEstudianteService.GetAsistenciaEstudiantesAsync();
             var asistenciaEstudianteResponses = _mapper.Map<List<AsistenciaEstudianteResponse>>(asistenciaEstudiantes);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)

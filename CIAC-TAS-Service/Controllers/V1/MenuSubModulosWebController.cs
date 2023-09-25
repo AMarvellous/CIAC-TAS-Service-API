@@ -36,7 +36,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var menuSubModulosWebs = await _menuSubModulosWebService.GetMenuSubModulosWebsAsync(pagination);
+            var menuSubModulosWebs = await _menuSubModulosWebService.GetMenuSubModulosWebsAsync();
             var menuSubModulosWebResponses = _mapper.Map<List<MenuSubModulosWebResponse>>(menuSubModulosWebs);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)

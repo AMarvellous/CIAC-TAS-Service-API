@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using CIAC_TAS_Service.Domain.Estudiante;
+using CIAC_TAS_Service.Domain.InstructorDomain;
 
 namespace CIAC_TAS_Service.Domain.General
 {
@@ -34,5 +35,7 @@ namespace CIAC_TAS_Service.Domain.General
         [ForeignKey(nameof(UserId))]
         public IdentityUser User { get; set; }
         public IEnumerable<AsistenciaEstudianteHeader> AsistenciaEstudianteHeaders { get; set; }
+        public IEnumerable<InstructorMateria> InstructorMaterias { get; set; }
+        public IEnumerable<InstructorProgramaAnalitico> InstructorProgramaAnaliticos { get; set; }
     }
 }

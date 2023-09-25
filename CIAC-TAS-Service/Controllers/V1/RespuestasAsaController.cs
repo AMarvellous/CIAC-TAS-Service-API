@@ -45,7 +45,7 @@ namespace CIAC_TAS_Service.Controllers.V1
         public async Task<IActionResult> GetAllByUserId([FromRoute] string userId , [FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var respuestasAsas = await _respuestasAsaService.GetRespuestasAsasByUserIdAsync(userId, pagination);
+            var respuestasAsas = await _respuestasAsaService.GetRespuestasAsasByUserIdAsync(userId);
             var respuestasAsaResponses = _mapper.Map<List<RespuestasAsaResponse>>(respuestasAsas);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)

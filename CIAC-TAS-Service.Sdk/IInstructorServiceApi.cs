@@ -27,5 +27,8 @@ namespace CIAC_TAS_Service.Sdk
 
         [Delete("/" + Instructores.Delete)]
         Task<ApiResponse<InstructorResponse>> DeleteAsync(int instructorId);
+
+        [Get("/" + Instructores.GetByUserId)]
+        Task<ApiResponse<InstructorResponse>> GetByUserIdAsync(string userId);
     }
 }

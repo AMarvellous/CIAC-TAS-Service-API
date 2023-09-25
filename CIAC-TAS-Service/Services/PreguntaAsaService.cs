@@ -84,6 +84,7 @@ namespace CIAC_TAS_Service.Services
                 .Where(x => x.EstadoPreguntaAsaId != 2) // Avoid estado Inactive
                 .Include(x => x.PreguntaAsaOpciones)
                 .Include(x => x.GrupoPreguntaAsa)
+                .AsNoTracking()
                 .AsQueryable();
 
             if (grupoPreguntaAsaIds.Count() > 0)
