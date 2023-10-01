@@ -121,5 +121,25 @@ namespace CIAC_TAS_Service.Services
                 .Take(paginationFilter.PageSize)
                 .ToListAsync();
         }
+
+        public async Task<List<EstudianteMateria>> GetAllByEstudianteIdAsync(int estudianteId, PaginationFilter paginationFilter = null)
+        {
+            var queryable = _dataContext.EstudianteMateria
+                .Where(x => x.EstudianteId == estudianteId)
+                .Include(x => x.Estudiante)
+                .Include(x => x.Grupo)
+                .Include(x => x.Materia)
+                .AsQueryable();
+
+            if (paginationFilter == null)
+            {
+                return await queryable.ToListAsync();
+            }
+
+            var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
+            return await queryable.Skip(skip)
+                .Take(paginationFilter.PageSize)
+                .ToListAsync();
+        }
     }
 }

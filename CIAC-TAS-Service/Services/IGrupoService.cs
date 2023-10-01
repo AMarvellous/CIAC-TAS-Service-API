@@ -12,5 +12,6 @@ namespace CIAC_TAS_Service.Services
         Task<bool> DeleteGrupoAsync(int id);
 		Task<bool> CheckGrupoExistsAsync(int id);
 		Task<List<Grupo>> GetGruposNotAssignedEstudentsAsync(PaginationFilter paginationFilter = null);
-	}
+        Task<List<Grupo>> GetAllGruposAssignedByInstructorAsync(int instructorId, PaginationFilter paginationFilter = null);
+    }
 }

@@ -28,5 +28,8 @@ namespace CIAC_TAS_Service.Sdk
         
         [Get("/" + EstudianteMaterias.GetAllByMateriaGrupo)]
         Task<ApiResponse<PagedResponse<EstudianteMateriaResponse>>> GetAllByMateriaGrupoAsync(int materiaId, int grupoId);
+
+        [Get("/" + EstudianteMaterias.GetAllByEstudianteId)]
+        Task<ApiResponse<PagedResponse<EstudianteMateriaResponse>>> GetAllByEstudianteIdAsync(int estudianteId);
     }
 }

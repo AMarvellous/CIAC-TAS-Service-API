@@ -183,5 +183,24 @@ namespace CIAC_TAS_Service.Controllers.V1
 
             return Ok(paginationResponse);
         }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Instructor,Estudiante")]
+        [HttpGet(ApiRoute.EstudianteMaterias.GetAllByEstudianteId)]
+        [ProducesResponseType(typeof(List<EstudianteMateriaResponse>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAllByEstudianteId([FromRoute] int estudianteId, [FromQuery] PaginationQuery paginationQuery)
+        {
+            var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
+            var estudianteMaterias = await _estudianteMateriaService.GetAllByEstudianteIdAsync(estudianteId);
+            var estudianteMateriaResponses = _mapper.Map<List<EstudianteMateriaResponse>>(estudianteMaterias);
+
+            if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
+            {
+                return Ok(new PagedResponse<EstudianteMateriaResponse>(estudianteMateriaResponses));
+            }
+
+            var paginationResponse = PaginationHelpers.CreatePaginatedResponse(_uriService, pagination, estudianteMateriaResponses);
+
+            return Ok(paginationResponse);
+        }
     }
 }

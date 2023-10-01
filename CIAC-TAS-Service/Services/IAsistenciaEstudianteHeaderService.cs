@@ -11,5 +11,6 @@ namespace CIAC_TAS_Service.Services
         Task<bool> UpdateAsistenciaEstudianteHeaderAsync(AsistenciaEstudianteHeader asistenciaEstudianteHeader);
         Task<bool> DeleteAsistenciaEstudianteHeaderAsync(int id);
         Task<List<AsistenciaEstudianteHeader>> GetAsistenciaEstudianteHeadersByGrupoIdMateriaIdAsync(int grupoId, int materiaId, PaginationFilter paginationFilter = null);
+        Task<List<AsistenciaEstudianteHeader>> GetAsistenciaEstudianteHeadersByGrupoIdMateriaIdEstudianteIdAsync(int grupoId, int materiaId, int estudianteId, PaginationFilter paginationFilter = null);
     }
 }

@@ -30,5 +30,8 @@ namespace CIAC_TAS_Service.Sdk
 
         [Get("/" + AsistenciaEstudianteHeaders.GetAllHeadersByGrupoAndMateriaId)]
         Task<ApiResponse<PagedResponse<AsistenciaEstudianteHeaderResponse>>> GetAllHeadersByGrupoIdMateriaIdAsync(int grupoId, int materiaId);
+        
+        [Get("/" + AsistenciaEstudianteHeaders.GetAllHeadersByGrupoMateriaAndEstudianteId)]
+        Task<ApiResponse<PagedResponse<AsistenciaEstudianteHeaderResponse>>> GetAllHeadersByGrupoMateriaAndEstudianteIdAsync(int grupoId, int materiaId, int estudianteId);
     }
 }

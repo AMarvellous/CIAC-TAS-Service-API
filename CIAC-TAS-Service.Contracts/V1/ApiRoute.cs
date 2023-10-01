@@ -42,7 +42,8 @@
             public const string Update = Base + "/grupos/{grupoId}";
             public const string Delete = Base + "/grupos/{grupoId}";
 			public const string GetAllNotAssignedEstudents = $"{Base}/grupos/NoAssigned/Estudents";
-		}
+            public const string GetAllGruposAssignedByInstructor = Base + "/instructorMateria/assigned/grupos/{instructorId}";
+        }
 
         public static class GrupoPreguntaAsas
         {
@@ -230,6 +231,7 @@
             public const string Update = Base + "/materias/{materiaId}";
             public const string Delete = Base + "/materias/{materiaId}";
             public const string GetAllNotAssignedMaterias = Base + "/materias/NoAssigned/{estudianteId}/{grupoId}";
+            public const string GetAllMateriasAssignedByInstructorGrupo = Base + "/materias/assigned/instructor/grupo/{instructorId}/{grupoId}";
         }
 
         public static class Modulos
@@ -258,6 +260,7 @@
             public const string Update = Base + "/asistenciaEstudianteHeaders/{asistenciaEstudianteHeaderId}";
             public const string Delete = Base + "/asistenciaEstudianteHeaders/{asistenciaEstudianteHeaderId}";
             public const string GetAllHeadersByGrupoAndMateriaId = Base + "/asistenciaEstudianteHeaders/grupo/{grupoId}/materia/{materiaId}";
+            public const string GetAllHeadersByGrupoMateriaAndEstudianteId = Base + "/asistenciaEstudianteHeaders/grupo/{grupoId}/materia/{materiaId}/estudiante/{estudianteId}";
         }
 
         public static class AsistenciaEstudiantes
@@ -280,6 +283,7 @@
             public const string GetAllByEstudianteGrupo = Base + "/estudianteMaterias/{estudianteId}/{grupoId}";
             public const string CreateAsignAllMaterias = Base + "/estudianteMaterias/allMaterias/{estudianteId}/{grupoId}";
             public const string GetAllByMateriaGrupo = Base + "/estudianteMaterias/materiaGrupo/{materiaId}/{grupoId}";
+            public const string GetAllByEstudianteId = Base + "/estudianteMaterias/estudianteId/{estudianteId}";
         }
 
         public static class TipoAsistencias

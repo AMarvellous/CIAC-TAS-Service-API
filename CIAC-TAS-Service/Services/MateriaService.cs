@@ -83,5 +83,25 @@ namespace CIAC_TAS_Service.Services
                 .Take(paginationFilter.PageSize)
                 .ToListAsync();
         }
+
+        public async Task<List<Materia>> GetAllMateriasAssignedByInstructorGrupoAsync(int instructorId, int grupoId, PaginationFilter paginationFilter = null)
+        {
+            var queryable = _dataContext.Materia
+                .Where(g => _dataContext.InstructorMateria
+                    .Where(x => x.InstructorId == instructorId && x.GrupoId == grupoId)
+                    .Select(im => im.MateriaId)
+                        .Contains(g.Id)
+                ).AsQueryable();
+
+            if (paginationFilter == null)
+            {
+                return await queryable.ToListAsync();
+            }
+
+            var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
+            return await queryable.Skip(skip)
+                .Take(paginationFilter.PageSize)
+                .ToListAsync();
+        }
     }
 }

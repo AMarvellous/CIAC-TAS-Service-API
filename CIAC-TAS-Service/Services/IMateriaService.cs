@@ -11,5 +11,6 @@ namespace CIAC_TAS_Service.Services
         Task<bool> UpdateMateriaAsync(Materia materia);
         Task<bool> DeleteMateriaAsync(int id);
         Task<List<Materia>> GetAllNotAssignedMateriasAsync(int estudianteId, int grupoId, PaginationFilter paginationFilter = null);
+        Task<List<Materia>> GetAllMateriasAssignedByInstructorGrupoAsync(int instructorId, int grupoId, PaginationFilter paginationFilter = null);
     }
 }

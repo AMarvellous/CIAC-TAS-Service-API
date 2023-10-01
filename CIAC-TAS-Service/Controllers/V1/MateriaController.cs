@@ -47,7 +47,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(paginationResponse);
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Instructor")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Instructor,Estudiante")]
         [HttpGet(ApiRoute.Materias.Get)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(MateriaResponse), (int)HttpStatusCode.OK)]
@@ -139,6 +139,25 @@ namespace CIAC_TAS_Service.Controllers.V1
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
             var materias = await _materiaService.GetAllNotAssignedMateriasAsync(estudianteId, grupoId);
+            var materiaResponses = _mapper.Map<List<MateriaResponse>>(materias);
+
+            if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
+            {
+                return Ok(new PagedResponse<MateriaResponse>(materiaResponses));
+            }
+
+            var paginationResponse = PaginationHelpers.CreatePaginatedResponse(_uriService, pagination, materiaResponses);
+
+            return Ok(paginationResponse);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Instructor")]
+        [HttpGet(ApiRoute.Materias.GetAllMateriasAssignedByInstructorGrupo)]
+        [ProducesResponseType(typeof(MateriaResponse), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAllMateriasAssignedByInstructorGrupo([FromRoute] int instructorId, [FromRoute] int grupoId, [FromQuery] PaginationQuery paginationQuery)
+        {
+            var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
+            var materias = await _materiaService.GetAllMateriasAssignedByInstructorGrupoAsync(instructorId, grupoId);
             var materiaResponses = _mapper.Map<List<MateriaResponse>>(materias);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)

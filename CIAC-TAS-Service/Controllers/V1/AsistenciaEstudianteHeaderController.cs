@@ -15,7 +15,6 @@ using static CIAC_TAS_Service.Contracts.V1.ApiRoute;
 
 namespace CIAC_TAS_Service.Controllers.V1
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin, Instructor")]
     [Produces("application/json")]
     public class AsistenciaEstudianteHeaderController : Controller
     {
@@ -30,6 +29,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             _uriService = uriService;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin, Instructor")]
         [HttpGet(ApiRoute.AsistenciaEstudianteHeaders.GetAll)]
         [ProducesResponseType(typeof(AsistenciaEstudianteHeaderResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
@@ -48,6 +48,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(paginationResponse);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin, Instructor")]
         [HttpGet(ApiRoute.AsistenciaEstudianteHeaders.Get)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(AsistenciaEstudianteHeaderResponse), (int)HttpStatusCode.OK)]
@@ -63,6 +64,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(_mapper.Map<AsistenciaEstudianteHeaderResponse>(asistenciaEstudianteHeader));
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin, Instructor")]
         [HttpPost(ApiRoute.AsistenciaEstudianteHeaders.Create)]
         [ProducesResponseType(typeof(AsistenciaEstudianteHeaderResponse), (int)HttpStatusCode.Created)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
@@ -104,6 +106,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Created(locationUri, response);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin, Instructor")]
         [HttpPut(ApiRoute.AsistenciaEstudianteHeaders.Update)]
         [ProducesResponseType(typeof(AsistenciaEstudianteHeaderResponse), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
@@ -133,6 +136,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(_mapper.Map<AsistenciaEstudianteHeaderResponse>(asistenciaEstudianteHeader));
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin, Instructor")]
         [HttpDelete(ApiRoute.AsistenciaEstudianteHeaders.Delete)]
         [ProducesResponseType(typeof(AsistenciaEstudianteHeaderResponse), (int)HttpStatusCode.NoContent)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
@@ -148,12 +152,32 @@ namespace CIAC_TAS_Service.Controllers.V1
             return NoContent();
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin, Instructor")]
         [HttpGet(ApiRoute.AsistenciaEstudianteHeaders.GetAllHeadersByGrupoAndMateriaId)]
         [ProducesResponseType(typeof(AsistenciaEstudianteHeaderResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAllHeadersByGrupoAndMateriaId([FromRoute] int grupoId, [FromRoute] int materiaId, [FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
             var asistenciaEstudianteHeaders = await _asistenciaEstudianteHeaderService.GetAsistenciaEstudianteHeadersByGrupoIdMateriaIdAsync(grupoId, materiaId);
+            var asistenciaEstudianteHeaderResponses = _mapper.Map<List<AsistenciaEstudianteHeaderResponse>>(asistenciaEstudianteHeaders);
+
+            if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
+            {
+                return Ok(new PagedResponse<AsistenciaEstudianteHeaderResponse>(asistenciaEstudianteHeaderResponses));
+            }
+
+            var paginationResponse = PaginationHelpers.CreatePaginatedResponse(_uriService, pagination, asistenciaEstudianteHeaderResponses);
+
+            return Ok(paginationResponse);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Instructor,Estudiante")]
+        [HttpGet(ApiRoute.AsistenciaEstudianteHeaders.GetAllHeadersByGrupoMateriaAndEstudianteId)]
+        [ProducesResponseType(typeof(AsistenciaEstudianteHeaderResponse), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAllHeadersByGrupoMateriaAndEstudianteId([FromRoute] int grupoId, [FromRoute] int materiaId, [FromRoute] int estudianteId, [FromQuery] PaginationQuery paginationQuery)
+        {
+            var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
+            var asistenciaEstudianteHeaders = await _asistenciaEstudianteHeaderService.GetAsistenciaEstudianteHeadersByGrupoIdMateriaIdEstudianteIdAsync(grupoId, materiaId, estudianteId);
             var asistenciaEstudianteHeaderResponses = _mapper.Map<List<AsistenciaEstudianteHeaderResponse>>(asistenciaEstudianteHeaders);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)

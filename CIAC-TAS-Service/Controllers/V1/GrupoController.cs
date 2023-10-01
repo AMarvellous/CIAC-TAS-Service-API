@@ -15,7 +15,7 @@ using System.Net;
 
 namespace CIAC_TAS_Service.Controllers.V1
 {
-    
+
     [Produces("application/json")]
     public class GrupoController : Controller
     {
@@ -49,7 +49,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(paginationResponse);
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Instructor")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Instructor,Estudiante")]
         [HttpGet(ApiRoute.Grupos.Get)]
         //[Cached(600)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
@@ -148,21 +148,40 @@ namespace CIAC_TAS_Service.Controllers.V1
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpGet(ApiRoute.Grupos.GetAllNotAssignedEstudents)]
-		[ProducesResponseType(typeof(GrupoResponse), (int)HttpStatusCode.OK)]
-		public async Task<IActionResult> GetAllNotAssignedEstudents([FromQuery] PaginationQuery paginationQuery)
-		{
-			var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-			var grupos = await _grupoService.GetGruposNotAssignedEstudentsAsync();
-			var grupoResponses = _mapper.Map<List<GrupoResponse>>(grupos);
+        [ProducesResponseType(typeof(GrupoResponse), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAllNotAssignedEstudents([FromQuery] PaginationQuery paginationQuery)
+        {
+            var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
+            var grupos = await _grupoService.GetGruposNotAssignedEstudentsAsync();
+            var grupoResponses = _mapper.Map<List<GrupoResponse>>(grupos);
 
-			if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
-			{
-				return Ok(new PagedResponse<GrupoResponse>(grupoResponses));
-			}
+            if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
+            {
+                return Ok(new PagedResponse<GrupoResponse>(grupoResponses));
+            }
 
-			var paginationResponse = PaginationHelpers.CreatePaginatedResponse(_uriService, pagination, grupoResponses);
+            var paginationResponse = PaginationHelpers.CreatePaginatedResponse(_uriService, pagination, grupoResponses);
 
-			return Ok(paginationResponse);
-		}
-	}
+            return Ok(paginationResponse);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Instructor")]
+        [HttpGet(ApiRoute.Grupos.GetAllGruposAssignedByInstructor)]
+        [ProducesResponseType(typeof(GrupoResponse), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAllGruposAssignedByInstructor([FromRoute] int instructorId, [FromQuery] PaginationQuery paginationQuery)
+        {
+            var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
+            var grupos = await _grupoService.GetAllGruposAssignedByInstructorAsync(instructorId);
+            var grupoResponses = _mapper.Map<List<GrupoResponse>>(grupos);
+
+            if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
+            {
+                return Ok(new PagedResponse<GrupoResponse>(grupoResponses));
+            }
+
+            var paginationResponse = PaginationHelpers.CreatePaginatedResponse(_uriService, pagination, grupoResponses);
+
+            return Ok(paginationResponse);
+        }
+    }
 }
