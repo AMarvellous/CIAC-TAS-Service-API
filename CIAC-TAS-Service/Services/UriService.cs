@@ -180,5 +180,20 @@ namespace CIAC_TAS_Service.Services
         {
             return new Uri(_baseUri + ApiRoute.InstructorProgramaAnaliticos.Get.Replace("{instructorId}", instructorId).Replace("{programaAnaliticoPdfId}", programaAnaliticoId));
         }
+
+        public Uri GetRegistroNotaHeaderUri(string registroNotaHeaderId)
+        {
+            return new Uri(_baseUri + ApiRoute.RegistroNotaHeaders.Get.Replace("{registroNotaHeaderId}", registroNotaHeaderId));
+        }
+
+        public Uri GetRegistroNotaEstudianteHeaderUri(string registroNotaEstudianteHeaderId)
+        {
+            return new Uri(_baseUri + ApiRoute.RegistroNotaEstudianteHeaders.Get.Replace("{registroNotaEstudianteHeaderId}", registroNotaEstudianteHeaderId));
+        }
+
+        public Uri GetRegistroNotaEstudianteUri(string registroNotaEstudianteId)
+        {
+            return new Uri(_baseUri + ApiRoute.RegistroNotaEstudiantes.Get.Replace("{registroNotaEstudianteId}", registroNotaEstudianteId));
+        }
     }
 }

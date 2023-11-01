@@ -49,6 +49,9 @@ namespace CIAC_TAS_Service.Installers
             services.AddScoped<IProgramaAnaliticoPdfService, ProgramaAnaliticoPdfService>();
             services.AddScoped<IInstructorMateriaService, InstructorMateriaService>();
             services.AddScoped<IInstructorProgramaAnaliticoService, InstructorProgramaAnaliticoService>();
+            services.AddScoped<IRegistroNotaHeaderService, RegistroNotaHeaderService>();
+            services.AddScoped<IRegistroNotaEstudianteHeaderService, RegistroNotaEstudianteHeaderService>();
+            services.AddScoped<IRegistroNotaEstudianteService, RegistroNotaEstudianteService>();
         }
     }
 }

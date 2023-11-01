@@ -15,5 +15,6 @@ namespace CIAC_TAS_Service.Services
         Task<bool> CheckUserIdIsAssignableToThisEstudianteAsync(int estudianteId, string proposedUserId);
         Task<List<Estudiante>> GetAllNotAssignedToGrupoAsync(int grupoId, PaginationFilter paginationFilter = null);
         Task<List<Estudiante>> GetAllNotAssignedAsistenciaEstudianteAsync(int materiaId, int grupoId, int asistenciaEstudianteHeaderId, PaginationFilter paginationFilter = null);
+        Task<List<Estudiante>> GetAllNotAssignedToRegistroNotaEstudianteHeaderAsync(int registroNotaHeaderId, PaginationFilter paginationFilter = null);
     }
 }

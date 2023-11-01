@@ -100,6 +100,7 @@
             public const string GetByUserId = Base + "/estudiantes/userId/{userId}";
             public const string GetAllNotAssignedToGrupo = Base + "/estudiantes/noAssigned/grupo/{grupoId}";
             public const string GetAllNotAssignedAsistenciaEstudiante = Base + "/estudiantes/noAssigned/estudianteMateria/{materiaId}/{grupoId}/{asistenciaEstudianteHeaderId}";
+            public const string GetAllNotAssignedToRegistroNotaEstudianteHeader = Base + "/estudiantes/noAssigned/registroNotaEstudianteHeader/registroNotaHeader/{registroNotaHeaderId}";
         }
 
         public static class EstudianteGrupos
@@ -321,6 +322,37 @@
             public const string Create = $"{Base}/instructorProgramaAnaliticos";
             public const string Delete = Base + "/instructorProgramaAnaliticos/{instructorId}/{programaAnaliticoPdfId}";
             public const string GetAllByInstructorId = Base + "/instructorProgramaAnaliticos/instructor/{instructorId}";
+        }
+
+        public static class RegistroNotaHeaders
+        {
+            public const string GetAll = $"{Base}/registroNotaHeaders";
+            public const string Get = Base + "/registroNotaHeaders/{registroNotaHeaderId}";
+            public const string Create = $"{Base}/registroNotaHeaders";
+            public const string Update = Base + "/registroNotaHeaders/{registroNotaHeaderId}";
+            public const string Delete = Base + "/registroNotaHeaders/{registroNotaHeaderId}";
+            public const string GetAllHeadersByGrupoAndMateriaId = Base + "/registroNotaHeaders/grupo/{grupoId}/materia/{materiaId}";
+            public const string CreateRegistroNotaEstudianteHeader = $"{Base}/registroNotaHeaders/registroNotaEstudianteHeader";
+        }
+
+        public static class RegistroNotaEstudianteHeaders
+        {
+            public const string GetAll = $"{Base}/registroNotaEstudianteHeaders";
+            public const string Get = Base + "/registroNotaEstudianteHeaders/{registroNotaEstudianteHeaderId}";
+            public const string Create = $"{Base}/registroNotaEstudianteHeaders";
+            public const string Update = Base + "/registroNotaEstudianteHeaders/{registroNotaEstudianteHeaderId}";
+            public const string Delete = Base + "/registroNotaEstudianteHeaders/{registroNotaEstudianteHeaderId}";
+            public const string GetAllByRegistroNotaHeaderId = Base + "/registroNotaEstudianteHeaders/registroNotaHeader/{registroNotaHeaderId}";
+        }
+
+        public static class RegistroNotaEstudiantes
+        {
+            public const string GetAll = $"{Base}/registroNotaEstudiantes";
+            public const string Get = Base + "/registroNotaEstudiantes/{registroNotaEstudianteId}";
+            public const string Create = $"{Base}/registroNotaEstudiantes";
+            public const string Update = Base + "/registroNotaEstudiantes/{registroNotaEstudianteId}";
+            public const string Delete = Base + "/registroNotaEstudiantes/{registroNotaEstudianteId}";
+            public const string GetAllByRegistroNotaEstudianteHeaderId = Base + "/registroNotaEstudiantes/RegistroNotaEstudianteHeader/{registroNotaEstudianteHeaderId}";
         }
     }
 }

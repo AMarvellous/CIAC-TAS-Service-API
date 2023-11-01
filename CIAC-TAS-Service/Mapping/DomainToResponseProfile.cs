@@ -108,6 +108,36 @@ namespace CIAC_TAS_Service.Mapping
                     x => x.TipoAsistenciaResponse,
                     opt => opt.MapFrom(m => m.TipoAsistencia));
 
+            CreateMap<RegistroNotaHeader, RegistroNotaHeaderResponse>()
+                .ForMember(
+                    x => x.Programa,
+                    opt => opt.MapFrom(m => m.Programa))
+                .ForMember(
+                    x => x.Grupo,
+                    opt => opt.MapFrom(m => m.Grupo))
+                .ForMember(
+                    x => x.Materia,
+                    opt => opt.MapFrom(m => m.Materia))
+                .ForMember(
+                    x => x.Modulo,
+                    opt => opt.MapFrom(m => m.Modulo))
+                .ForMember(
+                    x => x.Instructor,
+                    opt => opt.MapFrom(m => m.Instructor));
+
+            CreateMap<RegistroNotaEstudianteHeader, RegistroNotaEstudianteHeaderResponse>()
+                .ForMember(
+                    x => x.Estudiante,
+                    opt => opt.MapFrom(m => m.Estudiante))
+                .ForMember(
+                    x => x.RegistroNotaHeader,
+                    opt => opt.MapFrom(m => m.RegistroNotaHeader));
+
+            CreateMap<RegistroNotaEstudiante, RegistroNotaEstudianteResponse>()
+                .ForMember(
+                    x => x.RegistroNotaEstudianteHeader,
+                    opt => opt.MapFrom(m => m.RegistroNotaEstudianteHeader));
+
             CreateMap<Tag, TagResponse>();
             CreateMap<Grupo, GrupoResponse>();
             CreateMap<GrupoPreguntaAsa, GrupoPreguntaAsaResponse>();

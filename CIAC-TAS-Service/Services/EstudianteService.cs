@@ -3,6 +3,7 @@ using CIAC_TAS_Service.Domain;
 using CIAC_TAS_Service.Domain.Estudiante;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using static CIAC_TAS_Service.Contracts.V1.ApiRoute;
 
 namespace CIAC_TAS_Service.Services
 {
@@ -142,6 +143,39 @@ namespace CIAC_TAS_Service.Services
                     .Select(x => x.EstudianteId)
                     .Contains(e.Id))
                 .AsQueryable();
+
+            if (paginationFilter == null)
+            {
+                return await queryable.ToListAsync();
+            }
+
+            var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
+            return await queryable.Skip(skip)
+                .Take(paginationFilter.PageSize)
+                .ToListAsync();
+        }
+
+        public async Task<List<Estudiante>> GetAllNotAssignedToRegistroNotaEstudianteHeaderAsync(int registroNotaHeaderId, PaginationFilter paginationFilter = null)
+        {
+            var registroNotaHeader = await _dataContext.RegistroNotaHeader
+                .AsNoTracking()
+                .SingleOrDefaultAsync(x => x.Id == registroNotaHeaderId);
+
+            if (registroNotaHeader == null)
+            {
+                return new List<Estudiante> ();
+            }
+
+            var queryable = _dataContext.Estudiante
+               .Where(e => _dataContext.EstudianteMateria
+                    .Where(x => x.MateriaId == registroNotaHeader.MateriaId && x.GrupoId == registroNotaHeader.GrupoId)
+                    .Select(x => x.EstudianteId)
+                    .Contains(e.Id) &&
+                    !_dataContext.RegistroNotaEstudianteHeader
+                    .Where(x => x.RegistroNotaHeaderId == registroNotaHeaderId)
+                    .Select(x => x.EstudianteId)
+                    .Contains(e.Id))
+               .AsQueryable();
 
             if (paginationFilter == null)
             {

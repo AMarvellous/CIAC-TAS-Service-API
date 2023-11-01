@@ -36,5 +36,8 @@ namespace CIAC_TAS_Service.Sdk
 
         [Get("/" + Estudiantes.GetAllNotAssignedAsistenciaEstudiante)]
         Task<ApiResponse<PagedResponse<EstudianteResponse>>> GetAllNotAssignedAsistenciaEstudianteAsync(int materiaId, int grupoId, int asistenciaEstudianteHeaderId);
+
+        [Get("/" + Estudiantes.GetAllNotAssignedToRegistroNotaEstudianteHeader)]
+        Task<ApiResponse<PagedResponse<EstudianteResponse>>> GetAllNotAssignedToRegistroNotaEstudianteHeaderAsync(int registroNotaHeaderId);
     }
 }

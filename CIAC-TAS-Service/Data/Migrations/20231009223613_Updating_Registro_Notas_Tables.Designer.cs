@@ -4,6 +4,7 @@ using CIAC_TAS_Service.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CIACTASService.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231009223613_Updating_Registro_Notas_Tables")]
+    partial class Updating_Registro_Notas_Tables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -591,14 +593,14 @@ namespace CIACTASService.Data.Migrations
                     b.Property<bool>("AplicaRecuperatorio")
                         .HasColumnType("bit");
 
-                    b.Property<double>("Nota")
+                    b.Property<double>("NotaDominio")
+                        .HasColumnType("float");
+
+                    b.Property<double>("NotaProgreso")
                         .HasColumnType("float");
 
                     b.Property<int>("RegistroNotaEstudianteHeaderId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("TipoDominio")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

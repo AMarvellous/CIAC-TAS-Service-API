@@ -4,6 +4,7 @@ using CIAC_TAS_Service.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CIACTASService.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231003001956_Adding_Registro_Nota_Domains")]
+    partial class Adding_Registro_Nota_Domains
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -591,14 +593,14 @@ namespace CIACTASService.Data.Migrations
                     b.Property<bool>("AplicaRecuperatorio")
                         .HasColumnType("bit");
 
-                    b.Property<double>("Nota")
+                    b.Property<double>("NotaDominio")
+                        .HasColumnType("float");
+
+                    b.Property<double>("NotaProgreso")
                         .HasColumnType("float");
 
                     b.Property<int>("RegistroNotaEstudianteHeaderId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("TipoDominio")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -618,12 +620,16 @@ namespace CIACTASService.Data.Migrations
                     b.Property<int>("EstudianteId")
                         .HasColumnType("int");
 
+                    b.Property<int>("PorcentajeDominioTotal")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PorcentajeProgresoTotal")
+                        .HasColumnType("int");
+
                     b.Property<int>("RegistroNotaHeaderId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EstudianteId");
 
                     b.HasIndex("RegistroNotaHeaderId");
 
@@ -651,12 +657,6 @@ namespace CIACTASService.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("ModuloId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PorcentajeDominioTotal")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PorcentajeProgresoTotal")
                         .HasColumnType("int");
 
                     b.Property<int>("ProgramaId")
@@ -2171,7 +2171,7 @@ namespace CIACTASService.Data.Migrations
             modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.RegistroNotaEstudiante", b =>
                 {
                     b.HasOne("CIAC_TAS_Service.Domain.Estudiante.RegistroNotaEstudianteHeader", "RegistroNotaEstudianteHeader")
-                        .WithMany("RegistroNotaEstudiantes")
+                        .WithMany()
                         .HasForeignKey("RegistroNotaEstudianteHeaderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -2181,19 +2181,11 @@ namespace CIACTASService.Data.Migrations
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.RegistroNotaEstudianteHeader", b =>
                 {
-                    b.HasOne("CIAC_TAS_Service.Domain.Estudiante.Estudiante", "Estudiante")
-                        .WithMany("RegistroNotaEstudianteHeaders")
-                        .HasForeignKey("EstudianteId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("CIAC_TAS_Service.Domain.Estudiante.RegistroNotaHeader", "RegistroNotaHeader")
-                        .WithMany("RegistroNotaEstudianteHeaders")
+                        .WithMany()
                         .HasForeignKey("RegistroNotaHeaderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Estudiante");
 
                     b.Navigation("RegistroNotaHeader");
                 });
@@ -2485,18 +2477,6 @@ namespace CIACTASService.Data.Migrations
                     b.Navigation("EstudianteMaterias");
 
                     b.Navigation("EstudianteProgramas");
-
-                    b.Navigation("RegistroNotaEstudianteHeaders");
-                });
-
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.RegistroNotaEstudianteHeader", b =>
-                {
-                    b.Navigation("RegistroNotaEstudiantes");
-                });
-
-            modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.RegistroNotaHeader", b =>
-                {
-                    b.Navigation("RegistroNotaEstudianteHeaders");
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.General.Grupo", b =>

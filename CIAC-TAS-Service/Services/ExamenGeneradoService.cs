@@ -77,7 +77,7 @@ namespace CIAC_TAS_Service.Services
 
 			//var grupo = await _grupoService.GetGrupoByIdAsync(grupoId);
 
-            var preguntasAsa = await _preguntaAsaService.GetRandomGeneratedPreguntasAsaAsync(numeroPreguntas, 5, 15, new List<int>());
+            var preguntasAsa = await _preguntaAsaService.GetRandomGeneratedPreguntasAsaAsync(numeroPreguntas, 0, 0, new List<int>());
 
 			foreach (var pregunta in preguntasAsa)
 			{

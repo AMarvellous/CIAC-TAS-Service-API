@@ -37,5 +37,6 @@ namespace CIAC_TAS_Service.Domain.General
         public IEnumerable<AsistenciaEstudianteHeader> AsistenciaEstudianteHeaders { get; set; }
         public IEnumerable<InstructorMateria> InstructorMaterias { get; set; }
         public IEnumerable<InstructorProgramaAnalitico> InstructorProgramaAnaliticos { get; set; }
+        public IEnumerable<RegistroNotaHeader> RegistroNotaHeaders { get; set; }
     }
 }

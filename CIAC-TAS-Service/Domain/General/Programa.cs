@@ -15,5 +15,6 @@ namespace CIAC_TAS_Service.Domain.General
         // Link to tables
         public IEnumerable<EstudiantePrograma> EstudianteProgramas { get; set; }
         public IEnumerable<AsistenciaEstudianteHeader> AsistenciaEstudianteHeaders { get; set; }
+        public IEnumerable<RegistroNotaHeader> RegistroNotaHeaders { get; set; }
     }
 }

@@ -342,5 +342,8 @@ namespace CIAC_TAS_Service.Data
         public DbSet<InstructorMateria> InstructorMateria { get; set; }
         public DbSet<ProgramaAnaliticoPdf> ProgramaAnaliticoPdf { get; set; }
         public DbSet<InstructorProgramaAnalitico> InstructorProgramaAnalitico { get; set; }
+        public DbSet<RegistroNotaHeader> RegistroNotaHeader { get; set; }
+        public DbSet<RegistroNotaEstudianteHeader> RegistroNotaEstudianteHeader { get; set; }
+        public DbSet<RegistroNotaEstudiante> RegistroNotaEstudiante { get; set; }
     }
 }
