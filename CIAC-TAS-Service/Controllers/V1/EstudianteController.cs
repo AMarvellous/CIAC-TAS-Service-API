@@ -252,5 +252,24 @@ namespace CIAC_TAS_Service.Controllers.V1
 
             return Ok(paginationResponse);
         }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        [HttpGet(ApiRoute.Estudiantes.GetAllNotAssignedInhabilitacionEstudiante)]
+        [ProducesResponseType(typeof(List<EstudianteResponse>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAllNotAssignedInhabilitacionEstudiante([FromQuery] PaginationQuery paginationQuery)
+        {
+            var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
+            var estudiantes = await _estudianteService.GetAllNotAssignedInhabilitacionEstudianteAsync();
+            var estudianteResponses = _mapper.Map<List<EstudianteResponse>>(estudiantes);
+
+            if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
+            {
+                return Ok(new PagedResponse<EstudianteResponse>(estudianteResponses));
+            }
+
+            var paginationResponse = PaginationHelpers.CreatePaginatedResponse(_uriService, pagination, estudianteResponses);
+
+            return Ok(paginationResponse);
+        }
     }
 }

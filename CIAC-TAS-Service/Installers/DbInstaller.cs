@@ -52,6 +52,11 @@ namespace CIAC_TAS_Service.Installers
             services.AddScoped<IRegistroNotaHeaderService, RegistroNotaHeaderService>();
             services.AddScoped<IRegistroNotaEstudianteHeaderService, RegistroNotaEstudianteHeaderService>();
             services.AddScoped<IRegistroNotaEstudianteService, RegistroNotaEstudianteService>();
+            services.AddScoped<ITipoRegistroNotaEstudianteService, TipoRegistroNotaEstudianteService>();
+            services.AddScoped<ITipoRegistroNotaHeaderService, TipoRegistroNotaHeaderService>();
+            services.AddScoped<IInhabilitacionEstudianteService, InhabilitacionEstudianteService>();
+            services.AddScoped<ICierreMateriaService, CierreMateriaService>();
+            services.AddScoped<ITipoAsistenciaEstudianteHeaderService, TipoAsistenciaEstudianteHeaderService>();
         }
     }
 }

@@ -11,5 +11,6 @@ namespace CIAC_TAS_Service.Services
         Task<bool> UpdateRegistroNotaEstudianteHeaderAsync(RegistroNotaEstudianteHeader registroNotaEstudianteHeader);
         Task<bool> DeleteRegistroNotaEstudianteHeaderAsync(int id);
         Task<List<RegistroNotaEstudianteHeader>> GetRegistroNotaEstudianteHeadersByRegistroNotaHeaderIdAsync(int registroNotaHeaderId, PaginationFilter paginationFilter = null);
+        Task<bool> DeleteRegistroNotaEstudianteHeaderAndChildrenAsync(int id);
     }
 }

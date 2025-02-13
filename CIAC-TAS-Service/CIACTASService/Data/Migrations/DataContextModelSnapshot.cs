@@ -388,6 +388,9 @@ namespace CIACTASService.Data.Migrations
                     b.Property<int>("InstructorId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsLocked")
+                        .HasColumnType("bit");
+
                     b.Property<int>("MateriaId")
                         .HasColumnType("int");
 
@@ -400,6 +403,9 @@ namespace CIACTASService.Data.Migrations
                     b.Property<string>("Tema")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TipoAsistenciaEstudianteHeaderId")
+                        .HasColumnType("int");
 
                     b.Property<int>("TotalHorasPracticas")
                         .HasColumnType("int");
@@ -418,6 +424,8 @@ namespace CIACTASService.Data.Migrations
                     b.HasIndex("ModuloId");
 
                     b.HasIndex("ProgramaId");
+
+                    b.HasIndex("TipoAsistenciaEstudianteHeaderId");
 
                     b.ToTable("AsistenciaEstudianteHeader");
                 });
@@ -556,6 +564,9 @@ namespace CIACTASService.Data.Migrations
                     b.Property<int>("MateriaId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("InscritoTutorial")
+                        .HasColumnType("bit");
+
                     b.HasKey("EstudianteId", "GrupoId", "MateriaId");
 
                     b.HasIndex("GrupoId");
@@ -580,6 +591,28 @@ namespace CIACTASService.Data.Migrations
                     b.ToTable("EstudiantePrograma");
                 });
 
+            modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.InhabilitacionEstudiante", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("EstudianteId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Motivo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EstudianteId");
+
+                    b.ToTable("InhabilitacionEstudiante");
+                });
+
             modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.RegistroNotaEstudiante", b =>
                 {
                     b.Property<int>("Id")
@@ -588,21 +621,20 @@ namespace CIACTASService.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<bool>("AplicaRecuperatorio")
-                        .HasColumnType("bit");
-
                     b.Property<double>("Nota")
                         .HasColumnType("float");
 
                     b.Property<int>("RegistroNotaEstudianteHeaderId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("TipoDominio")
-                        .HasColumnType("bit");
+                    b.Property<int>("TipoRegistroNotaEstudianteId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("RegistroNotaEstudianteHeaderId");
+
+                    b.HasIndex("TipoRegistroNotaEstudianteId");
 
                     b.ToTable("RegistroNotaEstudiante");
                 });
@@ -662,6 +694,9 @@ namespace CIACTASService.Data.Migrations
                     b.Property<int>("ProgramaId")
                         .HasColumnType("int");
 
+                    b.Property<int>("TipoRegistroNotaHeaderId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("GrupoId");
@@ -674,7 +709,101 @@ namespace CIACTASService.Data.Migrations
 
                     b.HasIndex("ProgramaId");
 
+                    b.HasIndex("TipoRegistroNotaHeaderId");
+
                     b.ToTable("RegistroNotaHeader");
+                });
+
+            modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.TipoAsistenciaEstudianteHeader", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TipoAsistenciaEstudianteHeader");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Nombre = "Regular"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Nombre = "Tutorial"
+                        });
+                });
+
+            modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.TipoRegistroNotaEstudiante", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TipoRegistroNotaEstudiante");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Nombre = "Progreso"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Nombre = "Dominio"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Nombre = "Recuperatorio"
+                        });
+                });
+
+            modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.TipoRegistroNotaHeader", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TipoRegistroNotaHeader");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Nombre = "Regular"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Nombre = "Tutorial"
+                        });
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.General.Administrativo", b =>
@@ -754,6 +883,29 @@ namespace CIACTASService.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Administrativo");
+                });
+
+            modelBuilder.Entity("CIAC_TAS_Service.Domain.General.CierreMateria", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("GrupoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MateriaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GrupoId");
+
+                    b.HasIndex("MateriaId");
+
+                    b.ToTable("CierreMateria");
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.General.Grupo", b =>
@@ -2081,6 +2233,12 @@ namespace CIACTASService.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("CIAC_TAS_Service.Domain.Estudiante.TipoAsistenciaEstudianteHeader", "TipoAsistenciaEstudianteHeader")
+                        .WithMany("AsistenciaEstudianteHeaders")
+                        .HasForeignKey("TipoAsistenciaEstudianteHeaderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Grupo");
 
                     b.Navigation("Instructor");
@@ -2090,6 +2248,8 @@ namespace CIACTASService.Data.Migrations
                     b.Navigation("Modulo");
 
                     b.Navigation("Programa");
+
+                    b.Navigation("TipoAsistenciaEstudianteHeader");
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.Estudiante", b =>
@@ -2168,6 +2328,17 @@ namespace CIACTASService.Data.Migrations
                     b.Navigation("Programa");
                 });
 
+            modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.InhabilitacionEstudiante", b =>
+                {
+                    b.HasOne("CIAC_TAS_Service.Domain.Estudiante.Estudiante", "Estudiante")
+                        .WithMany("InhabilitacionEstudiantes")
+                        .HasForeignKey("EstudianteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Estudiante");
+                });
+
             modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.RegistroNotaEstudiante", b =>
                 {
                     b.HasOne("CIAC_TAS_Service.Domain.Estudiante.RegistroNotaEstudianteHeader", "RegistroNotaEstudianteHeader")
@@ -2176,7 +2347,15 @@ namespace CIACTASService.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("CIAC_TAS_Service.Domain.Estudiante.TipoRegistroNotaEstudiante", "TipoRegistroNotaEstudiante")
+                        .WithMany("RegistroNotaEstudiantes")
+                        .HasForeignKey("TipoRegistroNotaEstudianteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("RegistroNotaEstudianteHeader");
+
+                    b.Navigation("TipoRegistroNotaEstudiante");
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.RegistroNotaEstudianteHeader", b =>
@@ -2230,6 +2409,12 @@ namespace CIACTASService.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("CIAC_TAS_Service.Domain.Estudiante.TipoRegistroNotaHeader", "TipoRegistroNotaHeader")
+                        .WithMany("RegistroNotaHeaders")
+                        .HasForeignKey("TipoRegistroNotaHeaderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Grupo");
 
                     b.Navigation("Instructor");
@@ -2239,6 +2424,8 @@ namespace CIACTASService.Data.Migrations
                     b.Navigation("Modulo");
 
                     b.Navigation("Programa");
+
+                    b.Navigation("TipoRegistroNotaHeader");
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.General.Administrativo", b =>
@@ -2250,6 +2437,25 @@ namespace CIACTASService.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("CIAC_TAS_Service.Domain.General.CierreMateria", b =>
+                {
+                    b.HasOne("CIAC_TAS_Service.Domain.General.Grupo", "Grupo")
+                        .WithMany("CierreMaterias")
+                        .HasForeignKey("GrupoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CIAC_TAS_Service.Domain.General.Materia", "Materia")
+                        .WithMany("CierreMaterias")
+                        .HasForeignKey("MateriaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Grupo");
+
+                    b.Navigation("Materia");
                 });
 
             modelBuilder.Entity("CIAC_TAS_Service.Domain.General.Instructor", b =>
@@ -2486,6 +2692,8 @@ namespace CIACTASService.Data.Migrations
 
                     b.Navigation("EstudianteProgramas");
 
+                    b.Navigation("InhabilitacionEstudiantes");
+
                     b.Navigation("RegistroNotaEstudianteHeaders");
                 });
 
@@ -2499,9 +2707,26 @@ namespace CIACTASService.Data.Migrations
                     b.Navigation("RegistroNotaEstudianteHeaders");
                 });
 
+            modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.TipoAsistenciaEstudianteHeader", b =>
+                {
+                    b.Navigation("AsistenciaEstudianteHeaders");
+                });
+
+            modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.TipoRegistroNotaEstudiante", b =>
+                {
+                    b.Navigation("RegistroNotaEstudiantes");
+                });
+
+            modelBuilder.Entity("CIAC_TAS_Service.Domain.Estudiante.TipoRegistroNotaHeader", b =>
+                {
+                    b.Navigation("RegistroNotaHeaders");
+                });
+
             modelBuilder.Entity("CIAC_TAS_Service.Domain.General.Grupo", b =>
                 {
                     b.Navigation("AsistenciaEstudianteHeaders");
+
+                    b.Navigation("CierreMaterias");
 
                     b.Navigation("ConfiguracionPreguntaAsa");
 
@@ -2530,6 +2755,8 @@ namespace CIACTASService.Data.Migrations
             modelBuilder.Entity("CIAC_TAS_Service.Domain.General.Materia", b =>
                 {
                     b.Navigation("AsistenciaEstudianteHeaders");
+
+                    b.Navigation("CierreMaterias");
 
                     b.Navigation("EstudianteMaterias");
 

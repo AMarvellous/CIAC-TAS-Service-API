@@ -31,5 +31,8 @@ namespace CIAC_TAS_Service.Sdk
 
         [Get("/" + EstudianteMaterias.GetAllByEstudianteId)]
         Task<ApiResponse<PagedResponse<EstudianteMateriaResponse>>> GetAllByEstudianteIdAsync(int estudianteId);
+
+        [Patch("/" + EstudianteMaterias.Update)]
+        Task<ApiResponse<EstudianteMateriaResponse>> UpdateAsync(int estudianteId, int grupoId, int materiaId, [Body] UpdateEstudianteMateriaRequest estudianteMateriaRequest);
     }
 }

@@ -18,6 +18,7 @@ namespace CIAC_TAS_Service.Services
         {
             var queryable = _dataContext.RegistroNotaEstudiante
                 .Include(x => x.RegistroNotaEstudianteHeader)
+                .Include(x => x.TipoRegistroNotaEstudiante)
                 .AsQueryable();
 
             if (paginationFilter == null)
@@ -35,6 +36,7 @@ namespace CIAC_TAS_Service.Services
         {
             return await _dataContext.RegistroNotaEstudiante
                 .Include(x => x.RegistroNotaEstudianteHeader)
+                .Include(x => x.TipoRegistroNotaEstudiante)
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
 
@@ -73,6 +75,7 @@ namespace CIAC_TAS_Service.Services
             var queryable = _dataContext.RegistroNotaEstudiante
                 .Where(x => x.RegistroNotaEstudianteHeaderId == registroNotaEstudianteHeaderId)
                 .Include(x => x.RegistroNotaEstudianteHeader)
+                .Include(x => x.TipoRegistroNotaEstudiante)
                 .AsQueryable();
 
             if (paginationFilter == null)

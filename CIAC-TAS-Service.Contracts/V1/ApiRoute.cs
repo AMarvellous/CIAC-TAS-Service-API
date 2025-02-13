@@ -101,6 +101,7 @@
             public const string GetAllNotAssignedToGrupo = Base + "/estudiantes/noAssigned/grupo/{grupoId}";
             public const string GetAllNotAssignedAsistenciaEstudiante = Base + "/estudiantes/noAssigned/estudianteMateria/{materiaId}/{grupoId}/{asistenciaEstudianteHeaderId}";
             public const string GetAllNotAssignedToRegistroNotaEstudianteHeader = Base + "/estudiantes/noAssigned/registroNotaEstudianteHeader/registroNotaHeader/{registroNotaHeaderId}";
+            public const string GetAllNotAssignedInhabilitacionEstudiante = Base + "/estudiantes/noAssigned/inhabilitacion";
         }
 
         public static class EstudianteGrupos
@@ -285,6 +286,7 @@
             public const string CreateAsignAllMaterias = Base + "/estudianteMaterias/allMaterias/{estudianteId}/{grupoId}";
             public const string GetAllByMateriaGrupo = Base + "/estudianteMaterias/materiaGrupo/{materiaId}/{grupoId}";
             public const string GetAllByEstudianteId = Base + "/estudianteMaterias/estudianteId/{estudianteId}";
+            public const string Update = Base + "/estudianteMaterias/{estudianteId}/{grupoId}/{materiaId}";
         }
 
         public static class TipoAsistencias
@@ -343,6 +345,7 @@
             public const string Update = Base + "/registroNotaEstudianteHeaders/{registroNotaEstudianteHeaderId}";
             public const string Delete = Base + "/registroNotaEstudianteHeaders/{registroNotaEstudianteHeaderId}";
             public const string GetAllByRegistroNotaHeaderId = Base + "/registroNotaEstudianteHeaders/registroNotaHeader/{registroNotaHeaderId}";
+            public const string DeleteRegistroNotaEstudianteHeaderAndChildren = Base + "/registroNotaEstudianteHeaders/children/{registroNotaEstudianteHeaderId}";
         }
 
         public static class RegistroNotaEstudiantes
@@ -353,6 +356,54 @@
             public const string Update = Base + "/registroNotaEstudiantes/{registroNotaEstudianteId}";
             public const string Delete = Base + "/registroNotaEstudiantes/{registroNotaEstudianteId}";
             public const string GetAllByRegistroNotaEstudianteHeaderId = Base + "/registroNotaEstudiantes/RegistroNotaEstudianteHeader/{registroNotaEstudianteHeaderId}";
+        }
+
+        public static class TipoRegistroNotaEstudiantes
+        {
+            public const string GetAll = $"{Base}/tipoRegistroNotaEstudiantes";
+            public const string Get = Base + "/tipoRegistroNotaEstudiantes/{tipoRegistroNotaEstudianteId}";
+            public const string Create = $"{Base}/tipoRegistroNotaEstudiantes";
+            public const string Update = Base + "/tipoRegistroNotaEstudiantes/{tipoRegistroNotaEstudianteId}";
+            public const string Delete = Base + "/tipoRegistroNotaEstudiantes/{tipoRegistroNotaEstudianteId}";
+        }
+
+        public static class TipoRegistroNotaHeaders
+        {
+            public const string GetAll = $"{Base}/tipoRegistroNotaHeaders";
+            public const string Get = Base + "/tipoRegistroNotaHeaders/{tipoRegistroNotaHeaderId}";
+            public const string Create = $"{Base}/tipoRegistroNotaHeaders";
+            public const string Update = Base + "/tipoRegistroNotaHeaders/{tipoRegistroNotaHeaderId}";
+            public const string Delete = Base + "/tipoRegistroNotaHeaders/{tipoRegistroNotaHeaderId}";
+        }
+
+        public static class InhabilitacionEstudiantes
+        {
+            public const string GetAll = $"{Base}/inhabilitacionEstudiantes";
+            public const string Get = Base + "/inhabilitacionEstudiantes/{inhabilitacionEstudianteId}";
+            public const string Create = $"{Base}/inhabilitacionEstudiantes";
+            public const string Update = Base + "/inhabilitacionEstudiantes/{inhabilitacionEstudianteId}";
+            public const string Delete = Base + "/inhabilitacionEstudiantes/{inhabilitacionEstudianteId}";
+            public const string GetByEstudianteId = Base + "/inhabilitacionEstudiantes/estudiante/{estudianteId}";
+        }
+
+        public static class CierreMaterias
+        {
+            public const string GetAll = $"{Base}/cierreMaterias";
+            public const string Get = Base + "/cierreMaterias/{cierreMateriaId}";
+            public const string Create = $"{Base}/cierreMaterias";
+            //public const string Update = Base + "/cierreMaterias/{cierreMateriaId}";
+            public const string Delete = Base + "/cierreMaterias/{cierreMateriaId}";
+            public const string CreateAllByMateriaIdAndGrupoId = $"{Base}/cierreMaterias/all/materia/grupo";
+            public const string GetByGrupoIdMateriaId = Base + "/cierreMaterias/grupo/{grupoId}/materia/{materiaId}";
+        }
+
+        public static class TipoAsistenciaEstudianteHeaders
+        {
+            public const string GetAll = $"{Base}/tipoAsistenciaEstudianteHeaders";
+            public const string Get = Base + "/tipoAsistenciaEstudianteHeaders/{tipoAsistenciaEstudianteHeaderId}";
+            public const string Create = $"{Base}/tipoAsistenciaEstudianteHeaders";
+            public const string Update = Base + "/tipoAsistenciaEstudianteHeaders/{tipoAsistenciaEstudianteHeaderId}";
+            public const string Delete = Base + "/tipoAsistenciaEstudianteHeaders/{tipoAsistenciaEstudianteHeaderId}";
         }
     }
 }

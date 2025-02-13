@@ -247,6 +247,21 @@ namespace CIAC_TAS_Service.Data
                 new ModuloMateria { ModuloId = 11, MateriaId = 40 },
                 new ModuloMateria { ModuloId = 12, MateriaId = 41 });
 
+            builder.Entity<TipoRegistroNotaHeader>()
+                .HasData(
+                new TipoRegistroNotaHeader { Id = 1, Nombre = "Regular" },
+                new TipoRegistroNotaHeader { Id = 2, Nombre = "Tutorial" });
+
+            builder.Entity<TipoAsistenciaEstudianteHeader>()
+               .HasData(
+               new TipoAsistenciaEstudianteHeader { Id = 1, Nombre = "Regular" },
+               new TipoAsistenciaEstudianteHeader { Id = 2, Nombre = "Tutorial" });
+
+            builder.Entity<TipoRegistroNotaEstudiante>()
+                .HasData(
+                new TipoRegistroNotaEstudiante { Id = 1, Nombre = "Progreso" },
+                new TipoRegistroNotaEstudiante { Id = 2, Nombre = "Dominio" },
+                new TipoRegistroNotaEstudiante { Id = 3, Nombre = "Recuperatorio" });
 
             //Script para llenar las preguntasAsa
             //INSERT INTO[CIAC_TAS_DEV].[dbo].[PreguntaAsa]
@@ -345,5 +360,10 @@ namespace CIAC_TAS_Service.Data
         public DbSet<RegistroNotaHeader> RegistroNotaHeader { get; set; }
         public DbSet<RegistroNotaEstudianteHeader> RegistroNotaEstudianteHeader { get; set; }
         public DbSet<RegistroNotaEstudiante> RegistroNotaEstudiante { get; set; }
+        public DbSet<TipoRegistroNotaEstudiante> TipoRegistroNotaEstudiante { get; set; }
+        public DbSet<TipoRegistroNotaHeader> TipoRegistroNotaHeader { get; set; }
+        public DbSet<InhabilitacionEstudiante> InhabilitacionEstudiante { get; set; }
+        public DbSet<CierreMateria> CierreMateria { get; set; }
+        public DbSet<TipoAsistenciaEstudianteHeader> TipoAsistenciaEstudianteHeader { get; set; }
     }
 }

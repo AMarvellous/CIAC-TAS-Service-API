@@ -72,8 +72,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             {
                 RegistroNotaEstudianteHeaderId = registroNotaEstudianteRequest.RegistroNotaEstudianteHeaderId,
                 Nota = registroNotaEstudianteRequest.Nota,
-                TipoDominio = registroNotaEstudianteRequest.TipoDominio,
-                AplicaRecuperatorio = registroNotaEstudianteRequest.AplicaRecuperatorio,
+                TipoRegistroNotaEstudianteId = registroNotaEstudianteRequest.TipoRegistroNotaEstudianteId,
             };
 
         var created = await _registroNotaEstudianteService.CreateRegistroNotaEstudianteAsync(registroNotaEstudiante);
@@ -105,8 +104,7 @@ namespace CIAC_TAS_Service.Controllers.V1
 
             registroNotaEstudiante.RegistroNotaEstudianteHeaderId = request.RegistroNotaEstudianteHeaderId;
             registroNotaEstudiante.Nota = request.Nota;
-            registroNotaEstudiante.TipoDominio = request.TipoDominio;
-            registroNotaEstudiante.AplicaRecuperatorio = request.AplicaRecuperatorio;
+            registroNotaEstudiante.TipoRegistroNotaEstudianteId = request.TipoRegistroNotaEstudianteId;
 
             var update = await _registroNotaEstudianteService.UpdateRegistroNotaEstudianteAsync(registroNotaEstudiante);
 

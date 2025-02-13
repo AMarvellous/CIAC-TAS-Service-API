@@ -2,6 +2,7 @@
 using CIAC_TAS_Service.Domain.Estudiante;
 using CIAC_TAS_Service.Domain;
 using Microsoft.EntityFrameworkCore;
+using static CIAC_TAS_Service.Contracts.V1.ApiRoute;
 
 namespace CIAC_TAS_Service.Services
 {
@@ -24,6 +25,7 @@ namespace CIAC_TAS_Service.Services
                 .Include(x => x.Instructor)
                 .Include(x => x.AsistenciaEstudiantes)
                 .ThenInclude(x => x.Estudiante)
+                .Include(x => x.TipoAsistenciaEstudianteHeader)
                 .AsQueryable();
 
             if (paginationFilter == null)
@@ -49,6 +51,7 @@ namespace CIAC_TAS_Service.Services
                 .ThenInclude(x => x.Estudiante)
                 .Include(x => x.AsistenciaEstudiantes)
                 .ThenInclude(x => x.TipoAsistencia)
+                .Include(x => x.TipoAsistenciaEstudianteHeader)
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
 
@@ -95,6 +98,7 @@ namespace CIAC_TAS_Service.Services
                 .ThenInclude(x => x.Estudiante)
                 .Include(x => x.AsistenciaEstudiantes)
                 .ThenInclude(x => x.TipoAsistencia)
+                .Include(x => x.TipoAsistenciaEstudianteHeader)
                 .OrderBy(x => x.Fecha)
                 .AsQueryable();
 
@@ -122,6 +126,7 @@ namespace CIAC_TAS_Service.Services
                 .ThenInclude(x => x.Estudiante)
                 .Include(x => x.AsistenciaEstudiantes)
                 .ThenInclude(x => x.TipoAsistencia)
+                .Include(x => x.TipoAsistenciaEstudianteHeader)
                 .OrderBy(x => x.Fecha)
                 .AsQueryable();
 
@@ -134,6 +139,19 @@ namespace CIAC_TAS_Service.Services
             return await queryable.Skip(skip)
                 .Take(paginationFilter.PageSize)
                 .ToListAsync();
+        }
+
+        public async Task<bool> UpdateAsistenciaEstudianteHeaderLockAsync(int grupoId, int materiaId, bool isLocked)
+        {
+            var asistenciaEstudianteHeaders = await _dataContext.AsistenciaEstudianteHeader
+                .Where(x => x.GrupoId == grupoId && x.MateriaId == materiaId)
+                .ToListAsync();
+
+            asistenciaEstudianteHeaders.ForEach(asistenciaEstudianteHeader => asistenciaEstudianteHeader.IsLocked = isLocked);
+
+            var updated = await _dataContext.SaveChangesAsync();
+
+            return updated > 0;
         }
     }
 }

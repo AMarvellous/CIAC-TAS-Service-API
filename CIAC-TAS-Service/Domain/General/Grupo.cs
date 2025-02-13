@@ -21,5 +21,6 @@ namespace CIAC_TAS_Service.Domain.General
         public IEnumerable<EstudianteMateria> EstudianteMaterias { get; set; }
         public IEnumerable<InstructorMateria> InstructorMaterias { get; set; }
         public IEnumerable<RegistroNotaHeader> RegistroNotaHeaders { get; set; }
+        public IEnumerable<CierreMateria> CierreMaterias { get; set; }
     }
 }

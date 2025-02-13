@@ -92,5 +92,29 @@ namespace CIAC_TAS_Service.Services
                 .Take(paginationFilter.PageSize)
                 .ToListAsync();
         }
+
+        public async Task<bool> DeleteRegistroNotaEstudianteHeaderAndChildrenAsync(int registroNotaEstudianteHeaderId)
+        {
+            var registroNotaEstudiantes = await _dataContext.RegistroNotaEstudiante.
+                Where(x => x.RegistroNotaEstudianteHeaderId == registroNotaEstudianteHeaderId)
+                .ToListAsync();
+
+            if (registroNotaEstudiantes != null)
+            {
+                _dataContext.RegistroNotaEstudiante.RemoveRange(registroNotaEstudiantes);
+            }
+
+            var registroNotaEstudianteHeader = await GetRegistroNotaEstudianteHeaderByIdAsync(registroNotaEstudianteHeaderId);
+
+            if (registroNotaEstudianteHeader == null)
+            {
+                return false;
+            }
+
+            _dataContext.RegistroNotaEstudianteHeader.Remove(registroNotaEstudianteHeader);
+            var deleted = await _dataContext.SaveChangesAsync();
+
+            return deleted > 0;
+        }
     }
 }

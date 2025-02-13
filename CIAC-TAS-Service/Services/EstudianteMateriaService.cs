@@ -3,6 +3,8 @@ using CIAC_TAS_Service.Domain.Estudiante;
 using CIAC_TAS_Service.Domain;
 using Microsoft.EntityFrameworkCore;
 using static CIAC_TAS_Service.Contracts.V1.ApiRoute;
+using CIAC_TAS_Service.Contracts.V1.Requests;
+using CIAC_TAS_Service.Domain.ASA;
 
 namespace CIAC_TAS_Service.Services
 {
@@ -140,6 +142,14 @@ namespace CIAC_TAS_Service.Services
             return await queryable.Skip(skip)
                 .Take(paginationFilter.PageSize)
                 .ToListAsync();
+        }
+
+        public async Task<bool> UpdateEstudianteMateriaAsync(EstudianteMateria estudianteMateria)
+        {
+            _dataContext.EstudianteMateria.Update(estudianteMateria);
+            var updated = await _dataContext.SaveChangesAsync();
+
+            return updated > 0;
         }
     }
 }

@@ -15,6 +15,6 @@ namespace CIAC_TAS_Service.Contracts.V1.Responses
         public int RegistroNotaHeaderId { get; set; }
 
         public EstudianteResponse Estudiante { get; set; }
-        public RegistroNotaHeaderResponse RegistroNotaHeader { get; set; }
+        public ICollection<RegistroNotaEstudianteResponse> RegistroNotaEstudiantes { get; set; }
     }
 }

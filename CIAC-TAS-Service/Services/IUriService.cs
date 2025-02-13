@@ -41,5 +41,10 @@ namespace CIAC_TAS_Service.Services
         Uri GetRegistroNotaHeaderUri(string registroNotaHeaderId);
         Uri GetRegistroNotaEstudianteHeaderUri(string registroNotaEstudianteHeaderId);
         Uri GetRegistroNotaEstudianteUri(string registroNotaEstudianteId);
+        Uri GetTipoRegistroNotaEstudianteUri(string tipoRegistroNotaEstudianteId);
+        Uri GetTipoRegistroNotaHeaderUri(string tipoRegistroNotaHeaderId);
+        Uri GetInhabilitacionEstudianteUri(string inhabilitacionEstudianteId);
+        Uri GetCierreMateriaUri(string cierreMateriaId);
+        Uri GetTipoAsistenciaEstudianteHeaderUri(string tipoAsistenciaEstudianteHeaderId);
     }
 }

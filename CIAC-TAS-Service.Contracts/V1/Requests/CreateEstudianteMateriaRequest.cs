@@ -11,5 +11,6 @@ namespace CIAC_TAS_Service.Contracts.V1.Requests
         public int EstudianteId { get; set; }
         public int GrupoId { get; set; }
         public int MateriaId { get; set; }
+        public bool InscritoTutorial { get; set; }
     }
 }

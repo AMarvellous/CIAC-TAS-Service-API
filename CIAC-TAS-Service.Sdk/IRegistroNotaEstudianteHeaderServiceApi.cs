@@ -30,5 +30,8 @@ namespace CIAC_TAS_Service.Sdk
 
         [Get("/" + RegistroNotaEstudianteHeaders.GetAllByRegistroNotaHeaderId)]
         Task<ApiResponse<PagedResponse<RegistroNotaEstudianteHeaderResponse>>> GetAllByRegistroNotaHeaderIdasync(int registroNotaHeaderId);
+
+        [Delete("/" + RegistroNotaEstudianteHeaders.DeleteRegistroNotaEstudianteHeaderAndChildren)]
+        Task<ApiResponse<RegistroNotaEstudianteHeaderResponse>> DeleteRegistroNotaEstudianteHeaderAndChildrenAsync(int registroNotaEstudianteHeaderId);
     }
 }

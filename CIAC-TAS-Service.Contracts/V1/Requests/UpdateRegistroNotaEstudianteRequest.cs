@@ -10,7 +10,6 @@ namespace CIAC_TAS_Service.Contracts.V1.Requests
     {
         public int RegistroNotaEstudianteHeaderId { get; set; }
         public double Nota { get; set; }
-        public bool TipoDominio { get; set; }
-        public bool AplicaRecuperatorio { get; set; }
+        public int TipoRegistroNotaEstudianteId { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using CIAC_TAS_Service.Domain.Estudiante;
 using CIAC_TAS_Service.Domain;
 using Microsoft.EntityFrameworkCore;
+using static CIAC_TAS_Service.Contracts.V1.ApiRoute;
 
 namespace CIAC_TAS_Service.Services
 {
@@ -22,6 +23,7 @@ namespace CIAC_TAS_Service.Services
                 .Include(x => x.Materia)
                 .Include(x => x.Instructor)
                 .Include(x => x.Modulo)
+                .Include(x => x.TipoRegistroNotaHeader)
                 .Include(x => x.RegistroNotaEstudianteHeaders)
                 .AsQueryable();
 
@@ -44,7 +46,12 @@ namespace CIAC_TAS_Service.Services
                 .Include(x => x.Materia)
                 .Include(x => x.Instructor)
                 .Include(x => x.Modulo)
+                .Include(x => x.TipoRegistroNotaHeader)
                 .Include(x => x.RegistroNotaEstudianteHeaders)
+                .ThenInclude(x => x.Estudiante)
+                .Include(x => x.RegistroNotaEstudianteHeaders)
+                .ThenInclude(x => x.RegistroNotaEstudiantes)
+                .ThenInclude(x => x.TipoRegistroNotaEstudiante)
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
 
@@ -88,7 +95,12 @@ namespace CIAC_TAS_Service.Services
                 .Include(x => x.Materia)
                 .Include(x => x.Instructor)
                 .Include(x => x.Modulo)
+                .Include(x => x.TipoRegistroNotaHeader)
                 .Include(x => x.RegistroNotaEstudianteHeaders)
+                .ThenInclude(x => x.Estudiante)
+                .Include(x => x.RegistroNotaEstudianteHeaders)
+                .ThenInclude(x => x.RegistroNotaEstudiantes)
+                .ThenInclude(x => x.TipoRegistroNotaEstudiante)
                 .AsQueryable();
 
             if (paginationFilter == null)
@@ -126,6 +138,19 @@ namespace CIAC_TAS_Service.Services
             }
             
             return created > 0;
+        }
+
+        public async Task<bool> UpdateRegistroNotaHeaderLockAsync(int grupoId, int materiaId, bool isLocked)
+        {
+            var registroNotaHeaders = await _dataContext.RegistroNotaHeader
+                .Where(x => x.GrupoId == grupoId && x.MateriaId == materiaId)
+                .ToListAsync();
+
+            registroNotaHeaders.ForEach(registroNotaHeader => registroNotaHeader.IsLocked = isLocked);
+
+            var updated = await _dataContext.SaveChangesAsync();
+
+            return updated > 0;
         }
     }
 }

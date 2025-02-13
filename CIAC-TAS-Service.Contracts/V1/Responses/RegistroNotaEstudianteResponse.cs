@@ -12,9 +12,8 @@ namespace CIAC_TAS_Service.Contracts.V1.Responses
         public int Id { get; set; }
         public int RegistroNotaEstudianteHeaderId { get; set; }
         public double Nota { get; set; }
-        public bool TipoDominio { get; set; }
-        public bool AplicaRecuperatorio { get; set; }
+        public int TipoRegistroNotaEstudianteId { get; set; }
 
-        public RegistroNotaEstudianteHeaderResponse RegistroNotaEstudianteHeader { get; set; }
+        public TipoRegistroNotaEstudianteResponse TipoRegistroNotaEstudiante { get; set; }
     }
 }

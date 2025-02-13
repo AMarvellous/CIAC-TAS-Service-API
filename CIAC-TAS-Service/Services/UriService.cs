@@ -195,5 +195,30 @@ namespace CIAC_TAS_Service.Services
         {
             return new Uri(_baseUri + ApiRoute.RegistroNotaEstudiantes.Get.Replace("{registroNotaEstudianteId}", registroNotaEstudianteId));
         }
+
+        public Uri GetTipoRegistroNotaEstudianteUri(string tipoRegistroNotaEstudianteId)
+        {
+            return new Uri(_baseUri + ApiRoute.TipoRegistroNotaEstudiantes.Get.Replace("{tipoRegistroNotaEstudianteId}", tipoRegistroNotaEstudianteId));
+        }
+
+        public Uri GetTipoRegistroNotaHeaderUri(string tipoRegistroNotaHeaderId)
+        {
+            return new Uri(_baseUri + ApiRoute.TipoRegistroNotaHeaders.Get.Replace("{tipoRegistroNotaHeaderId}", tipoRegistroNotaHeaderId));
+        }
+
+        public Uri GetInhabilitacionEstudianteUri(string inhabilitacionEstudianteId)
+        {
+            return new Uri(_baseUri + ApiRoute.InhabilitacionEstudiantes.Get.Replace("{inhabilitacionEstudianteId}", inhabilitacionEstudianteId));
+        }
+
+        public Uri GetCierreMateriaUri(string cierreMateriaId)
+        {
+            return new Uri(_baseUri + ApiRoute.CierreMaterias.Get.Replace("{cierreMateriaId}", cierreMateriaId));
+        }
+
+        public Uri GetTipoAsistenciaEstudianteHeaderUri(string tipoAsistenciaEstudianteHeaderId)
+        {
+            return new Uri(_baseUri + ApiRoute.TipoAsistenciaEstudianteHeaders.Get.Replace("{tipoAsistenciaEstudianteHeaderId}", tipoAsistenciaEstudianteHeaderId));
+        }
     }
 }

@@ -10,5 +10,6 @@ namespace CIAC_TAS_Service.Domain.Estudiante
         public Grupo Grupo { get; set; }
         public int MateriaId { get; set; }
         public Materia Materia { get; set; }
+        public bool InscritoTutorial { get; set; }
     }
 }

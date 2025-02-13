@@ -83,7 +83,9 @@ namespace CIAC_TAS_Service.Controllers.V1
                 HoraFin = asistenciaEstudianteHeaderRequest.HoraFin,
                 TotalHorasTeoricas = asistenciaEstudianteHeaderRequest.TotalHorasTeoricas,
                 TotalHorasPracticas = asistenciaEstudianteHeaderRequest.TotalHorasPracticas,
-                Tema = asistenciaEstudianteHeaderRequest.Tema
+                Tema = asistenciaEstudianteHeaderRequest.Tema,
+                IsLocked = asistenciaEstudianteHeaderRequest.IsLocked,
+                TipoAsistenciaEstudianteHeaderId = asistenciaEstudianteHeaderRequest.TipoAsistenciaEstudianteHeaderId
             };
 
             var created = await _asistenciaEstudianteHeaderService.CreateAsistenciaEstudianteHeaderAsync(asistenciaEstudianteHeader);
@@ -125,6 +127,8 @@ namespace CIAC_TAS_Service.Controllers.V1
             asistenciaEstudianteHeader.TotalHorasTeoricas = request.TotalHorasTeoricas;
             asistenciaEstudianteHeader.TotalHorasPracticas = request.TotalHorasPracticas;
             asistenciaEstudianteHeader.Tema = request.Tema;
+            asistenciaEstudianteHeader.IsLocked = request.IsLocked;
+            asistenciaEstudianteHeader.TipoAsistenciaEstudianteHeaderId = request.TipoAsistenciaEstudianteHeaderId;
 
             var update = await _asistenciaEstudianteHeaderService.UpdateAsistenciaEstudianteHeaderAsync(asistenciaEstudianteHeader);
 

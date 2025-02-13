@@ -16,5 +16,6 @@ namespace CIAC_TAS_Service.Contracts.V1.Requests
         public bool IsLocked { get; set; }
         public int PorcentajeProgresoTotal { get; set; }
         public int PorcentajeDominioTotal { get; set; }
+        public int TipoRegistroNotaHeaderId { get; set; }
     }
 }

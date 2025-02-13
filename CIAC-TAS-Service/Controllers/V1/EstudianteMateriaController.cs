@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using static CIAC_TAS_Service.Contracts.V1.ApiRoute;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using CIAC_TAS_Service.Domain.ASA;
 
 namespace CIAC_TAS_Service.Controllers.V1
 {
@@ -48,7 +50,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             return Ok(paginationResponse);
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Instructor")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Instructor,Estudiante")]
         [HttpGet(ApiRoute.EstudianteMaterias.Get)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(EstudianteMateriaResponse), (int)HttpStatusCode.OK)]
@@ -74,7 +76,8 @@ namespace CIAC_TAS_Service.Controllers.V1
             {
                 EstudianteId = estudianteMateriaRequest.EstudianteId,
                 GrupoId = estudianteMateriaRequest.GrupoId,
-                MateriaId = estudianteMateriaRequest.MateriaId
+                MateriaId = estudianteMateriaRequest.MateriaId,
+                InscritoTutorial = estudianteMateriaRequest.InscritoTutorial,
             };
 
             var estudianteMateriaDB = await _estudianteMateriaService.GetEstudianteMateriaByIdAsync(estudianteMateria.EstudianteId, estudianteMateria.GrupoId, estudianteMateria.MateriaId);
@@ -201,6 +204,30 @@ namespace CIAC_TAS_Service.Controllers.V1
             var paginationResponse = PaginationHelpers.CreatePaginatedResponse(_uriService, pagination, estudianteMateriaResponses);
 
             return Ok(paginationResponse);
+        }
+
+        [HttpPatch(ApiRoute.EstudianteMaterias.Update)]
+        [ProducesResponseType(typeof(EstudianteMateriaResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> Update([FromRoute] int estudianteId, [FromRoute] int grupoId, [FromRoute] int materiaId, [FromBody] UpdateEstudianteMateriaRequest request)
+        {
+            var estudianteMateria = await _estudianteMateriaService.GetEstudianteMateriaByIdAsync(estudianteId, grupoId, materiaId);
+
+            if (estudianteMateria == null)
+            {
+                return NotFound();
+            }
+
+            estudianteMateria.InscritoTutorial = request.InscritoTutorial;
+
+            var update = await _estudianteMateriaService.UpdateEstudianteMateriaAsync(estudianteMateria);
+
+            if (!update)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<EstudianteMateriaResponse>(estudianteMateria));
         }
     }
 }

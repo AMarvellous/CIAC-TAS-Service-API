@@ -146,5 +146,20 @@ namespace CIAC_TAS_Service.Controllers.V1
 
             return Ok(paginationResponse);
         }
+
+        [HttpDelete(ApiRoute.RegistroNotaEstudianteHeaders.DeleteRegistroNotaEstudianteHeaderAndChildren)]
+        [ProducesResponseType(typeof(RegistroNotaEstudianteHeaderResponse), (int)HttpStatusCode.NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> DeleteRegistroNotaEstudianteHeaderAndChildren([FromRoute] int registroNotaEstudianteHeaderId)
+        {
+            var deleted = await _registroNotaEstudianteHeaderService.DeleteRegistroNotaEstudianteHeaderAndChildrenAsync(registroNotaEstudianteHeaderId);
+
+            if (!deleted)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
     }
 }

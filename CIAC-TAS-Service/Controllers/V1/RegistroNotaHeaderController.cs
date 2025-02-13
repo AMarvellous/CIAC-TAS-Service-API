@@ -76,7 +76,8 @@ namespace CIAC_TAS_Service.Controllers.V1
                 InstructorId = registroNotaHeaderRequest.InstructorId,
                 IsLocked = registroNotaHeaderRequest.IsLocked,
                 PorcentajeDominioTotal = registroNotaHeaderRequest.PorcentajeDominioTotal,
-                PorcentajeProgresoTotal = registroNotaHeaderRequest.PorcentajeProgresoTotal
+                PorcentajeProgresoTotal = registroNotaHeaderRequest.PorcentajeProgresoTotal,
+                TipoRegistroNotaHeaderId = registroNotaHeaderRequest.TipoRegistroNotaHeaderId,
             };
 
         var created = await _registroNotaHeaderService.CreateRegistroNotaHeaderAsync(registroNotaHeader);
@@ -114,6 +115,7 @@ namespace CIAC_TAS_Service.Controllers.V1
             registroNotaHeader.IsLocked = request.IsLocked;
             registroNotaHeader.PorcentajeDominioTotal = request.PorcentajeDominioTotal;
             registroNotaHeader.PorcentajeProgresoTotal = request.PorcentajeProgresoTotal;
+            registroNotaHeader.TipoRegistroNotaHeaderId = request.TipoRegistroNotaHeaderId;
 
             var update = await _registroNotaHeaderService.UpdateRegistroNotaHeaderAsync(registroNotaHeader);
 
@@ -172,7 +174,8 @@ namespace CIAC_TAS_Service.Controllers.V1
                 InstructorId = request.InstructorId,
                 IsLocked = request.IsLocked,
                 PorcentajeDominioTotal = request.PorcentajeDominioTotal,
-                PorcentajeProgresoTotal = request.PorcentajeProgresoTotal
+                PorcentajeProgresoTotal = request.PorcentajeProgresoTotal,
+                TipoRegistroNotaHeaderId = request.TipoRegistroNotaHeaderId,
             };
 
             var created = await _registroNotaHeaderService.CreateRegistroNotaEstudianteHeaderAsync(registroNotaHeader);

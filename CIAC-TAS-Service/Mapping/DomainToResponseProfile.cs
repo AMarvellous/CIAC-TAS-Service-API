@@ -7,6 +7,7 @@ using CIAC_TAS_Service.Domain.General;
 using CIAC_TAS_Service.Domain.InstructorDomain;
 using CIAC_TAS_Service.Domain.Menu;
 using Microsoft.AspNetCore.Identity;
+using static CIAC_TAS_Service.Contracts.V1.ApiRoute;
 
 namespace CIAC_TAS_Service.Mapping
 {
@@ -97,8 +98,19 @@ namespace CIAC_TAS_Service.Mapping
                     x => x.InstructorResponse,
                     opt => opt.MapFrom(m => m.Instructor))
                 .ForMember(
+                    x => x.TipoAsistenciaEstudianteHeaderResponse,
+                    opt => opt.MapFrom(m => m.TipoAsistenciaEstudianteHeader))
+                .ForMember(
                     x => x.AsistenciaEstudiantesResponse,
                     opt => opt.MapFrom(m => m.AsistenciaEstudiantes));
+
+            CreateMap<CierreMateria, CierreMateriaResponse>()
+                .ForMember(
+                    x => x.Grupo,
+                    opt => opt.MapFrom(m => m.Grupo))
+                .ForMember(
+                    x => x.Materia,
+                    opt => opt.MapFrom(m => m.Materia));
 
             CreateMap<AsistenciaEstudiante, AsistenciaEstudianteResponse>()
                 .ForMember(
@@ -107,6 +119,36 @@ namespace CIAC_TAS_Service.Mapping
                 .ForMember(
                     x => x.TipoAsistenciaResponse,
                     opt => opt.MapFrom(m => m.TipoAsistencia));
+
+            CreateMap<Estudiante, EstudianteResponse>();
+
+            CreateMap<RegistroNotaEstudiante, RegistroNotaEstudianteResponse>()
+                .ForMember(
+                    x => x.TipoRegistroNotaEstudiante,
+                    opt => opt.MapFrom(m => m.TipoRegistroNotaEstudiante));
+
+            CreateMap<RegistroNotaEstudianteHeader, RegistroNotaEstudianteHeaderResponse>()
+                .ForMember(
+                    x => x.Estudiante,
+                    opt => opt.MapFrom(m => m.Estudiante))
+                .ForMember(
+                    x => x.RegistroNotaEstudiantes,
+                    opt => opt.MapFrom(m => m.RegistroNotaEstudiantes));
+                //.ForMember(
+                //    x => x.RegistroNotaEstudiantes,
+                //    opt => opt.MapFrom(
+                //        src => src.RegistroNotaEstudiantes.Select(x => new RegistroNotaEstudianteResponse
+                //        {
+                //            Id = x.Id,
+                //            RegistroNotaEstudianteHeaderId = x.RegistroNotaEstudianteHeaderId,
+                //            Nota = x.Nota,
+                //            TipoRegistroNotaEstudianteId = x.TipoRegistroNotaEstudianteId,
+                //            TipoRegistroNotaEstudiante = new TipoRegistroNotaEstudianteResponse
+                //            {
+                //                Id = x.TipoRegistroNotaEstudiante.Id,
+                //                Nombre = x.TipoRegistroNotaEstudiante.Nombre,
+                //            }
+                //        })));
 
             CreateMap<RegistroNotaHeader, RegistroNotaHeaderResponse>()
                 .ForMember(
@@ -123,20 +165,18 @@ namespace CIAC_TAS_Service.Mapping
                     opt => opt.MapFrom(m => m.Modulo))
                 .ForMember(
                     x => x.Instructor,
-                    opt => opt.MapFrom(m => m.Instructor));
+                    opt => opt.MapFrom(m => m.Instructor))
+                .ForMember(
+                    x => x.TipoRegistroNotaHeader,
+                    opt => opt.MapFrom(m => m.TipoRegistroNotaHeader))
+                .ForMember(
+                    x => x.RegistroNotaEstudianteHeaders,
+                    opt => opt.MapFrom(m => m.RegistroNotaEstudianteHeaders));
 
-            CreateMap<RegistroNotaEstudianteHeader, RegistroNotaEstudianteHeaderResponse>()
+            CreateMap<InhabilitacionEstudiante, InhabilitacionEstudianteResponse>()
                 .ForMember(
                     x => x.Estudiante,
-                    opt => opt.MapFrom(m => m.Estudiante))
-                .ForMember(
-                    x => x.RegistroNotaHeader,
-                    opt => opt.MapFrom(m => m.RegistroNotaHeader));
-
-            CreateMap<RegistroNotaEstudiante, RegistroNotaEstudianteResponse>()
-                .ForMember(
-                    x => x.RegistroNotaEstudianteHeader,
-                    opt => opt.MapFrom(m => m.RegistroNotaEstudianteHeader));
+                    opt => opt.MapFrom(m => m.Estudiante));
 
             CreateMap<Tag, TagResponse>();
             CreateMap<Grupo, GrupoResponse>();
@@ -144,10 +184,8 @@ namespace CIAC_TAS_Service.Mapping
             CreateMap<Programa, ProgramaResponse>();
             CreateMap<ImagenAsa, ImagenAsaResponse>();
             CreateMap<EstadoPreguntaAsa, EstadoPreguntaAsaResponse>();            
-            CreateMap<Estudiante, EstudianteResponse>();
             CreateMap<EstudiantePrograma, EstudianteProgramaResponse>();
             CreateMap<MenuSubModuloWeb, MenuSubModulosWebResponse>();
-            
             CreateMap<PreguntaAsaImagenAsa, PreguntaAsaImagenAsaResponse>();
             CreateMap<IdentityUser, IdentityUserResponse>();
             CreateMap<PreguntaAsaOpcion, PreguntaAsaOpcionResponse>();
@@ -160,6 +198,9 @@ namespace CIAC_TAS_Service.Mapping
             CreateMap<ProgramaAnaliticoPdf, ProgramaAnaliticoPdfResponse>();
             CreateMap<InstructorMateria, InstructorMateriaResponse>();
             CreateMap<InstructorProgramaAnalitico, InstructorProgramaAnaliticoResponse>();
+            CreateMap<TipoRegistroNotaEstudiante, TipoRegistroNotaEstudianteResponse>();
+            CreateMap<TipoRegistroNotaHeader, TipoRegistroNotaHeaderResponse>();
+            CreateMap<TipoAsistenciaEstudianteHeader, TipoAsistenciaEstudianteHeaderResponse>();
         }
     }
 }

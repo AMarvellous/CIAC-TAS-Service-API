@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using CIAC_TAS_Service.Domain.General;
 using CIAC_TAS_Service.Domain.ASA;
+using static CIAC_TAS_Service.Contracts.V1.ApiRoute;
+using CIAC_TAS_Service.Domain.InstructorDomain;
 
 namespace CIAC_TAS_Service.Domain.Estudiante
 {
@@ -22,6 +24,8 @@ namespace CIAC_TAS_Service.Domain.Estudiante
         public int TotalHorasTeoricas { get; set; }
         public int TotalHorasPracticas { get; set; }
         public string Tema { get; set; }
+        public bool IsLocked { get; set; }
+        public int TipoAsistenciaEstudianteHeaderId { get; set; }
 
         [ForeignKey(nameof(ProgramaId))]
         public Programa Programa { get; set; }
@@ -37,6 +41,9 @@ namespace CIAC_TAS_Service.Domain.Estudiante
 
         [ForeignKey(nameof(InstructorId))]
         public Instructor Instructor { get; set; }
+
+        [ForeignKey(nameof(TipoAsistenciaEstudianteHeaderId))]
+        public TipoAsistenciaEstudianteHeader TipoAsistenciaEstudianteHeader { get; set; }
 
         public virtual IEnumerable<AsistenciaEstudiante> AsistenciaEstudiantes { get; set; }
     }

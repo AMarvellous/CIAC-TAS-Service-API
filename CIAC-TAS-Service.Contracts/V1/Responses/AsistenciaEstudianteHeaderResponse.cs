@@ -20,11 +20,14 @@ namespace CIAC_TAS_Service.Contracts.V1.Responses
         public int TotalHorasTeoricas { get; set; }
         public int TotalHorasPracticas { get; set; }
         public string Tema { get; set; }
+        public bool IsLocked { get; set; }
+        public int TipoAsistenciaEstudianteHeaderId { get; set; }
         public ProgramaResponse ProgramaResponse { get; set; }
         public GrupoResponse GrupoResponse { get; set; }
         public MateriaResponse MateriaResponse { get; set; }
         public ModuloResponse ModuloResponse { get; set; }
         public InstructorResponse InstructorResponse { get; set; }
+        public TipoAsistenciaEstudianteHeaderResponse TipoAsistenciaEstudianteHeaderResponse { get; set; }
         public List<AsistenciaEstudianteResponse> AsistenciaEstudiantesResponse { get; set; }
     }
 }

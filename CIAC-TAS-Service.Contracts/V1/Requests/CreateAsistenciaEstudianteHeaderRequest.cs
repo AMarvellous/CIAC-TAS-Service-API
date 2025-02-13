@@ -19,5 +19,7 @@ namespace CIAC_TAS_Service.Contracts.V1.Requests
         public int TotalHorasTeoricas { get; set; }
         public int TotalHorasPracticas { get; set; }
         public string Tema { get; set; }
+        public bool IsLocked { get; set; }
+        public int TipoAsistenciaEstudianteHeaderId { get; set; }
     }
 }
